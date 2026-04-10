@@ -1,0 +1,239 @@
+{
+  "metadata": {
+    "title": "Sintérgica AI — IA Privada para o México e América Latina",
+    "description": "A Sintérgica AI desenha, implementa e opera o Lattice: IA privada com modelos especializados, agentes autônomos e governança verificável para setores regulados no México e LATAM."
+  },
+  "navigation": {
+    "soluciones": "Soluções",
+    "industrias": "Indústrias",
+    "servicios": "Serviços",
+    "investigacion": "Pesquisa",
+    "recursos": "Recursos",
+    "empresa": "Empresa",
+    "contacto": "Agendar Demo"
+  },
+  "navMenus": {
+    "soluciones": {
+      "groups": [
+        {
+          "heading": "Produtos",
+          "items": [
+            { "name": "Lattice", "desc": "O sistema operacional inteligente" },
+            { "name": "Nahui", "desc": "Logística Inteligente e TMS" },
+            { "name": "SalesHub", "desc": "Motor Comercial Completo" }
+          ]
+        },
+        {
+          "heading": "Serviços",
+          "items": [
+            { "name": "Consultoria", "desc": "Estratégia e arquitetura" },
+            { "name": "Implementação", "desc": "Implantação em 4 modalidades" },
+            { "name": "Capacitação", "desc": "Formação para sua equipe" }
+          ]
+        }
+      ],
+      "bottomLinks": [
+        { "label": "Desenvolvimento Sob Medida" },
+        { "label": "MaaS (Marketing)" }
+      ]
+    },
+    "industrias": {
+      "groups": [
+        {
+          "heading": "Setores",
+          "items": [
+            { "name": "Jurídico" },
+            { "name": "Governo" },
+            { "name": "Logística" },
+            { "name": "Energia" },
+            { "name": "Saúde" },
+            { "name": "Financeiro" },
+            { "name": "Vendas" }
+          ]
+        }
+      ],
+      "featured": {
+        "title": "Lattice Séeb →",
+        "desc": "SLMs especializados por indústria. Modelos treinados com corpus setorial da LATAM."
+      },
+      "bottomLinks": [
+        { "label": "Casos de uso" }
+      ]
+    },
+    "investigacion": {
+      "groups": [
+        {
+          "heading": "Pesquisa",
+          "items": [
+            { "name": "Lattice Na'at", "desc": "Modelo 1T da Sintérgica AI para LATAM" },
+            { "name": "Viés WEIRD", "desc": "Por que a IA global não é suficiente" },
+            { "name": "Governança", "desc": "Ética, transparência e controle" }
+          ]
+        },
+        {
+          "heading": "Recursos",
+          "items": [
+            { "name": "Blog", "desc": "Artigos e pensamento sobre IA" },
+            { "name": "Eventos", "desc": "Webinars, workshops e conferências" },
+            { "name": "Constituição", "desc": "Marco constitucional de IA para o México" }
+          ]
+        }
+      ],
+      "featured": {
+        "title": "Sintérgica Labs →",
+        "desc": "Pesquisa aberta em IA a partir do México. Modelos, papers e datasets para a comunidade."
+      }
+    },
+    "empresa": {
+      "groups": [
+        {
+          "heading": "Empresa",
+          "items": [
+            { "name": "Sobre nós" },
+            { "name": "Equipe" },
+            { "name": "Alianças" },
+            { "name": "Imprensa" },
+            { "name": "Contato" }
+          ]
+        }
+      ]
+    }
+  },
+  "footer": {
+    "tagline": "A infraestrutura de IA de referência para a América Latina.",
+    "asociaciones": "Parcerias e Associações",
+    "hechoEn": "Feito no México",
+    "rights": "Todos os direitos reservados.",
+    "columns": [
+      {
+        "title": "Produtos",
+        "links": [
+          { "label": "Lattice Platform", "href": "/soluciones/lattice" },
+          { "label": "Lattice Séeb", "href": "/soluciones/lattice-seeb" },
+          { "label": "Nahui", "href": "/soluciones/nahui" },
+          { "label": "SalesHub", "href": "/soluciones/saleshub" }
+        ]
+      },
+      {
+        "title": "Serviços",
+        "links": [
+          { "label": "Consultoria Estratégica", "href": "/servicios/consultoria" },
+          { "label": "Implementação", "href": "/servicios/implementacion" },
+          { "label": "Fine-Tuning Privado", "href": "/servicios/fine-tuning" },
+          { "label": "Desenvolvimento Sob Medida", "href": "/servicios/desarrollo-a-medida" }
+        ]
+      },
+      {
+        "title": "Pesquisa",
+        "links": [
+          { "label": "Sintérgica Labs A.C.", "href": "/investigacion/labs" },
+          { "label": "Lattice Na'at", "href": "/investigacion/lattice-naat" },
+          { "label": "Blog", "href": "/recursos/blog" },
+          { "label": "Eventos", "href": "/recursos/eventos" }
+        ]
+      },
+      {
+        "title": "Contato",
+        "links": [
+          { "label": "hola@sintergica.ai", "href": "mailto:hola@sintergica.ai" },
+          { "label": "+52 56 5922 7340", "href": "https://wa.me/525659227340" },
+          { "label": "Suporte", "href": "/soporte" }
+        ]
+      }
+    ],
+    "bottomLinks": [
+      { "label": "Política de Privacidade", "href": "/privacidad" },
+      { "label": "Termos de Uso", "href": "/terminos" },
+      { "label": "Segurança & Compliance", "href": "/seguridad" }
+    ]
+  },
+  "common": {
+    "nextStep": "PRÓXIMO PASSO",
+    "learnMore": "Saiba mais",
+    "viewSolution": "Ver solução",
+    "scheduleCall": "Agendar conversa",
+    "requestDiagnosis": "Solicitar Diagnóstico Inteligente",
+    "onPremise": "On-premise disponível",
+    "contextMX": "Contexto MX/LATAM",
+    "governance": "Governança por design",
+    "noCommitment": "Sem compromisso",
+    "noPermanence": "Sem permanência",
+    "realDataDemo": "Demo com dados reais",
+    "roiIncluded": "ROI estimado incluído",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu"
+  },
+  "hero": {
+    "badge": "Laboratório de IA · México 🇲🇽",
+    "headlineLine1": "Automatize operações complexas com",
+    "headlineLine2": "agentes de IA",
+    "headlineAccent": "24/7.",
+    "subtitle": "Reduza custos operacionais em setores regulados implantando IA privada que opera em sua própria infraestrutura. Sem expor seus dados.",
+    "ctaPrimary": "Mapeamento de processos (5 vagas) →",
+    "ctaSecondary": "Ver Casos de Uso",
+    "trustText": "Implantação on-premise garantida."
+  },
+  "statsBar": {
+    "stats": [
+      {
+        "prefix": null,
+        "number": "+16%",
+        "description": "de aumento na receita para empresas mexicanas que adotaram IA",
+        "source": "Meta / Linux Foundation 2025"
+      },
+      {
+        "prefix": null,
+        "number": "350%",
+        "description": "de ROI em projetos de IA bem implementados",
+        "source": "Microsoft / IDC"
+      },
+      {
+        "prefix": null,
+        "number": "67%",
+        "description": "das empresas usam IA mas não passam da fase de piloto",
+        "source": "McKinsey State of AI 2025"
+      }
+    ],
+    "closingLine": "A diferença não está na tecnologia. Está em quem a implementa com o contexto certo."
+  },
+  "problema": {
+    "badge": "O Problema",
+    "title": "A IA mais avançada do mundo foi treinada para um país que não é o seu.",
+    "description": "Não é um bug. É arquitetura. Os modelos globais foram projetados, medidos e otimizados para contextos WEIRD (Western, Educated, Industrialized, Rich, Democratic).",
+    "ctaLabel": "Conheça o viés WEIRD →",
+    "ejemplos": [
+      {
+        "sector": "Escritórios de advocacia",
+        "texto": "Sugere cláusulas de Common Law anglo-saxão, não de direito civil latino-americano."
+      },
+      {
+        "sector": "Governo e licitações",
+        "texto": "Ignora as leis locais de compras públicas. Opera como a regulamentação federal dos EUA."
+      },
+      {
+        "sector": "Fiscal e contabilidade",
+        "texto": "Confunde regras fiscais locais com regras do IRS. Resultado: exposição regulatória."
+      }
+    ],
+    "vs_global": {
+      "title": "Global vs Lattice",
+      "metrics": {
+        "conocimiento": {
+          "label": "Conhecimento regulatório LATAM",
+          "global": "Superficial",
+          "lattice": "Profundo"
+        },
+        "idioma": {
+          "label": "Espanhol/Português principal",
+          "global": "< 5% do corpus",
+          "lattice": "100% nativo"
+        },
+        "privacidad": {
+          "label": "Privacidade de dados",
+          "global": "Viajam para os EUA",
+          "lattice": "No seu servidor (On-Prem)"
+        }
+      }
+    }
+  }
+}

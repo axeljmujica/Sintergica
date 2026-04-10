@@ -1,0 +1,308 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+:root {
+  /* ──────────────────────────────────────────────────────────────
+   * 🎨 COLORES DE LA MARCA (EDITA ESTOS VALORES PARA CAMBIAR EL TEMA)
+   * Extraídos del logo:
+   *   #0c2144 - Azul oscuro (texto y detalles oscuros)
+   *   #006efa - Azul primario (ícono y acentos)
+   *   #21adeb - Azul claro (detalles del ícono y hovers)
+   * ────────────────────────────────────────────────────────────── */
+  --brand-midnight: #0c2144;      /* Color oscuro principal (texto, nav) */
+  --brand-navy: #091a38;          /* Fondo secundario oscuro (paneles, menús) */
+  --brand-deep: #0e2b5e;          /* Superficies y sombras oscuras */
+  --brand-mid: #1A3A5C;           /* Tono medio de azul marca */
+  --brand-accent: #006efa;        /* Azul primario (botones, enlaces) */
+  --brand-accent-light: #21adeb;  /* Azul claro (hovers, gradientes) */
+  --brand-white: #ffffff;         /* Blanco puro */
+  --brand-surface: #f6f9fc;       /* Fondo principal claro del sitio */
+
+  /* Semantic / Industry Colors */
+  --brand-teal: #0C6E8C;
+  --accent-green: #047857;
+  --accent-gold: #92400E;
+  --accent-purple: #4F46E5;
+  --accent-red: #B91C1C;
+
+  /* Colores del Fondo del Sitio (Ahora todo es Claro) */
+  --bg-primary: var(--brand-white);
+  --bg-secondary: var(--brand-surface);
+  
+  /* Textos */
+  --text-primary: var(--brand-midnight);
+  --text-secondary: rgba(12, 33, 68, 0.7); /* midnight al 70% */
+  
+  /* Acentos */
+  --accent: var(--brand-accent);
+  --border: rgba(12, 33, 68, 0.1);         /* midnight al 10% */
+  --card-bg: rgba(255, 255, 255, 0.8);
+  --code-bg: #f1f5f9;
+
+  /* Surface hierarchy */
+  --surface-elevated: rgba(255, 255, 255, 0.95);
+  --surface-overlay: rgba(255, 255, 255, 0.80);
+  --surface-subtle: rgba(12, 33, 68, 0.02);
+
+  /* Content hierarchy */
+  --content-primary: var(--brand-midnight);
+  --content-secondary: rgba(12, 33, 68, 0.70);
+  --content-tertiary: rgba(12, 33, 68, 0.45);
+  --content-disabled: rgba(12, 33, 68, 0.25);
+
+  /* Interactive */
+  --interactive-accent: var(--brand-accent);
+  --interactive-accent-hover: var(--brand-accent-light);
+  --interactive-accent-light: #53abe6;
+
+  /* Borders */
+  --border-subtle: rgba(12, 33, 68, 0.05);
+  --border-default: rgba(12, 33, 68, 0.10);
+  --border-strong: rgba(12, 33, 68, 0.20);
+  --border-accent: rgba(0, 110, 250, 0.25);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(12, 33, 68, 0.08);
+  --shadow-md: 0 4px 16px rgba(12, 33, 68, 0.10);
+  --shadow-lg: 0 12px 40px rgba(12, 33, 68, 0.14);
+  --shadow-accent: 0 8px 32px rgba(0, 110, 250, 0.20);
+
+  /* Status */
+  --color-success: #16A34A;
+  --color-warning: #D97706;
+  --color-danger: #DC2626;
+  --color-info: #0EA5E9;
+}
+
+body {
+  font-family: var(--font-mulish), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--brand-surface);
+  color: var(--brand-midnight);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+@layer base {
+  *, ::before, ::after {
+    border-color: var(--border);
+  }
+
+  ::selection {
+    background-color: rgba(54, 101, 245, 0.3);
+    color: #ffffff;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance; /* Chrome 114+, Firefox 121+, Safari 17.5+ */
+    overflow-wrap: break-word; /* fallback for older browsers */
+  }
+
+  /* Consistent section spacing */
+  .section-py {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+  @media (min-width: 768px) {
+    .section-py {
+      padding-top: 7rem;
+      padding-bottom: 7rem;
+    }
+  }
+
+  /* Mask fade utility for carousels */
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  }
+
+  /* Hide scrollbar for carousels */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ── Animated gradient mesh (hero bg) ──────────────────────── */
+.gradient-mesh {
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(54, 101, 245, 0.15) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(83, 171, 230, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 50% 80%, rgba(54, 101, 245, 0.08) 0%, transparent 60%);
+}
+
+/* ── Grid dot pattern ──────────────────────────────────────── */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(54, 101, 245, 0.12) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+[data-theme="light"] .dot-grid {
+  background-image: radial-gradient(circle, rgba(4, 6, 21, 0.06) 1px, transparent 1px);
+}
+
+[data-theme="dark"] .dot-grid {
+  background-image: radial-gradient(circle, rgba(54, 101, 245, 0.15) 1px, transparent 1px);
+}
+
+/* ── Glass morphism card ───────────────────────────────────── */
+.glass {
+  background: rgba(13, 30, 65, 0.40);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.60);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(4, 6, 21, 0.06);
+}
+
+/* ── Gradient border wrapper ───────────────────────────────── */
+.gradient-border {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(54, 101, 245, 0.4), rgba(83, 171, 230, 0.2), rgba(54, 101, 245, 0.0));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ── CTA glow pulse ────────────────────────────────────────── */
+.btn-glow {
+  box-shadow: 0 0 15px rgba(54, 101, 245, 0.2), 0 0 40px rgba(54, 101, 245, 0.05);
+  transition: box-shadow 0.4s ease, transform 0.2s ease;
+}
+.btn-glow:hover {
+  box-shadow: 0 0 25px rgba(54, 101, 245, 0.35), 0 0 60px rgba(54, 101, 245, 0.1);
+  transform: translateY(-1px);
+}
+
+/* ── Section divider glow line ─────────────────────────────── */
+.divider-glow {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(54, 101, 245, 0.3), rgba(83, 171, 230, 0.2), rgba(54, 101, 245, 0.3), transparent);
+}
+
+/* ── Industry card gradients (brand-derived) ─────────────── */
+.grad-legal      { background: linear-gradient(135deg, #0d1e41, #101c3a); }
+.grad-gobierno   { background: linear-gradient(135deg, #0d101e, #131832); }
+.grad-logistica  { background: linear-gradient(135deg, #142044, #1a2d5a); }
+.grad-energia    { background: linear-gradient(135deg, #0e1a35, #0d2847); }
+.grad-salud      { background: linear-gradient(135deg, #111838, #1a1f42); }
+.grad-financiero { background: linear-gradient(135deg, #0f1530, #18204a); }
+.grad-ventas     { background: linear-gradient(135deg, #1a1f3a, #2d1b4e); }
+
+/* Light mode industry gradients */
+[data-theme="light"] .grad-legal      { background: linear-gradient(135deg, #eef2ff, #e0e7ff); }
+[data-theme="light"] .grad-gobierno   { background: linear-gradient(135deg, #f1f5f9, #e2e8f0); }
+[data-theme="light"] .grad-logistica  { background: linear-gradient(135deg, #fff7ed, #ffedd5); }
+[data-theme="light"] .grad-energia    { background: linear-gradient(135deg, #fffbeb, #fef3c7); }
+[data-theme="light"] .grad-salud      { background: linear-gradient(135deg, #fdf2f8, #fce7f3); }
+[data-theme="light"] .grad-financiero { background: linear-gradient(135deg, #f0fdf4, #dcfce7); }
+[data-theme="light"] .grad-ventas     { background: linear-gradient(135deg, #f0f9ff, #e0f2fe); }
+
+/* ── Print Styles ──────────────────────────────────────────── */
+@media print {
+  @page {
+    size: letter;
+    margin: 20mm;
+  }
+
+  body {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide UI elements that shouldn't print */
+  .print-hide, nav, footer:not(.print-footer) {
+    display: none !important;
+  }
+
+  /* Base typography overrides for print */
+  article {
+    background: transparent !important;
+  }
+
+  /* Override dark mode text colors in the article */
+  .text-brand-white,
+  .text-brand-surface,
+  .text-brand-surface\/80,
+  .text-brand-surface\/60,
+  .text-brand-surface\/50,
+  .text-brand-surface\/40 {
+    color: #0f172a !important;
+  }
+
+  /* Explicitly format Prose elements for print */
+  .prose {
+    color: #0f172a !important;
+  }
+  .prose h1, .prose h2, .prose h3, .prose h4, .prose strong, .prose b {
+    color: #000000 !important;
+  }
+  .prose p, .prose li {
+    color: #1e293b !important;
+  }
+  .prose a {
+    color: #3665f5 !important;
+    text-decoration: none !important;
+  }
+  .prose blockquote {
+    background-color: #f8fafc !important;
+    color: #334155 !important;
+    border-left: 4px solid #3665f5 !important;
+    padding: 1rem 1.5rem !important;
+    border-radius: 0 0.5rem 0.5rem 0 !important;
+  }
+  .prose pre {
+    background-color: #f1f5f9 !important;
+    color: #0f172a !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+  .prose code {
+    color: #3665f5 !important;
+    background-color: #f8fafc !important;
+  }
+  .prose img {
+    border: 1px solid #e2e8f0 !important;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Preserve badge layout */
+  span.bg-brand-accent\/10 {
+    background-color: rgba(54, 101, 245, 0.1) !important;
+    color: #3665f5 !important;
+    border: 1px solid rgba(54, 101, 245, 0.2) !important;
+  }
+
+  /* Prevent awkward page breaks */
+  h1, h2, h3, h4, h5, h6 { page-break-after: avoid; }
+  img, figure, table, blockquote, pre { page-break-inside: avoid; }
+}

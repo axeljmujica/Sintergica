@@ -1,0 +1,58 @@
+import type { Metadata } from "next";
+import localFont from "next/font/local";
+import { Poppins, Mulish } from "next/font/google";
+import { ThemeProvider } from "next-themes";
+import "./globals.css";
+
+const gilroy = localFont({
+  src: [
+    { path: "../../public/fonts/Gilroy-Bold.ttf", weight: "700", style: "normal" },
+    { path: "../../public/fonts/Gilroy-Extrabold.ttf", weight: "800", style: "normal" },
+  ],
+  variable: "--font-gilroy",
+  display: "swap",
+});
+
+const poppins = Poppins({
+  variable: "--font-poppins",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const mulish = Mulish({
+  variable: "--font-mulish",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  title: "Sintérgica AI — IA Privada para México y Latinoamérica",
+  description:
+    "Sintérgica AI diseña, implementa y opera Lattice: IA privada con modelos especializados, agentes autónomos y gobernanza verificable para sectores regulados de México y LATAM.",
+  icons: {
+    icon: "/favicon/Sintergica-ai-icon@4x.png",
+    apple: "/favicon/Sintergica-ai-icon@4x.png",
+  },
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="es" suppressHydrationWarning >
+      <body className={`${gilroy.variable} ${poppins.variable} ${mulish.variable} font-sans antialiased bg-brand-surface dark:bg-brand-midnight text-brand-midnight dark:text-brand-white`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={true}
+          disableTransitionOnChange={false}
+        >
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}

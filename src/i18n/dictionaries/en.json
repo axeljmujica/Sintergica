@@ -1,0 +1,239 @@
+{
+  "metadata": {
+    "title": "Sintérgica AI — Private AI for Mexico and Latin America",
+    "description": "Sintérgica AI designs, implements, and operates Lattice: private AI with specialized models, autonomous agents, and verifiable governance for regulated sectors in Mexico and LATAM."
+  },
+  "navigation": {
+    "soluciones": "Solutions",
+    "industrias": "Industries",
+    "servicios": "Services",
+    "investigacion": "Research",
+    "recursos": "Resources",
+    "empresa": "Company",
+    "contacto": "Book a Demo"
+  },
+  "navMenus": {
+    "soluciones": {
+      "groups": [
+        {
+          "heading": "Products",
+          "items": [
+            { "name": "Lattice", "desc": "The intelligent operating system" },
+            { "name": "Nahui", "desc": "Smart Logistics & TMS" },
+            { "name": "SalesHub", "desc": "Complete Sales Engine" }
+          ]
+        },
+        {
+          "heading": "Services",
+          "items": [
+            { "name": "Consulting", "desc": "Strategy & architecture" },
+            { "name": "Implementation", "desc": "Deployment in 4 modes" },
+            { "name": "Training", "desc": "Upskill your team" }
+          ]
+        }
+      ],
+      "bottomLinks": [
+        { "label": "Custom Development" },
+        { "label": "MaaS (Marketing)" }
+      ]
+    },
+    "industrias": {
+      "groups": [
+        {
+          "heading": "Sectors",
+          "items": [
+            { "name": "Legal" },
+            { "name": "Government" },
+            { "name": "Logistics" },
+            { "name": "Energy" },
+            { "name": "Healthcare" },
+            { "name": "Financial" },
+            { "name": "Sales" }
+          ]
+        }
+      ],
+      "featured": {
+        "title": "Lattice Séeb →",
+        "desc": "Industry-specialized SLMs. Models trained on LATAM sector-specific corpora."
+      },
+      "bottomLinks": [
+        { "label": "Use Cases" }
+      ]
+    },
+    "investigacion": {
+      "groups": [
+        {
+          "heading": "Research",
+          "items": [
+            { "name": "Lattice Na'at", "desc": "Sintérgica AI's 1T model for LATAM" },
+            { "name": "WEIRD Bias", "desc": "Why global AI is not enough" },
+            { "name": "Governance", "desc": "Ethics, transparency & control" }
+          ]
+        },
+        {
+          "heading": "Resources",
+          "items": [
+            { "name": "Blog", "desc": "Articles & AI thought leadership" },
+            { "name": "Events", "desc": "Webinars, workshops & conferences" },
+            { "name": "Constitution", "desc": "AI constitutional framework for Mexico" }
+          ]
+        }
+      ],
+      "featured": {
+        "title": "Sintérgica Labs →",
+        "desc": "Open AI research from Mexico. Models, papers and datasets for the community."
+      }
+    },
+    "empresa": {
+      "groups": [
+        {
+          "heading": "Company",
+          "items": [
+            { "name": "About Us" },
+            { "name": "Team" },
+            { "name": "Partnerships" },
+            { "name": "Press" },
+            { "name": "Contact" }
+          ]
+        }
+      ]
+    }
+  },
+  "footer": {
+    "tagline": "The reference AI infrastructure for Latin America.",
+    "asociaciones": "Partnerships & Associations",
+    "hechoEn": "Made in Mexico",
+    "rights": "All rights reserved.",
+    "columns": [
+      {
+        "title": "Products",
+        "links": [
+          { "label": "Lattice Platform", "href": "/soluciones/lattice" },
+          { "label": "Lattice Séeb", "href": "/soluciones/lattice-seeb" },
+          { "label": "Nahui", "href": "/soluciones/nahui" },
+          { "label": "SalesHub", "href": "/soluciones/saleshub" }
+        ]
+      },
+      {
+        "title": "Services",
+        "links": [
+          { "label": "Strategic Consulting", "href": "/servicios/consultoria" },
+          { "label": "Implementation", "href": "/servicios/implementacion" },
+          { "label": "Private Fine-Tuning", "href": "/servicios/fine-tuning" },
+          { "label": "Custom Development", "href": "/servicios/desarrollo-a-medida" }
+        ]
+      },
+      {
+        "title": "Research",
+        "links": [
+          { "label": "Sintérgica Labs A.C.", "href": "/investigacion/labs" },
+          { "label": "Lattice Na'at", "href": "/investigacion/lattice-naat" },
+          { "label": "Blog", "href": "/recursos/blog" },
+          { "label": "Events", "href": "/recursos/eventos" }
+        ]
+      },
+      {
+        "title": "Contact",
+        "links": [
+          { "label": "hola@sintergica.ai", "href": "mailto:hola@sintergica.ai" },
+          { "label": "+52 56 5922 7340", "href": "https://wa.me/525659227340" },
+          { "label": "Support", "href": "/soporte" }
+        ]
+      }
+    ],
+    "bottomLinks": [
+      { "label": "Privacy Policy", "href": "/privacidad" },
+      { "label": "Terms of Use", "href": "/terminos" },
+      { "label": "Security & Compliance", "href": "/seguridad" }
+    ]
+  },
+  "common": {
+    "nextStep": "NEXT STEP",
+    "learnMore": "Learn more",
+    "viewSolution": "View solution",
+    "scheduleCall": "Schedule a call",
+    "requestDiagnosis": "Request Smart Diagnosis",
+    "onPremise": "On-premise available",
+    "contextMX": "MX/LATAM context",
+    "governance": "Governance by design",
+    "noCommitment": "No commitment",
+    "noPermanence": "No lock-in",
+    "realDataDemo": "Demo with real data",
+    "roiIncluded": "Estimated ROI included",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "hero": {
+    "badge": "AI Lab · Mexico 🇲🇽",
+    "headlineLine1": "Automate complex operations with",
+    "headlineLine2": "AI agents",
+    "headlineAccent": "24/7.",
+    "subtitle": "Reduce operational costs in regulated sectors by deploying private AI that operates within your own infrastructure. Without exposing your data.",
+    "ctaPrimary": "Free process mapping (5 spots left) →",
+    "ctaSecondary": "View Use Cases",
+    "trustText": "On-premise deployment guaranteed."
+  },
+  "statsBar": {
+    "stats": [
+      {
+        "prefix": null,
+        "number": "+16%",
+        "description": "increase in revenue for Mexican companies adopting AI",
+        "source": "Meta / Linux Foundation 2025"
+      },
+      {
+        "prefix": null,
+        "number": "350%",
+        "description": "ROI on properly implemented AI projects",
+        "source": "Microsoft / IDC"
+      },
+      {
+        "prefix": null,
+        "number": "67%",
+        "description": "of companies use AI but fail to scale beyond pilots",
+        "source": "McKinsey State of AI 2025"
+      }
+    ],
+    "closingLine": "The difference is not in the technology. It's in who implements it with the right context."
+  },
+  "problema": {
+    "badge": "The Problem",
+    "title": "The world's most advanced AI was trained for a country that isn't yours.",
+    "description": "It's not a bug. It's architecture. Global models were designed, measured, and optimized for WEIRD (Western, Educated, Industrialized, Rich, Democratic) contexts.",
+    "ctaLabel": "Learn about WEIRD bias →",
+    "ejemplos": [
+      {
+        "sector": "Law firms",
+        "texto": "Suggests Anglo-Saxon Common Law clauses, not Mexican civil law."
+      },
+      {
+        "sector": "Government and bidding",
+        "texto": "Ignores the Procurement Law. Operates like US federal regulations."
+      },
+      {
+        "sector": "Tax and accounting",
+        "texto": "Confuses CFDI 4.0 with IRS rules. Result: exposure to the SAT (Mexican IRS)."
+      }
+    ],
+    "vs_global": {
+      "title": "Global vs Lattice",
+      "metrics": {
+        "conocimiento": {
+          "label": "MEX regulatory knowledge",
+          "global": "Superficial",
+          "lattice": "Deep (BOF, DOF)"
+        },
+        "idioma": {
+          "label": "Primary Spanish",
+          "global": "< 4% of corpus",
+          "lattice": "100% native"
+        },
+        "privacidad": {
+          "label": "Data privacy",
+          "global": "Travel to US",
+          "lattice": "On your server (On-Prem)"
+        }
+      }
+    }
+  }
+}
