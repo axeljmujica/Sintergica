@@ -36,7 +36,7 @@ export function Hero() {
       aria-label="Sintérgica AI Inicio"
     >
       {/* Container acting as the "rounded image" like the reference */}
-      <div className="relative mx-4 md:mx-6 xl:mx-auto flex w-full max-w-[1400px] flex-col overflow-hidden rounded-[2.5rem] bg-brand-midnight h-[calc(100vh-5.5rem)] min-h-[580px] px-6 lg:px-12 pt-16 pb-10 shadow-2xl">
+      <div className="relative mx-4 md:mx-6 xl:mx-auto flex w-full max-w-[1400px] flex-col overflow-hidden rounded-[2.5rem] bg-brand-midnight min-h-[calc(100vh-5.5rem)] px-8 lg:px-12 pt-10 pb-8 shadow-2xl">
         {/* Background Video */}
         <div className="absolute inset-0 z-0 bg-brand-midnight">
           <video
@@ -61,14 +61,15 @@ export function Hero() {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 flex flex-col flex-1 items-start justify-center text-left mt-8 mb-8 mx-auto w-full">
+        <div className="relative z-10 flex flex-col flex-1 items-start justify-center text-left my-auto mx-auto w-full py-8">
           <motion.div
             initial={shouldReduce ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: shouldReduce ? 0 : 0.5 }}
-            className="mb-8 flex items-center gap-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-md px-5 py-2 text-[0.85rem] font-medium text-white/90 w-fit"
+            className="mb-8 flex items-center gap-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md px-5 py-2 text-[0.85rem] font-medium text-white/80 w-fit"
           >
-            Laboratorio de IA · México 🇲🇽
+            <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Laboratorio de IA Mexicano 🇲🇽
           </motion.div>
 
           <motion.h1
@@ -82,7 +83,7 @@ export function Hero() {
             </span>
             <span className="flex flex-wrap items-center gap-x-3 gap-y-3 md:gap-x-4">
               Es la del
-              <span className="inline-flex items-center px-5 py-2 md:px-6 md:py-2 rounded-2xl border border-white/30 bg-white/10 backdrop-blur-md shadow-xl text-brand-white/95">
+              <span className="inline-flex items-center px-5 py-2 md:px-6 md:py-2 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl shadow-2xl text-brand-white/95">
                 contexto correcto.
               </span>
             </span>
@@ -101,19 +102,25 @@ export function Hero() {
             initial={shouldReduce ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: shouldReduce ? 0 : 0.6, delay: 0.5 }}
-            className="mt-10 flex flex-col sm:flex-row items-start justify-start gap-4"
+            className="mt-10 flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-4 w-full sm:w-auto"
           >
             <a
               href={HERO.ctaPrimaryHref}
-              className="inline-flex items-center rounded-full bg-brand-surface px-8 py-4 text-[1rem] font-semibold text-brand-midnight shadow-xl transition-all duration-300 hover:scale-[1.03] hover:bg-white focus-visible:outline-none"
+              className="inline-flex w-full sm:w-auto items-center justify-center rounded-full bg-brand-surface px-8 py-4 text-[1rem] font-semibold text-brand-midnight shadow-xl transition-all duration-300 hover:scale-[1.03] hover:bg-white focus-visible:outline-none"
             >
               {dictionary.hero?.ctaPrimary || HERO.ctaPrimary}
+            </a>
+            <a
+              href={HERO.ctaSecondaryHref}
+              className="inline-flex w-full sm:w-auto items-center justify-center rounded-full border border-white/20 bg-white/5 backdrop-blur-sm px-8 py-4 text-[1rem] font-semibold text-white transition-all duration-300 hover:bg-white/10 focus-visible:outline-none"
+            >
+              {dictionary.hero?.ctaSecondary || HERO.ctaSecondary}
             </a>
           </motion.div>
         </div>
 
         {/* Bottom Elements (Inside Image Box) */}
-        <div className="relative z-10 w-full mt-auto pt-16 flex flex-col lg:flex-row items-start lg:items-end justify-between gap-8">
+        <div className="relative z-10 w-full mt-auto pt-6 flex flex-col lg:flex-row items-start lg:items-end justify-between gap-6">
           <div className="flex items-center gap-4 sm:gap-5 rounded-full border border-white/20 bg-white/10 backdrop-blur-md px-4 py-2 sm:px-5 sm:py-2.5 w-fit">
             <div className="flex items-center">
               {[
@@ -124,9 +131,8 @@ export function Hero() {
               ].map((cloud, i) => (
                 <div
                   key={i}
-                  className={`relative w-[2rem] h-[2rem] sm:w-[2.25rem] sm:h-[2.25rem] rounded-full border-[2px] border-white/40 overflow-hidden shadow-md bg-white ${
-                    i !== 0 ? "-ml-2.5" : ""
-                  }`}
+                  className={`relative w-[2rem] h-[2rem] sm:w-[2.25rem] sm:h-[2.25rem] rounded-full border-[2px] border-white/40 overflow-hidden shadow-md bg-white ${i !== 0 ? "-ml-2.5" : ""
+                    }`}
                 >
                   <Image
                     src={cloud.src}
@@ -152,15 +158,15 @@ export function Hero() {
 
           <div className="flex items-center gap-5">
             {HERO.socials.map((s) => (
-               <a
-                 key={s.label}
-                 href={s.href}
-                 target="_blank"
-                 rel="noopener noreferrer"
-                 className="text-[0.85rem] font-medium text-white/50 transition-colors hover:text-white flex items-center gap-1.5"
-               >
-                 {s.label} <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-               </a>
+              <a
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[0.85rem] font-medium text-white/50 transition-colors hover:text-white flex items-center gap-1.5"
+              >
+                {s.label} <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+              </a>
             ))}
           </div>
         </div>
