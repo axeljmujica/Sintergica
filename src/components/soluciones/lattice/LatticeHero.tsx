@@ -2,8 +2,8 @@
 
 import { useRef } from "react";
 import { LazyMotion, domAnimation, m, useInView, useReducedMotion } from "motion/react";
+import Image from "next/image";
 import { Bot, Workflow, Shield, MessageCircle } from "lucide-react";
-import { LatticePlatformMockup } from "@/components/ui/LatticePlatformMockup";
 
 const MICRO_FEATURES = [
   { icon: MessageCircle, label: "Chat inteligente" },
@@ -115,7 +115,14 @@ export function LatticeHero() {
                   transition: { duration: 0.7, delay: 0.5 },
                 })}
           >
-            <LatticePlatformMockup isDark />
+            <Image
+                src="/images/mockup.png"
+                alt="Lattice Platform — interfaz de chat, agentes y automatizaciones"
+                width={1100}
+                height={693}
+                className="w-full rounded-2xl shadow-2xl"
+                priority
+              />
           </m.div>
         </div>
       </section>

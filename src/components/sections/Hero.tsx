@@ -36,7 +36,7 @@ export function Hero() {
       aria-label="Sintérgica AI Inicio"
     >
       {/* Container acting as the "rounded image" like the reference */}
-      <div className="relative mx-4 md:mx-6 xl:mx-auto flex w-full max-w-[1400px] flex-col overflow-hidden rounded-[2.5rem] bg-brand-midnight min-h-[calc(100vh-5.5rem)] px-8 lg:px-12 pt-10 pb-8 shadow-2xl">
+      <div className="relative mx-4 md:mx-6 xl:mx-auto flex w-full max-w-[1400px] flex-col overflow-hidden rounded-[2.5rem] bg-brand-midnight h-[calc(100vh-5.5rem)] min-h-[600px] px-8 lg:px-12 pt-10 pb-8 shadow-2xl">
         {/* Background Video */}
         <div className="absolute inset-0 z-0 bg-brand-midnight">
           <video
@@ -61,7 +61,7 @@ export function Hero() {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 flex flex-col flex-1 items-start justify-center text-left my-auto mx-auto w-full py-8">
+        <div className="relative z-10 flex flex-col flex-1 items-start justify-center text-left mx-auto w-full">
           <motion.div
             initial={shouldReduce ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}

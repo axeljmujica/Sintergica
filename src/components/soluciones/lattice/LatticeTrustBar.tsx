@@ -34,12 +34,12 @@ export function LatticeTrustBar() {
 
   return (
     <section
-      className="relative overflow-hidden bg-[#040615] border-y border-white/[0.06]"
+      className="relative overflow-hidden bg-white border-y border-slate-200"
       aria-label="Integraciones compatibles"
     >
-      <div className="py-6">
+      <div className="py-8">
         {/* Label */}
-        <p className="mb-5 text-center text-[13px] font-normal uppercase tracking-[0.06em] text-white/40">
+        <p className="mb-6 text-center text-[13px] font-medium uppercase tracking-[0.1em] text-slate-500">
           Compatible con las herramientas que ya usas
         </p>
 
@@ -51,8 +51,8 @@ export function LatticeTrustBar() {
                 key={`${name}-${i}`}
                 className="group flex shrink-0 items-center gap-2 cursor-default"
               >
-                <Icon className="h-6 w-6 text-white/40 transition-all duration-200 group-hover:text-white md:h-8 md:w-8" />
-                <span className="hidden text-xs font-medium text-white/40 transition-colors duration-200 group-hover:text-white sm:inline">
+                <Icon className="h-6 w-6 text-slate-400 transition-all duration-200 group-hover:text-slate-900 md:h-7 md:w-7" />
+                <span className="hidden text-xs font-medium text-slate-500 transition-colors duration-200 group-hover:text-slate-900 sm:inline">
                   {name}
                 </span>
               </div>

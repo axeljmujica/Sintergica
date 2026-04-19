@@ -9,7 +9,10 @@ const VERTICALS = [
     id: "legal",
     label: "Legal",
     icon: Scale,
-    activeClasses: "border-[#8B5CF6]/20 bg-[#8B5CF6]/10 text-[#8B5CF6]",
+    activeClasses: "border-[#8B5CF6]/40 bg-[#8B5CF6]/10 text-[#8B5CF6]",
+    tint: "from-[#F5F3FF] to-[#FAF5FF]",
+    accent: "text-[#8B5CF6]",
+    ring: "ring-[#8B5CF6]/20",
     description:
       "Revisa contratos en minutos, detecta cláusulas de riesgo, compara versiones y genera borradores fundamentados en legislación mexicana vigente. El modelo cita el artículo exacto — no inventa.",
     metrics: [
@@ -22,7 +25,10 @@ const VERTICALS = [
     id: "gobierno",
     label: "Gobierno",
     icon: Building2,
-    activeClasses: "border-[#06B6D4]/20 bg-[#06B6D4]/10 text-[#06B6D4]",
+    activeClasses: "border-[#06B6D4]/40 bg-[#06B6D4]/10 text-[#06B6D4]",
+    tint: "from-[#ECFEFF] to-[#F0F9FF]",
+    accent: "text-[#06B6D4]",
+    ring: "ring-[#06B6D4]/20",
     description:
       "Cumplimiento LGTAIP documentado. Despliegue en territorio nacional. Audit trail inmutable. Lattice es elegible para licitación pública — los modelos globales no lo son.",
     metrics: [
@@ -35,7 +41,10 @@ const VERTICALS = [
     id: "logistica",
     label: "Logística",
     icon: Truck,
-    activeClasses: "border-[#F59E0B]/20 bg-[#F59E0B]/10 text-[#F59E0B]",
+    activeClasses: "border-[#F59E0B]/40 bg-[#F59E0B]/10 text-[#F59E0B]",
+    tint: "from-[#FFFBEB] to-[#FEF3C7]",
+    accent: "text-[#F59E0B]",
+    ring: "ring-[#F59E0B]/20",
     description:
       "Clasifica aranceles, genera pedimentos, detecta errores documentales y monitorea cadenas de suministro — con conocimiento de las regulaciones aduaneras de México y LATAM.",
     metrics: [
@@ -48,7 +57,10 @@ const VERTICALS = [
     id: "financiero",
     label: "Financiero",
     icon: Landmark,
-    activeClasses: "border-[#3B82F6]/20 bg-[#3B82F6]/10 text-[#3B82F6]",
+    activeClasses: "border-[#3B82F6]/40 bg-[#3B82F6]/10 text-[#3B82F6]",
+    tint: "from-[#EEF4FF] to-[#F0F9FF]",
+    accent: "text-[#3B82F6]",
+    ring: "ring-[#3B82F6]/20",
     description:
       "Detección de operaciones atípicas, aceleración de KYC/KYB, cumplimiento de circulares CNBV y análisis de riesgo — sin que los datos salgan de tu infraestructura.",
     metrics: [
@@ -61,7 +73,10 @@ const VERTICALS = [
     id: "salud",
     label: "Salud",
     icon: HeartPulse,
-    activeClasses: "border-[#10B981]/20 bg-[#10B981]/10 text-[#10B981]",
+    activeClasses: "border-[#10B981]/40 bg-[#10B981]/10 text-[#10B981]",
+    tint: "from-[#ECFDF5] to-[#F0FDF4]",
+    accent: "text-[#10B981]",
+    ring: "ring-[#10B981]/20",
     description:
       "Documentación clínica automatizada, codificación de diagnósticos, asistencia en notas de evolución y cumplimiento COFEPRIS — con trazabilidad completa de acceso a expedientes.",
     metrics: [
@@ -74,7 +89,10 @@ const VERTICALS = [
     id: "energia",
     label: "Energía",
     icon: Zap,
-    activeClasses: "border-[#EAB308]/20 bg-[#EAB308]/10 text-[#EAB308]",
+    activeClasses: "border-[#EAB308]/40 bg-[#EAB308]/10 text-[#EAB308]",
+    tint: "from-[#FEFCE8] to-[#FEF9C3]",
+    accent: "text-[#EAB308]",
+    ring: "ring-[#EAB308]/20",
     description:
       "Análisis de contratos de suministro, monitoreo regulatorio CRE, reporteo ESG automatizado y optimización operativa para generadores, distribuidores y comercializadores.",
     metrics: [
@@ -98,7 +116,7 @@ export function LatticeProVerticals() {
     <LazyMotion features={domAnimation}>
       <section
         ref={ref}
-        className="relative bg-[#040615] py-24 lg:py-32"
+        className="relative bg-white py-24 lg:py-32"
         aria-label="Verticales de Lattice"
       >
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -107,13 +125,18 @@ export function LatticeProVerticals() {
             initial={shouldReduce ? false : { opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="mx-auto max-w-[640px] text-center"
+            className="mx-auto max-w-[680px] text-center"
           >
-            <h2 className="font-gilroy text-3xl font-bold text-white md:text-4xl lg:text-5xl">
+            <span className="inline-block rounded-full border border-slate-200 bg-slate-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-slate-500">
+              Verticales
+            </span>
+            <h2 className="mt-5 font-proxima text-3xl font-bold text-slate-900 md:text-4xl lg:text-5xl">
               Inteligencia que entiende tu industria
             </h2>
-            <p className="mt-6 text-lg leading-relaxed text-white/65">
-              Lattice incluye modelos Seeb — Small Language Models especializados por sector, entrenados en normativa, terminología y procesos reales de cada vertical. No es un modelo genérico intentando ser experto. Es un modelo que ya lo es.
+            <p className="mt-6 text-lg leading-relaxed text-slate-600">
+              Lattice incluye modelos Seeb — Small Language Models especializados por sector,
+              entrenados en normativa, terminología y procesos reales de cada vertical. No es un
+              modelo genérico intentando ser experto. Es un modelo que ya lo es.
             </p>
           </m.div>
 
@@ -134,7 +157,7 @@ export function LatticeProVerticals() {
                   className={`relative inline-flex items-center rounded-full border px-4 py-1.5 text-xs font-semibold uppercase tracking-widest transition-all duration-200 ${
                     isActive
                       ? activeClasses
-                      : "border-white/[0.08] bg-white/[0.02] text-white/40 hover:border-white/20 hover:text-white"
+                      : "border-slate-200 bg-white text-slate-500 hover:border-slate-300 hover:text-slate-900"
                   }`}
                 >
                   {label}
@@ -155,7 +178,7 @@ export function LatticeProVerticals() {
             >
               {/* Left: text + metrics */}
               <div>
-                <p className="text-base leading-relaxed text-white/65">
+                <p className="text-base leading-relaxed text-slate-600">
                   {active.description}
                 </p>
 
@@ -164,12 +187,12 @@ export function LatticeProVerticals() {
                   {active.metrics.map((metric) => (
                     <div
                       key={metric.label}
-                      className="rounded-xl bg-[#006EFA]/[0.06] px-5 py-4"
+                      className="rounded-xl border border-slate-200 bg-slate-50 px-5 py-4"
                     >
-                      <span className="block text-[28px] font-bold leading-none text-[#006EFA]">
+                      <span className={`block text-[28px] font-bold leading-none ${active.accent}`}>
                         {metric.value}
                       </span>
-                      <span className="mt-1.5 block text-sm text-white/60">
+                      <span className="mt-1.5 block text-sm text-slate-600">
                         {metric.label}
                       </span>
                     </div>
@@ -177,11 +200,38 @@ export function LatticeProVerticals() {
                 </div>
               </div>
 
-              {/* Right: mockup placeholder */}
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl border border-white/[0.08] bg-[#111118] shadow-[0_16px_32px_rgba(0,0,0,0.3)]">
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-white/20">
-                  <ActiveIcon className="h-12 w-12" />
-                  <span className="max-w-[220px] text-center text-sm font-medium">
+              {/* Right: mockup */}
+              <div
+                className={`relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-gradient-to-br ${active.tint} shadow-[0_20px_40px_-16px_rgba(15,23,42,0.15)] ring-1 ${active.ring}`}
+              >
+                {/* Grid pattern */}
+                <svg
+                  aria-hidden="true"
+                  className="absolute inset-0 h-full w-full text-slate-900/[0.04]"
+                >
+                  <defs>
+                    <pattern
+                      id={`verticals-grid-${active.id}`}
+                      width="32"
+                      height="32"
+                      patternUnits="userSpaceOnUse"
+                    >
+                      <path
+                        d="M 32 0 L 0 0 0 32"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1"
+                      />
+                    </pattern>
+                  </defs>
+                  <rect width="100%" height="100%" fill={`url(#verticals-grid-${active.id})`} />
+                </svg>
+
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-md ring-1 ring-slate-200">
+                    <ActiveIcon className={`h-7 w-7 ${active.accent}`} />
+                  </div>
+                  <span className="max-w-[240px] text-center text-sm font-medium text-slate-500">
                     {active.mockupLabel}
                   </span>
                 </div>

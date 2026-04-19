@@ -9,6 +9,7 @@ import { LatticeCapabilities } from "@/components/soluciones/lattice/LatticeCapa
 import { LatticeProVerticals } from "@/components/soluciones/lattice/LatticeProVerticals";
 import { LatticeGovernance } from "@/components/soluciones/lattice/LatticeGovernance";
 import { LatticeComparison } from "@/components/soluciones/lattice/LatticeComparison";
+import { LatticeSecurity16 } from "@/components/soluciones/lattice/LatticeSecurity16";
 import { LatticeModels } from "@/components/soluciones/lattice/LatticeModels";
 import { LatticeCTA } from "@/components/soluciones/lattice/LatticeCTA";
 
@@ -69,7 +70,7 @@ const latticeSchema = {
 
 export default function LatticePage() {
   return (
-    <div className="min-h-screen bg-[#040615]">
+    <div className="min-h-screen bg-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(latticeSchema) }}
@@ -83,6 +84,7 @@ export default function LatticePage() {
         <div id="capacidades"><LatticeCapabilities /></div>
         <div id="verticales"><LatticeProVerticals /></div>
         <div id="seguridad"><LatticeGovernance /></div>
+        <div id="seguridad-capas"><LatticeSecurity16 /></div>
         <div id="comparativa"><LatticeComparison /></div>
         <div id="modelos"><LatticeModels /></div>
         <LatticeCTA />
