@@ -501,7 +501,7 @@ function FineTuningHero({ t }: { t: (typeof T)[keyof typeof T] }) {
       {/* Background image */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <Image
-          src="/images/ai-cloud-concept-with-lit-brain.jpg"
+          src="/images/fine-tuning-hero.jpg"
           alt=""
           fill
           priority
