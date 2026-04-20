@@ -1,255 +1,562 @@
 "use client";
 
-import { m, LazyMotion, domAnimation } from "motion/react";
-import { ArrowRight, Megaphone, Target, PenTool, BarChart3, Users, Sparkles } from "lucide-react";
+import { useRef } from "react";
+import { LazyMotion, domAnimation, m, useInView, useReducedMotion } from "motion/react";
+import {
+  Megaphone,
+  Target,
+  PenTool,
+  BarChart3,
+  Users,
+  Sparkles,
+  Check,
+  X,
+  Search,
+  Wand2,
+  Rocket,
+  LineChart,
+} from "lucide-react";
 import Link from "next/link";
-import { BackgroundBeams } from "@/components/ui/background-beams";
+import { PageHero } from "@/components/shared/PageHero";
+import { SectionHeader } from "@/components/shared/SectionHeader";
 import { CTASection } from "@/components/shared/CTASection";
-import { useLocale } from "@/i18n/DictionaryProvider";
 
-const T = {
-  es: {
-    heroBadge: "Marketing As A Service (MaaS)",
-    heroTitle: "Marketing Impulsado por ",
-    heroTitleHighlight: "Inteligencia Agéntica",
-    heroDesc: "Transformamos tu estrategia comercial con agentes de IA autónomos. Desde la gestión hiper-personalizada de campañas y captación de leads con SalesHub, hasta la generación de diseño gráfico a escala.",
-    ctaPrimary: "Impulsar mi Marketing",
-    ctaSecondary: "Conocer SalesHub",
-    featuresTitle: "El Ecosistema Completo de Marketing y Ventas",
-    featuresDesc: "Desplegamos infraestructura de IA de extremo a extremo para acelerar tu crecimiento, optimizar la conversión y escalar la creación de contenido.",
-    features: [
-      { title: "SalesHub Inteligente", desc: "Plataforma core para la captación, cualificación y automatización de seguimiento de leads 24/7 mediante agentes conversacionales avanzados." },
-      { title: "Agentes de Campañas", desc: "Sistemas autónomos que optimizan el presupuesto publicitario, ajustan el copy en tiempo real y segmentan audiencias con precisión microscópica." },
-      { title: "Diseño Gráfico Generativo", desc: "Generación de activos visuales on-brand a escala. Variaciones instantáneas para A/B testing adaptadas a cada canal y segmento." },
-      { title: "Personalización Masiva", desc: "Comunicación outbound adaptada al contexto individual de cada prospecto, incrementando radicalmente las tasas de respuesta." },
-      { title: "Analítica Predictiva", desc: "Modelos que anticipan la propensión de compra y el Life Time Value (LTV), sugiriendo la mejor siguiente acción para tu equipo de ventas." },
-      { title: "Contenido SEO Automatizado", desc: "Redacción técnica y blogs optimizados creados por IA ajustada a la voz de tu marca, posicionando a tu empresa como líder del sector." },
-    ],
-    ctaTitle: "Acelera tu crecimiento con agentes de marketing",
-    ctaDesc: "Integra ventas, creatividad y analítica en un solo flujo impulsado por inteligencia artificial agéntica.",
-    ctaButton: "Consultar sobre MaaS",
-  },
-  en: {
-    heroBadge: "Marketing As A Service (MaaS)",
-    heroTitle: "Marketing Powered by ",
-    heroTitleHighlight: "Agentic Intelligence",
-    heroDesc: "We transform your commercial strategy with autonomous AI agents. From hyper-personalized campaign management and lead capture with SalesHub, to graphic design generation at scale.",
-    ctaPrimary: "Boost my Marketing",
-    ctaSecondary: "Discover SalesHub",
-    featuresTitle: "The Complete Marketing & Sales Ecosystem",
-    featuresDesc: "We deploy end-to-end AI infrastructure to accelerate your growth, optimize conversion, and scale content creation.",
-    features: [
-      { title: "Intelligent SalesHub", desc: "Core platform for 24/7 lead capture, qualification, and follow-up automation through advanced conversational agents." },
-      { title: "Campaign Agents", desc: "Autonomous systems that optimize ad spend, adjust copy in real time, and segment audiences with microscopic precision." },
-      { title: "Generative Graphic Design", desc: "On-brand visual asset generation at scale. Instant variations for A/B testing adapted to each channel and segment." },
-      { title: "Mass Personalization", desc: "Outbound communication adapted to the individual context of each prospect, radically increasing response rates." },
-      { title: "Predictive Analytics", desc: "Models that anticipate purchase propensity and Life Time Value (LTV), suggesting the best next action for your sales team." },
-      { title: "Automated SEO Content", desc: "Technical writing and optimized blogs created by AI tuned to your brand voice, positioning your company as an industry leader." },
-    ],
-    ctaTitle: "Accelerate your growth with marketing agents",
-    ctaDesc: "Integrate sales, creativity, and analytics into a single flow powered by agentic artificial intelligence.",
-    ctaButton: "Inquire about MaaS",
-  },
-  "pt-br": {
-    heroBadge: "Marketing As A Service (MaaS)",
-    heroTitle: "Marketing Impulsionado por ",
-    heroTitleHighlight: "Inteligência Agêntica",
-    heroDesc: "Transformamos sua estratégia comercial com agentes de IA autônomos. Desde a gestão hiperpersonalizada de campanhas e captação de leads com SalesHub, até a geração de design gráfico em escala.",
-    ctaPrimary: "Impulsionar meu Marketing",
-    ctaSecondary: "Conhecer SalesHub",
-    featuresTitle: "O Ecossistema Completo de Marketing e Vendas",
-    featuresDesc: "Implantamos infraestrutura de IA de ponta a ponta para acelerar seu crescimento, otimizar a conversão e escalar a criação de conteúdo.",
-    features: [
-      { title: "SalesHub Inteligente", desc: "Plataforma central para captação, qualificação e automação de acompanhamento de leads 24/7 por meio de agentes conversacionais avançados." },
-      { title: "Agentes de Campanhas", desc: "Sistemas autônomos que otimizam o orçamento publicitário, ajustam o copy em tempo real e segmentam audiências com precisão microscópica." },
-      { title: "Design Gráfico Generativo", desc: "Geração de ativos visuais on-brand em escala. Variações instantâneas para testes A/B adaptadas a cada canal e segmento." },
-      { title: "Personalização Massiva", desc: "Comunicação outbound adaptada ao contexto individual de cada prospecto, aumentando radicalmente as taxas de resposta." },
-      { title: "Analítica Preditiva", desc: "Modelos que antecipam a propensão de compra e o Life Time Value (LTV), sugerindo a melhor próxima ação para sua equipe de vendas." },
-      { title: "Conteúdo SEO Automatizado", desc: "Redação técnica e blogs otimizados criados por IA ajustada à voz da sua marca, posicionando sua empresa como líder do setor." },
-    ],
-    ctaTitle: "Acelere seu crescimento com agentes de marketing",
-    ctaDesc: "Integre vendas, criatividade e analítica em um único fluxo impulsionado por inteligência artificial agêntica.",
-    ctaButton: "Consultar sobre MaaS",
-  },
-} as const;
+const HERO = {
+  badge: "Marketing as a Service",
+  title: "Marketing impulsado por agentes de IA, no por plantillas.",
+  subtitle:
+    "Captación, contenido, campañas y analítica en un solo flujo operado por inteligencia agéntica. Tu equipo se enfoca en estrategia; los agentes ejecutan a escala.",
+  ctaLabel: "Agendar diagnóstico",
+  trustSignals: [
+    "Kickoff en 1 semana",
+    "Sin permanencia",
+    "Precios en MXN, sin sorpresas",
+  ],
+};
 
-const FEATURES_BASE = [
-  { icon: Target },
-  { icon: Megaphone },
-  { icon: PenTool },
-  { icon: Users },
-  { icon: BarChart3 },
-  { icon: Sparkles },
+const PROBLEMS = [
+  {
+    icon: Users,
+    title: "Equipo de marketing rebasado",
+    description:
+      "Tres personas haciendo el trabajo de diez. Copy, diseño, pauta, reportes, nurturing — todo compite por el mismo tiempo y casi nada se hace con calidad.",
+  },
+  {
+    icon: BarChart3,
+    title: "Costo por lead que no baja",
+    description:
+      "Gastas más en Meta y Google cada trimestre, pero el CAC crece y la conversión se estanca. No hay tiempo para iterar creativos ni para optimizar audiencias.",
+  },
+  {
+    icon: PenTool,
+    title: "Contenido irregular",
+    description:
+      "Publicas tres semanas seguidas y luego desapareces un mes. SEO, redes y email compiten contra prioridades operativas que siempre ganan.",
+  },
+  {
+    icon: Target,
+    title: "Pipeline sin seguimiento",
+    description:
+      "Los leads entran, pero nadie los califica a tiempo. El que responde rápido gana; tú respondes tarde y pierdes deals que ya eran tuyos.",
+  },
+];
+
+const AI_CAPABILITIES = [
+  {
+    icon: Sparkles,
+    title: "Creación de contenido a escala",
+    description:
+      "Blogs, landings, emails, anuncios, posts y guiones de video generados con modelos ajustados a la voz de tu marca — no genéricos.",
+  },
+  {
+    icon: Wand2,
+    title: "Diseño generativo on-brand",
+    description:
+      "Variantes visuales para cada canal y audiencia en horas, no semanas. A/B testing real con suficiente volumen para aprender.",
+  },
+  {
+    icon: Target,
+    title: "Campañas optimizadas 24/7",
+    description:
+      "Agentes que ajustan copy, presupuesto y segmentación en tiempo real según métricas, no según el calendario de tu agencia.",
+  },
+  {
+    icon: Megaphone,
+    title: "Outbound hiper-personalizado",
+    description:
+      "Secuencias de email y LinkedIn adaptadas al contexto de cada prospecto. Tasa de respuesta real, no plantillas disfrazadas.",
+  },
+  {
+    icon: LineChart,
+    title: "Analítica y reporting continuo",
+    description:
+      "Un dashboard con lo que importa: CAC, LTV, pipeline por canal, ROAS. Cerrado con lectura semanal, no con un PDF trimestral.",
+  },
+  {
+    icon: Rocket,
+    title: "Nurturing con SalesHub",
+    description:
+      "Captación, calificación y seguimiento 24/7 en un CRM integrado. Los leads ya no se enfrían mientras duermes.",
+  },
+];
+
+const PLANS = [
+  {
+    name: "MaaS Starter",
+    price: "$17,900",
+    period: "MXN / mes",
+    tagline: "Para PyMEs que quieren presencia consistente.",
+    highlight: false,
+    features: [
+      "8 piezas de contenido al mes (blog, redes, email)",
+      "1 campaña activa en Meta o Google",
+      "Diseño generativo para 1 canal",
+      "Dashboard con métricas base",
+      "Reunión de lectura mensual",
+    ],
+  },
+  {
+    name: "MaaS Pro",
+    price: "$35,800",
+    period: "MXN / mes",
+    tagline: "Para empresas que quieren crecimiento medible.",
+    highlight: true,
+    features: [
+      "20 piezas de contenido al mes, multi-formato",
+      "3 campañas activas + optimización continua",
+      "Diseño generativo multi-canal + A/B testing",
+      "SalesHub configurado con nurturing y scoring",
+      "Outbound personalizado hasta 500 contactos",
+      "Dashboard completo + lectura quincenal",
+    ],
+  },
+  {
+    name: "MaaS Business",
+    price: "$89,600",
+    period: "MXN / mes",
+    tagline: "Para operaciones con pipeline grande y múltiples mercados.",
+    highlight: false,
+    features: [
+      "Contenido ilimitado dentro del scope definido",
+      "Campañas multi-mercado y multi-idioma",
+      "Diseño generativo enterprise con guidelines",
+      "SalesHub + integraciones a tu stack actual",
+      "Outbound hasta 5,000 contactos al mes",
+      "Agente dedicado + lectura semanal",
+      "Modelos ajustados a tu voz de marca",
+    ],
+  },
+];
+
+const INCLUDED_ALWAYS = [
+  "Onboarding guiado y brief estratégico",
+  "Acceso al dashboard en tiempo real",
+  "Modelos de IA operados por Sintérgica",
+  "Soporte por email y chat",
+  "Propiedad total de tu contenido y datos",
+];
+
+const PROCESS_WEEKS = [
+  {
+    week: "Semana 1",
+    icon: Search,
+    title: "Discovery y brief",
+    description:
+      "Entendemos tu oferta, ICP, canales actuales y métricas. Definimos el plan editorial y los KPIs que mueven tu negocio.",
+  },
+  {
+    week: "Semana 2",
+    icon: Wand2,
+    title: "Setup y calibración",
+    description:
+      "Configuramos los agentes a tu voz de marca, conectamos SalesHub, tu CRM y tus plataformas de pauta. Primeras piezas para aprobación.",
+  },
+  {
+    week: "Semana 3",
+    icon: Rocket,
+    title: "Lanzamiento",
+    description:
+      "Campañas al aire, contenido publicando, outbound en marcha. Dashboard activo con datos en vivo.",
+  },
+  {
+    week: "Semana 4",
+    icon: LineChart,
+    title: "Lectura y optimización",
+    description:
+      "Primera reunión de resultados. Ajustes de audiencia, creativos y secuencias basados en datos reales, no en corazonadas.",
+  },
+];
+
+const INCLUDED = [
+  "Contenido creado por agentes + curaduría humana",
+  "Diseño generativo con guidelines de tu marca",
+  "Gestión y optimización de campañas pagadas",
+  "CRM con nurturing y scoring automatizado",
+  "Dashboard de métricas y reuniones de lectura",
+  "Propiedad de todo el contenido generado",
+];
+
+const NOT_INCLUDED = [
+  "Presupuesto de pauta (se paga directo a las plataformas)",
+  "Licencias de herramientas externas no listadas",
+  "Producción de video profesional en locación",
+  "Eventos presenciales y activaciones BTL",
+  "Desarrollo de sitio web completo (ver Desarrollo a Medida)",
+];
+
+const AUDIENCES = [
+  {
+    icon: Rocket,
+    title: "Startups en etapa de crecimiento",
+    description:
+      "Tienes producto validado y necesitas volumen de leads consistente sin contratar un equipo de marketing completo.",
+  },
+  {
+    icon: Users,
+    title: "PyMEs con equipos pequeños",
+    description:
+      "Tu equipo de marketing son una o dos personas que no alcanzan a cubrir todos los frentes. MaaS se vuelve una extensión operativa.",
+  },
+  {
+    icon: BarChart3,
+    title: "Empresas con pipeline B2B",
+    description:
+      "Ventas consultivas con ciclos largos donde el nurturing, el contenido técnico y el outbound personalizado mueven la aguja.",
+  },
 ];
 
 export function MaaSContent() {
-  const locale = useLocale();
-  const t = T[locale] ?? T.es;
+  const shouldReduce = useReducedMotion();
+
+  const probRef = useRef<HTMLDivElement>(null);
+  const probInView = useInView(probRef, { once: true, margin: "-80px" });
+  const aiRef = useRef<HTMLDivElement>(null);
+  const aiInView = useInView(aiRef, { once: true, margin: "-80px" });
+  const plansRef = useRef<HTMLDivElement>(null);
+  const plansInView = useInView(plansRef, { once: true, margin: "-80px" });
+  const processRef = useRef<HTMLDivElement>(null);
+  const processInView = useInView(processRef, { once: true, margin: "-80px" });
+  const audRef = useRef<HTMLDivElement>(null);
+  const audInView = useInView(audRef, { once: true, margin: "-80px" });
 
   return (
     <LazyMotion features={domAnimation}>
-      <div className="relative overflow-hidden pt-32 pb-20 lg:pt-48 lg:pb-32 bg-brand-surface dark:bg-brand-midnight">
-        {/* Abstract Background Elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-[800px] h-[800px] rounded-full bg-brand-accent/5 dark:bg-brand-accent/10 blur-[120px] mix-blend-multiply dark:mix-blend-screen opacity-70 animate-float" />
-          <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] rounded-full bg-rose-500/5 dark:bg-rose-500/10 blur-[100px] mix-blend-multiply dark:mix-blend-screen opacity-50 animate-float" style={{ animationDelay: "2s" }} />
-          <div className="absolute inset-0 dot-grid opacity-30 dark:opacity-20" />
-          <BackgroundBeams className="opacity-20 dark:opacity-40" />
-        </div>
+      <>
+        <PageHero
+          badge={HERO.badge}
+          title={HERO.title}
+          subtitle={HERO.subtitle}
+          bgImage="/images/121725.jpg"
+          bgImageAlt="Marketing as a Service con IA agéntica"
+          ctaLabel={HERO.ctaLabel}
+          ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+          ctaSecondaryLabel="Ver planes"
+          ctaSecondaryHref="#planes"
+          trustSignals={HERO.trustSignals}
+        />
 
-        <div className="relative mx-auto max-w-[1400px] px-6 lg:px-8">
-          <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
-            {/* Left Content */}
-            <div className="max-w-2xl">
-              <m.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="inline-flex items-center gap-2 rounded-full border border-brand-midnight/10 bg-brand-white/50 px-3 py-1 text-sm font-medium text-brand-midnight backdrop-blur-md dark:border-brand-white/10 dark:bg-brand-white/5 dark:text-brand-white"
-              >
-                <Megaphone className="h-4 w-4 text-brand-accent" />
-                <span>{t.heroBadge}</span>
-              </m.div>
-
-              <m.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="mt-6 font-proxima text-5xl font-extrabold tracking-tight text-brand-midnight dark:text-brand-white sm:text-6xl lg:text-7xl"
-              >
-                {t.heroTitle}{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-rose-500 dark:from-brand-accent dark:to-rose-400">
-                  {t.heroTitleHighlight}
-                </span>
-              </m.h1>
-
-              <m.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="mt-6 text-lg leading-relaxed text-brand-midnight/70 dark:text-brand-white/70"
-              >
-                {t.heroDesc}
-              </m.p>
-
-              <m.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="mt-10 flex flex-wrap gap-4"
-              >
-                <Link
-                  href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
-                  className="btn-glow inline-flex items-center gap-2 rounded-full bg-brand-accent px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-brand-accent/90"
+        {/* Qué problema resuelve */}
+        <section className="bg-brand-surface dark:bg-brand-midnight py-24 px-6">
+          <div className="mx-auto max-w-6xl">
+            <SectionHeader
+              badge="Qué problema resuelve"
+              title="Marketing que no crece porque el equipo no alcanza."
+              subtitle="La mayoría de los equipos de marketing en México no tienen un problema de estrategia. Tienen un problema de ejecución: demasiados canales, muy poca gente, y herramientas que no hablan entre sí."
+              centered
+            />
+            <div ref={probRef} className="mt-14 grid gap-6 md:grid-cols-2">
+              {PROBLEMS.map(({ icon: Icon, title, description }, i) => (
+                <m.div
+                  key={title}
+                  initial={shouldReduce ? false : { opacity: 0, y: 16 }}
+                  animate={probInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: i * 0.08 }}
+                  className="rounded-2xl border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-white dark:bg-brand-deep p-8 transition-colors hover:border-brand-accent/30"
                 >
-                  {t.ctaPrimary} <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  href="/soluciones/saleshub"
-                  className="inline-flex items-center gap-2 rounded-full border border-brand-midnight/10 bg-brand-white/50 px-6 py-3 text-sm font-semibold text-brand-midnight backdrop-blur-md transition-all hover:bg-brand-midnight/5 dark:border-brand-white/10 dark:bg-brand-white/5 dark:text-brand-white dark:hover:bg-brand-white/10"
+                  <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-accent/10 text-brand-accent">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="font-proxima text-lg font-semibold text-brand-midnight dark:text-brand-white">
+                    {title}
+                  </h3>
+                  <p className="mt-3 text-[15px] leading-relaxed text-brand-midnight/65 dark:text-brand-white/65">
+                    {description}
+                  </p>
+                </m.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Qué hace la IA aquí */}
+        <section className="bg-brand-surface dark:bg-brand-deep py-24 px-6">
+          <div className="mx-auto max-w-6xl">
+            <SectionHeader
+              badge="Qué hace la IA aquí"
+              title="Seis capacidades que operan de forma continua."
+              subtitle="No es automatización superficial. Son agentes con acceso a tu contexto, tus guidelines y tus métricas."
+              centered
+            />
+            <div ref={aiRef} className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {AI_CAPABILITIES.map(({ icon: Icon, title, description }, i) => (
+                <m.div
+                  key={title}
+                  initial={shouldReduce ? false : { opacity: 0, y: 16 }}
+                  animate={aiInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: i * 0.08 }}
+                  className="group rounded-2xl border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-white dark:bg-brand-midnight p-8 transition-all hover:-translate-y-1 hover:border-brand-accent/30 hover:shadow-lg"
                 >
-                  {t.ctaSecondary}
-                </Link>
-              </m.div>
+                  <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-accent/10 text-brand-accent">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="font-proxima text-lg font-semibold text-brand-midnight dark:text-brand-white">
+                    {title}
+                  </h3>
+                  <p className="mt-3 text-[14px] leading-relaxed text-brand-midnight/65 dark:text-brand-white/65">
+                    {description}
+                  </p>
+                </m.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Planes */}
+        <section id="planes" className="bg-brand-surface dark:bg-brand-midnight py-24 px-6">
+          <div className="mx-auto max-w-6xl">
+            <SectionHeader
+              badge="Planes"
+              title="Tres niveles. Precio claro. Sin permanencia."
+              subtitle="Empiezas donde tu operación lo requiera y escalas cuando los números lo justifiquen."
+              centered
+            />
+            <div ref={plansRef} className="mt-14 grid gap-6 lg:grid-cols-3">
+              {PLANS.map((plan, i) => (
+                <m.div
+                  key={plan.name}
+                  initial={shouldReduce ? false : { opacity: 0, y: 16 }}
+                  animate={plansInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className={`relative flex flex-col rounded-2xl border p-8 ${
+                    plan.highlight
+                      ? "border-brand-accent bg-brand-white dark:bg-brand-deep shadow-xl shadow-brand-accent/10"
+                      : "border-brand-midnight/10 dark:border-brand-white/10 bg-brand-white dark:bg-brand-deep"
+                  }`}
+                >
+                  {plan.highlight && (
+                    <span className="absolute -top-3 left-8 inline-flex items-center rounded-full bg-brand-accent px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wider text-white">
+                      Más elegido
+                    </span>
+                  )}
+                  <h3 className="font-proxima text-xl font-bold text-brand-midnight dark:text-brand-white">
+                    {plan.name}
+                  </h3>
+                  <p className="mt-2 text-sm text-brand-midnight/60 dark:text-brand-white/60">
+                    {plan.tagline}
+                  </p>
+                  <div className="mt-6 flex items-baseline gap-2">
+                    <span className="font-proxima text-4xl font-extrabold text-brand-midnight dark:text-brand-white">
+                      {plan.price}
+                    </span>
+                    <span className="text-sm text-brand-midnight/50 dark:text-brand-white/50">
+                      {plan.period}
+                    </span>
+                  </div>
+                  <ul className="mt-8 flex-1 space-y-3">
+                    {plan.features.map((f) => (
+                      <li key={f} className="flex items-start gap-3 text-sm text-brand-midnight/75 dark:text-brand-white/75">
+                        <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-accent" />
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+                    className={`mt-8 inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold transition-all ${
+                      plan.highlight
+                        ? "bg-brand-accent text-white shadow-lg shadow-brand-accent/25 hover:bg-brand-400"
+                        : "border border-brand-midnight/15 text-brand-midnight hover:bg-brand-midnight/5 dark:border-brand-white/15 dark:text-brand-white dark:hover:bg-brand-white/5"
+                    }`}
+                  >
+                    Agendar diagnóstico
+                  </Link>
+                </m.div>
+              ))}
             </div>
 
-            {/* Right Graphic/Illustration */}
-            <m.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative lg:ml-auto w-full max-w-lg"
-            >
-              <div className="relative aspect-square w-full rounded-2xl overflow-hidden glass dark:glass p-8 flex flex-col justify-between">
-                <div className="absolute inset-0 bg-gradient-to-br from-brand-accent/10 to-rose-500/10 mix-blend-overlay"></div>
-
-                <div className="relative z-10 flex justify-between items-start">
-                  <div className="bg-brand-white dark:bg-brand-midnight rounded-xl p-4 shadow-lg border border-brand-midnight/10 dark:border-brand-white/10">
-                    <Target className="h-8 w-8 text-brand-accent" />
-                  </div>
-                  <div className="bg-brand-white dark:bg-brand-midnight rounded-xl p-4 shadow-lg border border-brand-midnight/10 dark:border-brand-white/10">
-                    <PenTool className="h-8 w-8 text-rose-500" />
-                  </div>
-                </div>
-
-                <div className="relative z-10 self-center">
-                  <div className="relative flex h-32 w-32 items-center justify-center rounded-full bg-gradient-to-br from-brand-accent to-rose-500 shadow-2xl shadow-brand-accent/30 animate-float">
-                    <div className="absolute inset-1 rounded-full bg-brand-surface dark:bg-brand-midnight m-[2px]" />
-                    <Sparkles className="relative h-12 w-12 text-brand-accent dark:text-brand-white" />
-
-                    {/* Orbiting particles */}
-                    <div className="absolute inset-0 animate-[spin_8s_linear_infinite]">
-                      <div className="absolute -top-2 left-1/2 h-4 w-4 -translate-x-1/2 rounded-full bg-brand-accent shadow-[0_0_15px_rgba(54,101,245,0.8)]" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="relative z-10 flex justify-between items-end">
-                  <div className="bg-brand-white dark:bg-brand-midnight rounded-xl p-4 shadow-lg border border-brand-midnight/10 dark:border-brand-white/10">
-                    <Users className="h-8 w-8 text-emerald-500" />
-                  </div>
-                  <div className="bg-brand-white dark:bg-brand-midnight rounded-xl p-4 shadow-lg border border-brand-midnight/10 dark:border-brand-white/10">
-                    <BarChart3 className="h-8 w-8 text-violet-500" />
-                  </div>
-                </div>
-
-                {/* Connecting lines SVG */}
-                <svg className="absolute inset-0 h-full w-full opacity-30 dark:opacity-20 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M 60 60 Q 200 60 200 200" stroke="currentColor" strokeWidth="2" fill="none" strokeDasharray="4 4" className="text-brand-midnight dark:text-brand-white" />
-                  <path d="M 440 60 Q 200 60 200 200" stroke="currentColor" strokeWidth="2" fill="none" strokeDasharray="4 4" className="text-brand-midnight dark:text-brand-white" />
-                  <path d="M 60 440 Q 200 440 200 200" stroke="currentColor" strokeWidth="2" fill="none" strokeDasharray="4 4" className="text-brand-midnight dark:text-brand-white" />
-                  <path d="M 440 440 Q 200 440 200 200" stroke="currentColor" strokeWidth="2" fill="none" strokeDasharray="4 4" className="text-brand-midnight dark:text-brand-white" />
-                </svg>
-              </div>
-            </m.div>
+            <div className="mt-14 rounded-2xl border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-white dark:bg-brand-deep p-8">
+              <h3 className="font-proxima text-lg font-semibold text-brand-midnight dark:text-brand-white">
+                Incluido en todos los planes
+              </h3>
+              <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+                {INCLUDED_ALWAYS.map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-sm text-brand-midnight/75 dark:text-brand-white/75">
+                    <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-accent" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>
-      </div>
+        </section>
 
-      {/* Features Section */}
-      <section className="py-24 bg-brand-white dark:bg-brand-deep relative">
-        <div className="mx-auto max-w-[1400px] px-6 lg:px-8">
-          <div className="mb-16 max-w-3xl">
-            <h2 className="font-proxima text-3xl font-bold text-brand-midnight dark:text-brand-white sm:text-4xl">
-              {t.featuresTitle}
-            </h2>
-            <p className="mt-4 text-lg text-brand-midnight/70 dark:text-brand-white/70">
-              {t.featuresDesc}
+        {/* Cómo funciona */}
+        <section className="bg-brand-surface dark:bg-brand-deep py-24 px-6">
+          <div className="mx-auto max-w-5xl">
+            <SectionHeader
+              badge="Cómo funciona"
+              title="Cuatro semanas del contrato a resultados."
+              centered
+            />
+            <div ref={processRef} className="mt-14 flex flex-col gap-4">
+              {PROCESS_WEEKS.map(({ week, icon: Icon, title, description }, i) => (
+                <m.div
+                  key={title}
+                  initial={shouldReduce ? false : { opacity: 0, x: -16 }}
+                  animate={processInView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className="flex flex-col gap-5 rounded-2xl border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-white dark:bg-brand-midnight p-8 sm:flex-row"
+                >
+                  <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-brand-accent/10 text-brand-accent">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex flex-wrap items-baseline gap-3">
+                      <h3 className="font-proxima text-lg font-semibold text-brand-midnight dark:text-brand-white">
+                        {title}
+                      </h3>
+                      <span className="text-xs font-semibold uppercase tracking-wider text-brand-accent">
+                        {week}
+                      </span>
+                    </div>
+                    <p className="mt-3 text-[15px] leading-relaxed text-brand-midnight/65 dark:text-brand-white/65">
+                      {description}
+                    </p>
+                  </div>
+                </m.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Incluido vs no incluido */}
+        <section className="bg-brand-surface dark:bg-brand-midnight py-24 px-6">
+          <div className="mx-auto max-w-6xl">
+            <SectionHeader
+              badge="Qué está incluido y qué no"
+              title="Transparente desde el primer día."
+              centered
+            />
+            <div className="mt-14 grid gap-6 md:grid-cols-2">
+              <div className="rounded-2xl border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-white dark:bg-brand-deep p-8">
+                <h3 className="font-proxima text-lg font-semibold text-brand-midnight dark:text-brand-white">
+                  Incluido
+                </h3>
+                <ul className="mt-5 space-y-3">
+                  {INCLUDED.map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-sm text-brand-midnight/75 dark:text-brand-white/75">
+                      <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-accent" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="rounded-2xl border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-white dark:bg-brand-deep p-8">
+                <h3 className="font-proxima text-lg font-semibold text-brand-midnight dark:text-brand-white">
+                  No incluido
+                </h3>
+                <ul className="mt-5 space-y-3">
+                  {NOT_INCLUDED.map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-sm text-brand-midnight/75 dark:text-brand-white/75">
+                      <X className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-midnight/40 dark:text-brand-white/40" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Para quién funciona */}
+        <section className="bg-brand-surface dark:bg-brand-deep py-24 px-6">
+          <div className="mx-auto max-w-6xl">
+            <SectionHeader
+              badge="Para quién funciona"
+              title="MaaS no es para todos. Es para estos tres casos."
+              centered
+            />
+            <div ref={audRef} className="mt-14 grid gap-6 md:grid-cols-3">
+              {AUDIENCES.map(({ icon: Icon, title, description }, i) => (
+                <m.div
+                  key={title}
+                  initial={shouldReduce ? false : { opacity: 0, y: 16 }}
+                  animate={audInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className="rounded-2xl border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-white dark:bg-brand-midnight p-8"
+                >
+                  <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-accent/10 text-brand-accent">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="font-proxima text-lg font-semibold text-brand-midnight dark:text-brand-white">
+                    {title}
+                  </h3>
+                  <p className="mt-3 text-[14px] leading-relaxed text-brand-midnight/65 dark:text-brand-white/65">
+                    {description}
+                  </p>
+                </m.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Sobre los resultados */}
+        <section className="bg-brand-surface dark:bg-brand-midnight py-24 px-6">
+          <div className="mx-auto max-w-3xl text-center">
+            <SectionHeader
+              badge="Sobre los resultados"
+              title="Hablamos de rangos, no de garantías."
+              subtitle="Lo que sí podemos asegurar: consistencia en la ejecución, datos reales para decidir y un equipo que no se enferma ni renuncia."
+              centered
+            />
+            <div className="mt-10 grid gap-6 sm:grid-cols-3">
+              {[
+                { metric: "−30 a −60%", label: "Costo por lead" },
+                { metric: "+40 a +80%", label: "Tasa de conversión" },
+                { metric: "5 a 10×", label: "Volumen de contenido" },
+              ].map((r) => (
+                <div
+                  key={r.label}
+                  className="rounded-2xl border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-white dark:bg-brand-deep p-8"
+                >
+                  <div className="font-proxima text-3xl font-extrabold text-brand-accent">
+                    {r.metric}
+                  </div>
+                  <div className="mt-2 text-sm text-brand-midnight/65 dark:text-brand-white/65">
+                    {r.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="mt-8 text-sm text-brand-midnight/55 dark:text-brand-white/55">
+              Rangos observados en clientes activos. Resultados dependen del punto de partida, industria y presupuesto de pauta.
             </p>
           </div>
+        </section>
 
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {FEATURES_BASE.map((base, i) => (
-              <m.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="group relative rounded-2xl border border-brand-midnight/10 bg-brand-surface/50 p-8 transition-all hover:bg-brand-surface dark:border-brand-white/10 dark:bg-brand-midnight/50 dark:hover:bg-brand-midnight"
-              >
-                <div className="mb-6 inline-flex rounded-xl bg-brand-accent/10 p-3 text-brand-accent dark:bg-brand-accent/20">
-                  <base.icon className="h-6 w-6" />
-                </div>
-                <h3 className="mb-3 font-proxima font-semibold text-lg text-brand-midnight dark:text-brand-white">
-                  {t.features[i].title}
-                </h3>
-                <p className="text-sm leading-relaxed text-brand-midnight/70 dark:text-brand-white/70">
-                  {t.features[i].desc}
-                </p>
-              </m.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <CTASection
-        badge="Siguiente paso"
-        title={t.ctaTitle}
-        subtitle={t.ctaDesc}
-        ctaLabel={t.ctaButton}
-        ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
-      />
+        <CTASection
+          badge="Siguiente paso"
+          title="Acelera tu crecimiento con agentes de marketing"
+          subtitle="Una conversación de 45 minutos basta para dimensionar el plan correcto para tu operación."
+          ctaLabel="Agendar diagnóstico"
+          ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+          trustSignals={[
+            "45 minutos, sin costo",
+            "Sin permanencia",
+            "Kickoff en 1 semana",
+          ]}
+        />
+      </>
     </LazyMotion>
   );
 }
