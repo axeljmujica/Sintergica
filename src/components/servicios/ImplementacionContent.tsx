@@ -237,7 +237,7 @@ export function ImplementacionContent() {
           badge={t.hero.badge}
           title={t.hero.title}
           subtitle={t.hero.subtitle}
-          bgImage="/img/sales-dashboard.jpg"
+          bgImage="/images/implementacion-hero.jpg"
           bgImageAlt={t.hero.bgImageAlt}
           ctaLabel={t.hero.ctaLabel}
           ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
@@ -251,7 +251,7 @@ export function ImplementacionContent() {
               <div className="order-2 lg:order-1 relative h-[400px] w-full rounded-2xl overflow-hidden border border-brand-midnight/10 dark:border-brand-white/10 shadow-2xl group">
                 <div className="absolute inset-0 bg-brand-midnight/10 dark:bg-brand-midnight/30 mix-blend-multiply z-10 transition-colors duration-500 group-hover:bg-transparent"></div>
                 <Image
-                  src="/img/sales-dashboard.jpg"
+                  src="/images/121725.jpg"
                   alt={t.intro.imageAlt}
                   fill
                   className="object-cover object-left transition-transform duration-700 group-hover:scale-105"

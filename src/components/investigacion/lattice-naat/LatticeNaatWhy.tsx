@@ -92,14 +92,18 @@ export function LatticeNaatWhy() {
             initial={shouldReduce ? false : { opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ duration: shouldReduce ? 0 : 0.5, delay: 0.6 }}
-            className="mt-10 rounded-2xl border border-brand-accent/30 bg-gradient-to-br from-brand-accent/10 to-purple-500/5 p-6 md:p-8"
+            className="relative mt-10 overflow-hidden rounded-2xl border border-brand-accent/30 bg-gradient-to-br from-[#0A0F1C] via-brand-midnight to-brand-navy p-6 md:p-8"
           >
-            <p className="font-proxima font-bold text-2xl md:text-3xl text-brand-midnight dark:text-brand-white text-balance">
+            <div
+              className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-brand-accent/20 blur-[100px]"
+              aria-hidden
+            />
+            <p className="relative font-proxima font-bold text-2xl md:text-3xl text-white text-balance">
               {c.conclusion}
             </p>
             <Link
               href="/investigacion/sesgo-weird"
-              className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-accent hover:text-brand-accent-light transition-colors"
+              className="relative mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-accent-light hover:text-white transition-colors"
             >
               <BookOpen className="h-4 w-4" />
               Leer la investigación sobre el sesgo WEIRD

@@ -80,6 +80,14 @@ export function LatticeNaatDifferentiators() {
         className="relative overflow-hidden bg-[#0A0F1C] py-24 lg:py-28 px-6"
         aria-label={c.h2}
       >
+        {/* Background image */}
+        <div
+          className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+          style={{ backgroundImage: "url('/images/naat/85.jpg')" }}
+          aria-hidden="true"
+        />
+        {/* Dark overlay on image */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#0A0F1C]/85 via-[#0A0F1C]/75 to-[#0A0F1C]/95" aria-hidden="true" />
         {/* Ambient glows */}
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
           <div className="absolute top-1/4 left-0 w-full md:w-1/2 h-1/2 rounded-full bg-brand-accent/15 blur-[150px]" />
@@ -136,7 +144,7 @@ export function LatticeNaatDifferentiators() {
                   </div>
 
                   {/* Number */}
-                  <p className="mt-6 font-proxima text-xs font-semibold uppercase tracking-[0.2em] text-white/35">
+                  <p className="mt-6 font-proxima text-xs font-semibold uppercase tracking-[0.2em] text-white">
                     {String(i + 1).padStart(2, "0")} · {c.badge.split(" ").slice(-1)[0]}
                   </p>
 

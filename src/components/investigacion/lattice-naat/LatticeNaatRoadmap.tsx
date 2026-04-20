@@ -58,7 +58,7 @@ export function LatticeNaatRoadmap() {
               aria-hidden
             />
 
-            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4 lg:items-stretch">
               {c.milestones.map((ms, i) => {
                 const isCurrent = ms.state === "actual";
                 const isCompleted = ms.state === "completado";
@@ -70,7 +70,7 @@ export function LatticeNaatRoadmap() {
                     initial={shouldReduce ? false : { opacity: 0, y: 28 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: shouldReduce ? 0 : 0.55, delay: i * 0.1 }}
-                    className="relative"
+                    className="relative flex flex-col"
                   >
                     {/* Node marker on spine */}
                     <div className="relative z-10 mb-6 flex items-center lg:justify-start">
@@ -101,9 +101,9 @@ export function LatticeNaatRoadmap() {
 
                     {/* Card */}
                     <div
-                      className={`group relative overflow-hidden rounded-[1.5rem] border p-6 lg:p-7 backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 ${
+                      className={`group relative flex flex-col overflow-hidden rounded-[1.5rem] border p-6 lg:p-7 backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 h-full ${
                         isCurrent
-                          ? "border-brand-accent/40 bg-gradient-to-br from-brand-accent/15 via-white/[0.05] to-white/[0.02] hover:border-brand-accent/60"
+                          ? "border-brand-accent bg-gradient-to-br from-brand-accent/15 via-white/[0.05] to-white/[0.02] shadow-[0_0_0_1px_rgba(0,110,250,0.5),0_0_40px_-4px_rgba(0,110,250,0.6),0_0_80px_-8px_rgba(33,173,235,0.4)] hover:border-brand-accent-light hover:shadow-[0_0_0_1px_rgba(33,173,235,0.6),0_0_60px_-4px_rgba(0,110,250,0.7),0_0_100px_-8px_rgba(33,173,235,0.5)]"
                           : "border-white/10 bg-white/[0.035] hover:bg-white/[0.06] hover:border-white/20"
                       }`}
                     >
