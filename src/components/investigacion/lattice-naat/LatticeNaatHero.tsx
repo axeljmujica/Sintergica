@@ -43,11 +43,11 @@ export function LatticeNaatHero() {
             loop
             muted
             playsInline
-            className="absolute inset-0 h-full w-full object-cover opacity-45"
+            className="absolute inset-0 h-full w-full object-cover opacity-65"
           />
           {/* Gradient overlay — dark blue from palette, heavier at edges */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0A0F1C]/70 via-brand-midnight/30 to-[#0A0F1C]/85" />
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/50 via-transparent to-brand-navy/50" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0A0F1C]/50 via-brand-midnight/15 to-[#0A0F1C]/70" />
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/30 via-transparent to-brand-navy/30" />
         </div>
 
         {/* Blue glow hints */}
