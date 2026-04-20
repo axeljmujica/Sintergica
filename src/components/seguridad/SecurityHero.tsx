@@ -104,7 +104,7 @@ export function SecurityHero() {
         {/* Background image */}
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
           <Image
-            src="/images/seguridad-implementacion.jpg"
+            src="/images/ciberseguridad-hero.jpg"
             alt=""
             fill
             priority
