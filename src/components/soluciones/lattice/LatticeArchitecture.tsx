@@ -71,57 +71,15 @@ export function LatticeArchitecture() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="mx-auto mt-14 mb-20 max-w-[980px]"
           >
-            <div className="relative aspect-video w-full overflow-hidden rounded-[24px] bg-gradient-to-br from-[#EEF4FF] via-[#F8FAFC] to-[#F0F9FF] shadow-[0_24px_56px_-12px_rgba(0,106,250,0.15)] ring-1 ring-slate-200/80">
-              {/* Decorative grid pattern */}
-              <svg
-                aria-hidden="true"
-                className="absolute inset-0 h-full w-full text-slate-900/[0.04]"
-              >
-                <defs>
-                  <pattern
-                    id="pillars-grid"
-                    width="40"
-                    height="40"
-                    patternUnits="userSpaceOnUse"
-                  >
-                    <path
-                      d="M 40 0 L 0 0 0 40"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1"
-                    />
-                  </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#pillars-grid)" />
-              </svg>
-
-              {/* Decorative floating shapes */}
-              <div className="pointer-events-none absolute -left-16 top-10 h-48 w-48 rounded-full bg-[#006EFA]/15 blur-3xl" />
-              <div className="pointer-events-none absolute -right-10 bottom-5 h-56 w-56 rounded-full bg-[#9333EA]/10 blur-3xl" />
-
-              {/* Content placeholder */}
-              <div className="absolute inset-0 flex items-center justify-center p-10">
-                <div className="flex flex-col items-center gap-4 text-slate-400">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-md ring-1 ring-slate-200">
-                    <svg
-                      className="h-8 w-8 text-[#006EFA]"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={1.5}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-                      />
-                    </svg>
-                  </div>
-                  <span className="text-sm font-medium text-slate-500">
-                    Equipos trabajando con Lattice
-                  </span>
-                </div>
-              </div>
+            <div className="relative aspect-video w-full overflow-hidden rounded-[24px] shadow-[0_24px_56px_-12px_rgba(0,106,250,0.15)] ring-1 ring-slate-200/80">
+              <iframe
+                src="https://www.youtube.com/embed/Xy0NsrMnP4A?rel=0&modestbranding=1"
+                title="Lattice — Equipos trabajando con IA"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="absolute inset-0 h-full w-full border-0"
+                loading="lazy"
+              />
             </div>
           </m.div>
 
