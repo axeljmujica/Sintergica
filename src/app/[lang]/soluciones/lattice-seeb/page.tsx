@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/sections/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { FloatingNav } from "@/components/ui/floating-nav";
+import { LatticeSeebContent } from "@/components/soluciones/lattice-seeb/LatticeSeebContent";
+import { SEEB_DEFAULT } from "@/lib/lattice-seeb-i18n";
 
 const SEEB_NAV = [
   { label: "Por qué SLMs", href: "#por-que" },
@@ -9,13 +11,6 @@ const SEEB_NAV = [
   { label: "Destilación", href: "#destilacion" },
   { label: "FAQ", href: "#faq" },
 ];
-import { LatticeSeebHero } from "@/components/soluciones/lattice-seeb/LatticeSeebHero";
-import { LatticeSeebWhySLMs } from "@/components/soluciones/lattice-seeb/LatticeSeebWhySLMs";
-import { LatticeSeebModelsTable } from "@/components/soluciones/lattice-seeb/LatticeSeebModelsTable";
-import { LatticeSeebDistillation } from "@/components/soluciones/lattice-seeb/LatticeSeebDistillation";
-import { LatticeSeebFAQ } from "@/components/soluciones/lattice-seeb/LatticeSeebFAQ";
-import { LatticeSeebCTA } from "@/components/soluciones/lattice-seeb/LatticeSeebCTA";
-import { SEEB_DEFAULT } from "@/lib/lattice-seeb-i18n";
 
 export const metadata: Metadata = {
   title: SEEB_DEFAULT.meta.title,
@@ -76,12 +71,7 @@ export default function LatticeSeebPage() {
         <Navbar />
         <FloatingNav items={SEEB_NAV} />
         <main>
-          <LatticeSeebHero />
-          <section id="por-que"><LatticeSeebWhySLMs /></section>
-          <section id="modelos"><LatticeSeebModelsTable /></section>
-          <section id="destilacion"><LatticeSeebDistillation /></section>
-          <section id="faq"><LatticeSeebFAQ /></section>
-          <LatticeSeebCTA />
+          <LatticeSeebContent />
         </main>
         <Footer />
       </div>
