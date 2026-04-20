@@ -478,7 +478,6 @@ const INDUSTRIES_BASE = [
   { icon: Database,   iconColor: "text-cyan-400",     iconBg: "bg-cyan-500/15",    border: "border-cyan-500/25",    glow: "shadow-cyan-500/20" },
 ];
 
-const HERO_STATUS = { label: "En producción", hint: "Desplegado en clientes regulados MX" };
 
 function FineTuningHero({ t }: { t: (typeof T)[keyof typeof T] }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -607,14 +606,6 @@ function FineTuningHero({ t }: { t: (typeof T)[keyof typeof T] }) {
           })}
         </m.div>
 
-        {/* Status pill */}
-        <m.div
-          {...anim(0.5)}
-          className="mt-8 flex items-center justify-center gap-2 text-xs text-white/45"
-        >
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-          {HERO_STATUS.label} · {HERO_STATUS.hint}
-        </m.div>
       </div>
     </section>
   );
