@@ -1,13 +1,14 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Image from "next/image";
 import { LazyMotion, domAnimation, m, useInView, useReducedMotion } from "motion/react";
 import {
   Brain, Shield, FileText, Zap, CheckCircle2, ChevronDown,
   ArrowRight, Database, Lock, FlaskConical, Rocket, AlertTriangle,
   BookOpen, Scale, HeartPulse, Building2, Bolt, TrendingUp,
+  CheckCircle,
 } from "lucide-react";
-import { PageHero } from "@/components/shared/PageHero";
 import { SectionHeader } from "@/components/shared/SectionHeader";
 import { CTASection } from "@/components/shared/CTASection";
 import { useLocale } from "@/i18n/DictionaryProvider";
@@ -18,7 +19,7 @@ const T = {
   es: {
     hero: {
       badge: "FINE-TUNING PRIVADO · LATTICE SÉEB",
-      title: "IA que piensa como tu organización. Entrenada con tus datos. Nunca expuestos.",
+      title: "IA que piensa\ncomo tu organización.\nEntrenada con tus datos.\nNunca expuestos.",
       subtitle: "Los SLM Lattice Séeb son modelos expertos, rápidos y ligeros diseñados para IA agéntica. Especializamos cada uno en tu terminología sectorial, normativas y lógica interna — on-premise, sin salida de datos.",
       bgImageAlt: "Visualización abstracta de fine-tuning de modelos de IA",
       ctaLabel: "Solicitar diagnóstico",
@@ -161,7 +162,7 @@ const T = {
   en: {
     hero: {
       badge: "PRIVATE FINE-TUNING · LATTICE SÉEB",
-      title: "AI that thinks like your organization. Trained on your data. Never exposed.",
+      title: "AI that thinks like\nyour organization.\nTrained on your data.\nNever exposed.",
       subtitle: "Lattice Séeb SLMs are expert, fast, and lightweight models designed for agentic AI. We specialize each one in your sector terminology, regulations, and internal logic — on-premise, with no data leaving your infrastructure.",
       bgImageAlt: "Abstract visualization of AI model fine-tuning",
       ctaLabel: "Request diagnosis",
@@ -304,7 +305,7 @@ const T = {
   "pt-br": {
     hero: {
       badge: "FINE-TUNING PRIVADO · LATTICE SÉEB",
-      title: "IA que pensa como sua organização. Treinada com seus dados. Nunca expostos.",
+      title: "IA que pensa como\nsua organização.\nTreinada com seus dados.\nNunca expostos.",
       subtitle: "Os SLM Lattice Séeb são modelos especialistas, rápidos e leves projetados para IA agêntica. Especializamos cada um na sua terminologia setorial, normativas e lógica interna — on-premise, sem saída de dados.",
       bgImageAlt: "Visualização abstrata de fine-tuning de modelos de IA",
       ctaLabel: "Solicitar diagnóstico",
@@ -469,13 +470,155 @@ const CORPUS_TYPES_BASE = [
 ];
 
 const INDUSTRIES_BASE = [
-  { icon: Scale },
-  { icon: Building2 },
-  { icon: Bolt },
-  { icon: HeartPulse },
-  { icon: TrendingUp },
-  { icon: Database },
+  { icon: Scale,      iconColor: "text-blue-400",     iconBg: "bg-blue-500/15",    border: "border-blue-500/25",    glow: "shadow-blue-500/20" },
+  { icon: Building2,  iconColor: "text-emerald-400",  iconBg: "bg-emerald-500/15", border: "border-emerald-500/25", glow: "shadow-emerald-500/20" },
+  { icon: Bolt,       iconColor: "text-amber-400",    iconBg: "bg-amber-500/15",   border: "border-amber-500/25",   glow: "shadow-amber-500/20" },
+  { icon: HeartPulse, iconColor: "text-pink-400",     iconBg: "bg-pink-500/15",    border: "border-pink-500/25",    glow: "shadow-pink-500/20" },
+  { icon: TrendingUp, iconColor: "text-purple-400",   iconBg: "bg-purple-500/15",  border: "border-purple-500/25",  glow: "shadow-purple-500/20" },
+  { icon: Database,   iconColor: "text-cyan-400",     iconBg: "bg-cyan-500/15",    border: "border-cyan-500/25",    glow: "shadow-cyan-500/20" },
 ];
+
+const HERO_STATUS = { label: "En producción", hint: "Desplegado en clientes regulados MX" };
+
+function FineTuningHero({ t }: { t: (typeof T)[keyof typeof T] }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true });
+  const shouldReduce = useReducedMotion();
+
+  const anim = (delay: number) =>
+    shouldReduce
+      ? {}
+      : {
+          initial: { opacity: 0, y: 24 },
+          animate: isInView ? { opacity: 1, y: 0 } : {},
+          transition: { duration: 0.6, delay },
+        };
+
+  return (
+    <section
+      className="relative flex min-h-screen flex-col overflow-hidden bg-[#050914]"
+      aria-label="Fine-tuning privado con Lattice Séeb"
+    >
+      {/* Background image */}
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <Image
+          src="/images/ai-cloud-concept-with-lit-brain.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center opacity-55"
+        />
+        {/* Overlays: deep vignette + horizontal legibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050914] via-[#050914]/60 to-[#050914]/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#050914]/70 via-transparent to-[#050914]/30" />
+        {/* Multi-color glows from palette: brand + purple + pink + sky */}
+        <div className="absolute -top-32 -left-24 h-[520px] w-[520px] rounded-full bg-brand-accent/20 blur-[120px]" />
+        <div className="absolute -top-20 right-0 h-[460px] w-[560px] rounded-full bg-purple-500/18 blur-[120px]" />
+        <div className="absolute bottom-0 left-1/4 h-[400px] w-[500px] rounded-full bg-pink-500/12 blur-[110px]" />
+        <div className="absolute bottom-10 right-10 h-[380px] w-[420px] rounded-full bg-sky-400/14 blur-[100px]" />
+        {/* Subtle dot grid */}
+        <div className="dot-grid absolute inset-0 opacity-20" />
+      </div>
+
+      <div
+        ref={ref}
+        className="relative z-10 mx-auto flex w-full max-w-5xl flex-1 flex-col justify-center px-6 pt-32 pb-0 text-center"
+      >
+        {/* Brain mark — gradient brand→purple */}
+        <m.div {...anim(0)} className="flex justify-center">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/20 bg-gradient-to-br from-brand-accent/25 via-purple-500/20 to-pink-500/15 backdrop-blur-md">
+            <Brain className="h-7 w-7 text-white" />
+          </div>
+        </m.div>
+
+        {/* Badge with gradient dot chain */}
+        <m.div {...anim(0.05)} className="mt-6 flex justify-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/8 px-5 py-2 text-[0.75rem] font-mulish font-medium uppercase tracking-widest text-white/85 backdrop-blur-md">
+            <span className="flex items-center gap-1">
+              <span className="h-1.5 w-1.5 rounded-full bg-brand-accent-light animate-pulse" />
+              <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
+              <span className="h-1.5 w-1.5 rounded-full bg-pink-400" />
+            </span>
+            {t.hero.badge}
+          </span>
+        </m.div>
+
+        {/* H1 */}
+        <m.h1
+          {...anim(0.1)}
+          className="mt-7 font-proxima text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[4rem]"
+        >
+          {t.hero.title.split("\n").map((line, i) => (
+            <span key={i} className="block">
+              {line}
+            </span>
+          ))}
+        </m.h1>
+
+        {/* Subtitle */}
+        <m.p
+          {...anim(0.2)}
+          className="mx-auto mt-6 max-w-3xl text-base leading-relaxed text-white/75 text-pretty md:text-lg"
+        >
+          {t.hero.subtitle}
+        </m.p>
+
+        {/* CTAs */}
+        <m.div
+          {...anim(0.3)}
+          className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
+        >
+          <a
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex h-14 items-center gap-2 rounded-full bg-brand-accent px-9 text-[1rem] font-mulish font-medium text-white shadow-xl shadow-brand-accent/30 transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.02] hover:bg-brand-accent-light hover:shadow-brand-accent/40"
+          >
+            {t.hero.ctaLabel}
+            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+          </a>
+          <a
+            href="#proceso"
+            className="inline-flex h-14 items-center justify-center rounded-full border border-white/20 bg-white/8 px-8 text-[1rem] font-mulish font-medium text-white backdrop-blur-md transition-colors hover:bg-white/15"
+          >
+            {t.hero.ctaSecondaryLabel}
+          </a>
+        </m.div>
+
+        {/* Trust signals — cycling through palette */}
+        <m.div
+          {...anim(0.4)}
+          className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-3"
+        >
+          {t.hero.trustSignals.map((signal, i) => {
+            const colors = [
+              "text-brand-accent-light",
+              "text-purple-300",
+              "text-pink-300",
+              "text-sky-300",
+            ];
+            return (
+              <span key={signal} className="flex items-center gap-1.5 text-sm text-white/70">
+                <CheckCircle className={`h-3.5 w-3.5 shrink-0 ${colors[i % colors.length]}`} />
+                {signal}
+              </span>
+            );
+          })}
+        </m.div>
+
+        {/* Status pill */}
+        <m.div
+          {...anim(0.5)}
+          className="mt-8 flex items-center justify-center gap-2 text-xs text-white/45"
+        >
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+          {HERO_STATUS.label} · {HERO_STATUS.hint}
+        </m.div>
+      </div>
+    </section>
+  );
+}
 
 export function FineTuningContent() {
   const locale = useLocale();
@@ -491,19 +634,7 @@ export function FineTuningContent() {
   return (
     <LazyMotion features={domAnimation}>
       <>
-        <PageHero
-          badge={t.hero.badge}
-          badgeColor="brand-accent"
-          title={t.hero.title}
-          subtitle={t.hero.subtitle}
-          bgImage="/images/Tecnologia-IA/papercut-silhouette-human-head-with-colorful-constructor-pieces.jpg"
-          bgImageAlt={t.hero.bgImageAlt}
-          ctaLabel={t.hero.ctaLabel}
-          ctaHref={BOOKING_URL}
-          ctaSecondaryLabel={t.hero.ctaSecondaryLabel}
-          ctaSecondaryHref="/servicios/metodologia"
-          trustSignals={[...t.hero.trustSignals]}
-        />
+        <FineTuningHero t={t} />
 
         {/* Problem Section */}
         <section className="bg-brand-surface dark:bg-brand-deep py-20 md:py-28 px-4 sm:px-6 lg:px-8">
@@ -607,7 +738,7 @@ export function FineTuningContent() {
         </section>
 
         {/* Process */}
-        <section className="bg-brand-surface dark:bg-brand-deep py-24 px-4 sm:px-6 lg:px-8">
+        <section id="proceso" className="bg-brand-surface dark:bg-brand-deep py-24 px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-5xl">
             <SectionHeader
               badge={t.process.badge}
@@ -647,36 +778,76 @@ export function FineTuningContent() {
           </div>
         </section>
 
-        {/* Comparison Table */}
-        <section className="bg-brand-surface dark:bg-brand-midnight py-24 px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-4xl">
+        {/* Comparison — Versus layout */}
+        <section className="relative overflow-hidden bg-brand-surface dark:bg-brand-midnight py-24 px-4 sm:px-6 lg:px-8">
+          {/* Split glows: red for generic, brand for Séeb */}
+          <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+            <div className="absolute left-0 top-1/2 h-[420px] w-[420px] -translate-x-1/3 -translate-y-1/2 rounded-full bg-red-500/5 blur-[120px]" />
+            <div className="absolute right-0 top-1/2 h-[420px] w-[420px] translate-x-1/3 -translate-y-1/2 rounded-full bg-brand-accent/10 blur-[120px]" />
+          </div>
+
+          <div className="relative mx-auto max-w-5xl">
             <SectionHeader
               badge={t.comparison.badge}
               title={t.comparison.title}
               subtitle={t.comparison.subtitle}
               centered
             />
-            <div ref={compRef} className="mt-14 overflow-hidden rounded-2xl border border-brand-midnight/10 dark:border-brand-white/10">
-              {/* Header */}
-              <div className="grid grid-cols-3 bg-brand-surface dark:bg-brand-deep/80 px-6 py-4">
-                <span className="text-xs font-bold uppercase tracking-wider text-brand-midnight/40 dark:text-brand-white/40">{t.comparison.colCapability}</span>
-                <span className="text-center text-xs font-bold uppercase tracking-wider text-red-400/70">{t.comparison.colGeneric}</span>
-                <span className="text-center text-xs font-bold uppercase tracking-wider text-brand-accent">{t.comparison.colSeeb}</span>
+
+            {/* Comparison table */}
+            <m.div
+              ref={compRef}
+              initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+              animate={compInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: shouldReduce ? 0 : 0.6 }}
+              className="mt-14 overflow-hidden rounded-2xl border border-brand-midnight/10 dark:border-brand-white/10"
+            >
+              {/* Header row */}
+              <div className="grid grid-cols-[1.4fr_1fr_1fr]">
+                <div className="border-b border-brand-midnight/10 dark:border-brand-white/10 bg-brand-midnight/[0.02] dark:bg-brand-white/[0.02] px-5 py-4">
+                  <span className="text-xs font-bold uppercase tracking-widest text-brand-midnight/40 dark:text-brand-white/35">
+                    {t.comparison.colCapability}
+                  </span>
+                </div>
+                <div className="border-b border-l border-red-500/15 bg-red-500/[0.04] px-5 py-4">
+                  <div className="flex items-center gap-2">
+                    <AlertTriangle className="h-4 w-4 shrink-0 text-red-400" />
+                    <span className="text-sm font-bold text-brand-midnight dark:text-brand-white">{t.comparison.colGeneric}</span>
+                  </div>
+                </div>
+                <div className="relative overflow-hidden border-b border-l border-brand-accent/25 bg-gradient-to-b from-brand-accent/15 to-brand-accent/8 px-5 py-4">
+                  <div className="pointer-events-none absolute -top-6 -right-6 h-20 w-20 rounded-full bg-brand-accent/25 blur-2xl" />
+                  <div className="relative flex items-center gap-2">
+                    <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-gradient-to-br from-brand-accent to-purple-500">
+                      <Brain className="h-3.5 w-3.5 text-white" />
+                    </div>
+                    <span className="text-sm font-bold text-brand-accent">{t.comparison.colSeeb}</span>
+                  </div>
+                </div>
               </div>
+
+              {/* Data rows */}
               {t.comparisonRows.map((row, i) => (
                 <m.div
                   key={row.feature}
                   initial={shouldReduce ? false : { opacity: 0 }}
                   animate={compInView ? { opacity: 1 } : {}}
-                  transition={{ duration: shouldReduce ? 0 : 0.3, delay: i * 0.07 }}
-                  className={`grid grid-cols-3 items-center gap-4 px-6 py-4 ${i % 2 === 0 ? "bg-brand-surface dark:bg-brand-midnight" : "bg-brand-surface dark:bg-brand-deep/40"}`}
+                  transition={{ duration: shouldReduce ? 0 : 0.3, delay: 0.3 + i * 0.05 }}
+                  className={`grid grid-cols-[1.4fr_1fr_1fr] ${i < t.comparisonRows.length - 1 ? "border-b border-brand-midnight/8 dark:border-brand-white/8" : ""} ${i % 2 === 1 ? "bg-brand-midnight/[0.015] dark:bg-brand-white/[0.02]" : ""}`}
                 >
-                  <span className="text-sm font-medium text-brand-midnight/75 dark:text-brand-white/75">{row.feature}</span>
-                  <span className="text-center text-sm text-red-400/80">{row.generic}</span>
-                  <span className="text-center text-sm font-semibold text-brand-accent">{row.seeb}</span>
+                  <div className="flex items-center px-5 py-4">
+                    <span className="text-sm text-brand-midnight/65 dark:text-brand-white/60">{row.feature}</span>
+                  </div>
+                  <div className="flex items-center border-l border-red-500/10 px-5 py-4">
+                    <span className="text-sm font-medium text-red-500/90 dark:text-red-400">{row.generic}</span>
+                  </div>
+                  <div className="flex items-center gap-2 border-l border-brand-accent/15 bg-brand-accent/[0.025] px-5 py-4">
+                    <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-brand-accent" />
+                    <span className="text-sm font-semibold text-brand-accent">{row.seeb}</span>
+                  </div>
                 </m.div>
               ))}
-            </div>
+            </m.div>
           </div>
         </section>
 
@@ -699,13 +870,15 @@ export function FineTuningContent() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: shouldReduce ? 0 : 0.5, delay: i * 0.08 }}
-                    className="group rounded-2xl border border-brand-midnight/5 dark:border-brand-white/10 bg-brand-surface dark:bg-brand-midnight p-6 transition-all hover:border-brand-accent/20 hover:bg-brand-midnight/70"
+                    className={`group relative overflow-hidden rounded-2xl border ${ind.border} bg-brand-surface dark:bg-brand-midnight p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${ind.glow}`}
                   >
-                    <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-brand-accent/10 transition-colors group-hover:bg-brand-accent/20">
-                      <Icon className="h-5 w-5 text-brand-accent" />
+                    {/* Color glow on hover */}
+                    <div className={`pointer-events-none absolute -top-16 -right-16 h-32 w-32 rounded-full ${ind.iconBg} opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100`} />
+                    <div className={`mb-4 flex h-11 w-11 items-center justify-center rounded-xl ${ind.iconBg} transition-transform duration-300 group-hover:scale-110`}>
+                      <Icon className={`h-5 w-5 ${ind.iconColor}`} />
                     </div>
                     <h3 className="font-proxima font-semibold text-brand-midnight dark:text-brand-white">{t.industryItems[i].name}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-brand-midnight/50 dark:text-brand-white/50">{t.industryItems[i].example}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-brand-midnight/55 dark:text-brand-white/55">{t.industryItems[i].example}</p>
                   </m.div>
                 );
               })}
