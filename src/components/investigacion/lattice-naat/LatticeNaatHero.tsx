@@ -62,7 +62,7 @@ export function LatticeNaatHero() {
           <m.div {...anim(0)}>
             <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/8 px-5 py-2 text-[0.75rem] font-semibold uppercase tracking-widest text-white/80 backdrop-blur-md">
               <span className="h-1.5 w-1.5 rounded-full bg-brand-accent-light animate-pulse" />
-              Lattice Na&apos;at · Modelo Fundacional
+              {c.badge}
             </span>
           </m.div>
 
@@ -77,7 +77,7 @@ export function LatticeNaatHero() {
           {/* Subtitle */}
           <m.p
             {...anim(0.2)}
-            className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/70 text-balance md:text-xl"
+            className="mx-auto mt-6 max-w-3xl lg:max-w-4xl text-base leading-relaxed text-white/70 text-pretty md:text-lg"
           >
             {c.subtitle}
           </m.p>

@@ -2,9 +2,9 @@
 
 import { useRef, useState } from "react";
 import { LazyMotion, domAnimation, m, useInView, useReducedMotion } from "motion/react";
-import { Server, BookOpen, Shield, CheckCircle2, Workflow, ChevronDown, Users } from "lucide-react";
+import { Server, BookOpen, Shield, CheckCircle2, Workflow, ChevronDown, Users, ArrowRight } from "lucide-react";
 import Image from "next/image";
-import { PageHero } from "@/components/shared/PageHero";
+import Link from "next/link";
 import { SectionHeader } from "@/components/shared/SectionHeader";
 import { TimelineSteps, type TimelineStep } from "@/components/shared/TimelineSteps";
 import { CTASection } from "@/components/shared/CTASection";
@@ -211,38 +211,83 @@ const T = {
   },
 } as const;
 
+const BOOKING_URL = "https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4";
+
 const INCLUYE_BASE = [
-  { icon: Users },
-  { icon: Server },
-  { icon: Shield },
-  { icon: BookOpen },
+  { icon: Users,    image: "/images/Lattice-Agents-configurados-implementacion.jpg", iconColor: "text-blue-400",    iconBg: "bg-blue-500/10",    borderColor: "rgba(96,165,250,0.45)",  glowColor: "rgba(59,130,246,0.5)"   },
+  { icon: Server,   image: "/images/arquitectura-flexible-implementacion.jpg",       iconColor: "text-violet-400",  iconBg: "bg-violet-500/10",  borderColor: "rgba(167,139,250,0.45)", glowColor: "rgba(139,92,246,0.5)"   },
+  { icon: Shield,   image: "/images/seguridad-implementacion.jpg",                   iconColor: "text-emerald-400", iconBg: "bg-emerald-500/10", borderColor: "rgba(52,211,153,0.45)",  glowColor: "rgba(16,185,129,0.5)"   },
+  { icon: BookOpen, image: "/images/capacitacion-implementacion.jpg",                iconColor: "text-amber-400",   iconBg: "bg-amber-500/10",   borderColor: "rgba(251,191,36,0.45)",  glowColor: "rgba(245,158,11,0.5)"   },
 ];
 
 export function ImplementacionContent() {
   const locale = useLocale();
   const t = T[locale] ?? T.es;
 
+  const heroRef = useRef<HTMLDivElement>(null);
+  const heroInView = useInView(heroRef, { once: true });
   const inclRef = useRef<HTMLDivElement>(null);
   const inclInView = useInView(inclRef, { once: true, margin: "-60px" });
   const garantRef = useRef<HTMLDivElement>(null);
   const garantInView = useInView(garantRef, { once: true, margin: "-60px" });
   const shouldReduce = useReducedMotion();
 
+  const anim = (delay: number) =>
+    shouldReduce ? {} : {
+      initial: { opacity: 0, y: 24 },
+      animate: heroInView ? { opacity: 1, y: 0 } : {},
+      transition: { duration: 0.55, delay },
+    };
+
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   return (
     <LazyMotion features={domAnimation}>
       <>
-        <PageHero
-          badge={t.hero.badge}
-          title={t.hero.title}
-          subtitle={t.hero.subtitle}
-          bgImage="/img/sales-dashboard.jpg"
-          bgImageAlt={t.hero.bgImageAlt}
-          ctaLabel={t.hero.ctaLabel}
-          ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
-          trustSignals={[...t.hero.trustSignals]}
-        />
+        {/* Hero — seeb-style full height dark */}
+        <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#0A0F1C] px-6 pb-16 pt-28">
+          <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+            <Image src="/images/implementacion-hero.jpg" alt="" fill priority className="object-cover opacity-60" sizes="100vw" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0A0F1C]/65 via-brand-midnight/35 to-[#0A0F1C]/90" />
+            <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/50 via-transparent to-brand-navy/50" />
+          </div>
+          <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+            <div className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-accent/8 blur-[120px]" />
+            <div className="absolute top-0 right-0 h-[400px] w-[400px] rounded-full bg-violet-600/10 blur-[150px]" />
+          </div>
+          <div ref={heroRef} className="relative z-10 mx-auto w-full max-w-5xl text-center">
+            <m.div {...anim(0)}>
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/8 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-white/80 backdrop-blur-md">
+                <span className="h-1.5 w-1.5 rounded-full bg-brand-accent-light animate-pulse" />
+                {t.hero.badge}
+              </span>
+            </m.div>
+            <m.h1 {...anim(0.1)} className="mt-6 font-proxima text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[4rem] text-balance">
+              {t.hero.title}
+            </m.h1>
+            <m.p {...anim(0.2)} className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/75 md:text-xl">
+              {t.hero.subtitle}
+            </m.p>
+            <m.div {...anim(0.3)} className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <Link
+                href={BOOKING_URL}
+                target="_blank" rel="noopener noreferrer"
+                className="inline-flex h-14 items-center gap-2 rounded-full bg-brand-accent px-9 text-base font-bold text-white shadow-lg shadow-brand-accent/30 transition-all hover:scale-[1.02] hover:-translate-y-0.5 hover:bg-brand-accent-light hover:shadow-brand-accent/40"
+              >
+                {t.hero.ctaLabel}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </m.div>
+            <m.div {...anim(0.4)} className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+              {t.hero.trustSignals.map((s) => (
+                <span key={s} className="flex items-center gap-1.5 text-sm text-white/60">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-brand-accent-light shrink-0" />
+                  {s}
+                </span>
+              ))}
+            </m.div>
+          </div>
+        </section>
 
         {/* Intro Section with Image */}
         <section className="bg-brand-surface dark:bg-brand-midnight py-20 px-4 sm:px-6 lg:px-8 border-b border-brand-midnight/5 dark:border-brand-white/10">
@@ -251,7 +296,7 @@ export function ImplementacionContent() {
               <div className="order-2 lg:order-1 relative h-[400px] w-full rounded-2xl overflow-hidden border border-brand-midnight/10 dark:border-brand-white/10 shadow-2xl group">
                 <div className="absolute inset-0 bg-brand-midnight/10 dark:bg-brand-midnight/30 mix-blend-multiply z-10 transition-colors duration-500 group-hover:bg-transparent"></div>
                 <Image
-                  src="/img/sales-dashboard.jpg"
+                  src="/images/2150061986.jpg"
                   alt={t.intro.imageAlt}
                   fill
                   className="object-cover object-left transition-transform duration-700 group-hover:scale-105"
@@ -270,7 +315,7 @@ export function ImplementacionContent() {
         </section>
 
         {/* Timeline */}
-        <section className="bg-brand-surface dark:bg-brand-deep py-24 px-4 sm:px-6 lg:px-8">
+        <section className="bg-gradient-to-br from-brand-surface via-blue-50/30 to-brand-surface dark:from-brand-midnight dark:via-blue-950/30 dark:to-brand-navy py-24 px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-4xl">
             <SectionHeader
               badge={t.timeline.badge}
@@ -285,19 +330,19 @@ export function ImplementacionContent() {
         </section>
 
         {/* What's included */}
-        <section className="bg-brand-surface dark:bg-brand-midnight py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-          {/* Decorative element */}
-          <div className="pointer-events-none absolute right-0 bottom-0 translate-x-1/3 translate-y-1/3 flex items-center justify-center opacity-10">
-            <div className="h-[600px] w-[600px] rounded-full bg-brand-accent blur-[150px]" />
+        <section className="bg-[#0A0F1C] py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+          {/* Ambient glows */}
+          <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+            <div className="absolute top-0 right-0 h-[500px] w-[500px] rounded-full bg-brand-accent/10 blur-[150px]" />
+            <div className="absolute bottom-0 left-0 h-[400px] w-[400px] rounded-full bg-violet-600/8 blur-[140px]" />
           </div>
 
           <div className="mx-auto max-w-6xl relative z-10">
-            <SectionHeader
-              badge={t.includes.badge}
-              title={t.includes.title}
-              subtitle={t.includes.subtitle}
-              centered
-            />
+            <div className="text-center mb-0">
+              <span className="inline-flex items-center rounded-full border border-brand-accent/30 bg-brand-accent/15 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-accent-light">{t.includes.badge}</span>
+              <h2 className="mt-4 font-proxima text-3xl font-bold text-white md:text-4xl text-balance">{t.includes.title}</h2>
+              <p className="mt-3 text-white/60 max-w-2xl mx-auto">{t.includes.subtitle}</p>
+            </div>
             <div ref={inclRef} className="mt-16 grid gap-6 sm:grid-cols-2">
               {INCLUYE_BASE.map((item, i) => {
                 const Icon = item.icon;
@@ -305,21 +350,29 @@ export function ImplementacionContent() {
                 return (
                   <m.div
                     key={content.title}
-                    initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-                    animate={inclInView ? { opacity: 1, y: 0 } : {}}
+                    initial={{ opacity: 1, y: 0 }}
                     transition={{ duration: shouldReduce ? 0 : 0.5, delay: shouldReduce ? 0 : i * 0.1 }}
-                    className="group flex gap-5 rounded-2xl border border-brand-midnight/5 dark:border-brand-white/10 bg-brand-deep/80 backdrop-blur-sm p-8 transition-all hover:border-brand-accent/30 hover:bg-brand-deep"
+                    className="group relative flex gap-5 overflow-hidden rounded-2xl bg-[#0A0F1C] p-8 transition-all duration-500 hover:-translate-y-1"
+                    style={{ border: `1px solid ${item.borderColor}`, boxShadow: `0 0 0 1px ${item.borderColor}` }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = `0 0 30px -4px ${item.glowColor}, 0 0 0 1px ${item.borderColor}`; }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = `0 0 0 1px ${item.borderColor}`; }}
                   >
+                    {/* Background image — only on hover */}
+                    <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                      <Image src={item.image} alt="" fill className="object-cover" sizes="(max-width:768px) 100vw, 50vw" />
+                      <div className="absolute inset-0 bg-[#0A0F1C]/65" />
+                    </div>
+                    {/* Icon */}
                     <m.div
                       whileHover={shouldReduce ? {} : { scale: 1.1, rotate: 5 }}
                       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                      className="mt-1 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-brand-accent/10 will-change-transform"
+                      className={`relative z-10 mt-1 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl ${item.iconBg} will-change-transform transition-colors duration-500 group-hover:bg-white/15`}
                     >
-                      <Icon className="h-6 w-6 text-brand-accent" />
+                      <Icon className={`h-6 w-6 ${item.iconColor} transition-colors duration-500 group-hover:text-white`} />
                     </m.div>
-                    <div>
-                      <h3 className="text-[18px] font-proxima font-semibold text-brand-midnight dark:text-brand-white mb-2">{content.title}</h3>
-                      <p className="text-[14px] leading-relaxed text-brand-midnight/60 dark:text-brand-white/60">{content.description}</p>
+                    <div className="relative z-10">
+                      <h3 className="text-[18px] font-proxima font-semibold text-white mb-2">{content.title}</h3>
+                      <p className="text-[14px] leading-relaxed text-white/70 transition-colors duration-500 group-hover:text-white/90">{content.description}</p>
                     </div>
                   </m.div>
                 );

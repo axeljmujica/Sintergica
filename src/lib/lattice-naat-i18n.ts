@@ -6,10 +6,10 @@ export const NAAT_DEFAULT = {
   },
 
   hero: {
-    badge: "Modelo Fundacional",
-    title: "El Modelo Fundacional Soberano.",
+    badge: "Lattice Na'at · Investigación Aplicada",
+    title: "Un modelo de frontera entrenado para México.",
     subtitle:
-      "El primer modelo de lenguaje de gran escala desarrollado en México. Entrenado para pensar en español mexicano — no traducido del inglés.",
+      "Na'at fue entrenado sobre corpus mexicano, regulación nacional y razonamiento sectorial — no sobre internet traducido. Para casos de uso en derecho, gobierno, logística o finanzas, la diferencia entre un modelo global y uno especializado es la diferencia entre una respuesta plausible y una respuesta correcta.",
     ctaPrimary: "Hablar con el equipo",
     ctaSecondary: "Ver la familia Na'at",
     microFeatures: [
