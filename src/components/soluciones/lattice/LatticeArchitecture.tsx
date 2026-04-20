@@ -71,15 +71,17 @@ export function LatticeArchitecture() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="mx-auto mt-14 mb-20 max-w-[980px]"
           >
-            <div className="relative aspect-video w-full overflow-hidden rounded-[24px] shadow-[0_24px_56px_-12px_rgba(0,106,250,0.15)] ring-1 ring-slate-200/80">
+            <div className="relative aspect-video w-full overflow-hidden rounded-[24px] shadow-[0_24px_56px_-12px_rgba(0,106,250,0.15)] ring-1 ring-slate-200/80 pointer-events-none">
+              {/* Scale up slightly to hide YouTube letterboxing/controls bleed */}
               <iframe
-                src="https://www.youtube.com/embed/Xy0NsrMnP4A?rel=0&modestbranding=1"
-                title="Lattice — Equipos trabajando con IA"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="absolute inset-0 h-full w-full border-0"
-                loading="lazy"
+                src="https://www.youtube.com/embed/Xy0NsrMnP4A?autoplay=1&mute=1&loop=1&playlist=Xy0NsrMnP4A&controls=0&disablekb=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=0"
+                title="Lattice — video de plataforma"
+                allow="autoplay; encrypted-media"
+                className="absolute inset-[-4%] h-[108%] w-[108%] border-0"
+                aria-hidden="true"
               />
+              {/* Subtle overlay so it reads as decorative, not primary content */}
+              <div className="absolute inset-0 bg-white/10" />
             </div>
           </m.div>
 
