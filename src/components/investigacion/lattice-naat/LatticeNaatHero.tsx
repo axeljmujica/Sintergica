@@ -2,13 +2,18 @@
 
 import { useRef } from "react";
 import { LazyMotion, domAnimation, m, useInView, useReducedMotion } from "motion/react";
-import { ArrowRight, Sparkles, Globe, Shield } from "lucide-react";
+import { ArrowRight, CheckCircle } from "lucide-react";
 import Link from "next/link";
 import { NAAT_DEFAULT } from "@/lib/lattice-naat-i18n";
 
 const c = NAAT_DEFAULT.hero;
 
-const MICRO_ICONS = [Shield, Sparkles, Globe];
+const TRUST_SIGNALS = [
+  "Corpus normativo mexicano",
+  "5 variantes de modelo",
+  "Despliegue on-premise o SaaS",
+  "Open source con atribución",
+];
 
 export function LatticeNaatHero() {
   const ref = useRef<HTMLDivElement>(null);
@@ -19,15 +24,15 @@ export function LatticeNaatHero() {
     shouldReduce
       ? {}
       : {
-          initial: { opacity: 0, y: 20 },
+          initial: { opacity: 0, y: 24 },
           animate: isInView ? { opacity: 1, y: 0 } : {},
-          transition: { duration: 0.5, delay },
+          transition: { duration: 0.55, delay },
         };
 
   return (
     <LazyMotion features={domAnimation}>
       <section
-        className="relative overflow-hidden bg-brand-midnight pt-32 pb-20 px-6"
+        className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black px-6 pb-16 pt-28"
         aria-label="Lattice Na'at Hero"
       >
         {/* Video background */}
@@ -38,98 +43,86 @@ export function LatticeNaatHero() {
             loop
             muted
             playsInline
-            className="absolute inset-0 h-full w-full object-cover opacity-40"
+            className="absolute inset-0 h-full w-full object-cover opacity-45"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-brand-midnight/70 via-brand-midnight/50 to-brand-midnight" />
+          {/* Gradient overlay — heavier at edges, lighter in center */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/80" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
         </div>
 
-        {/* Background glows */}
+        {/* Blue glow hints */}
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          <div className="absolute -left-40 -top-40 h-[600px] w-[600px] rounded-full bg-brand-accent/15 blur-3xl" />
-          <div className="absolute -bottom-32 right-0 h-[500px] w-[500px] rounded-full bg-purple-600/10 blur-3xl" />
-          <div className="absolute left-1/2 top-1/3 h-[300px] w-[300px] -translate-x-1/2 rounded-full bg-brand-accent-light/10 blur-3xl" />
+          <div className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-accent/8 blur-[120px]" />
         </div>
 
-        <div ref={ref} className="relative z-10 mx-auto max-w-6xl">
-          {/* Top content - centered */}
-          <div className="text-center max-w-3xl mx-auto">
-            {/* Badge */}
-            <m.span
-              {...anim(0)}
-              className="inline-flex items-center gap-2 rounded-full border border-brand-accent/30 bg-brand-accent/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-accent-light backdrop-blur-sm"
-            >
+        {/* Content */}
+        <div ref={ref} className="relative z-10 mx-auto w-full max-w-4xl text-center">
+
+          {/* Badge */}
+          <m.div {...anim(0)}>
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/8 px-5 py-2 text-[0.75rem] font-semibold uppercase tracking-widest text-white/80 backdrop-blur-md">
               <span className="h-1.5 w-1.5 rounded-full bg-brand-accent-light animate-pulse" />
-              {c.badge}
-            </m.span>
+              Lattice Na&apos;at · Modelo Fundacional
+            </span>
+          </m.div>
 
-            {/* h1 */}
-            <m.h1
-              {...anim(0.1)}
-              className="mt-6 font-proxima text-4xl font-extrabold leading-tight text-white md:text-5xl lg:text-6xl text-balance"
-            >
-              {c.title}
-            </m.h1>
+          {/* H1 */}
+          <m.h1
+            {...anim(0.1)}
+            className="mt-7 font-proxima text-5xl font-extrabold leading-[1.08] tracking-tight text-white md:text-6xl lg:text-7xl text-balance"
+          >
+            {c.title}
+          </m.h1>
 
-            {/* Subtitle */}
-            <m.p
-              {...anim(0.2)}
-              className="mx-auto mt-6 max-w-2xl text-lg text-white/75 text-balance"
-            >
-              {c.subtitle}
-            </m.p>
+          {/* Subtitle */}
+          <m.p
+            {...anim(0.2)}
+            className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/70 text-balance md:text-xl"
+          >
+            {c.subtitle}
+          </m.p>
 
-            {/* Micro-features */}
-            <m.div
-              {...anim(0.3)}
-              className="mt-8 flex flex-wrap justify-center gap-3"
+          {/* CTAs */}
+          <m.div
+            {...anim(0.3)}
+            className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
+          >
+            <Link
+              href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+              className="inline-flex h-14 items-center gap-2 rounded-full bg-brand-accent px-9 text-[1rem] font-bold text-white shadow-lg shadow-brand-accent/30 transition-all duration-300 hover:scale-[1.02] hover:-translate-y-0.5 hover:bg-brand-accent-light hover:shadow-brand-accent/40"
             >
-              {c.microFeatures.map((label, i) => {
-                const Icon = MICRO_ICONS[i] ?? Sparkles;
-                return (
-                  <span
-                    key={label}
-                    className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md px-3 py-1.5 text-sm text-white/75"
-                  >
-                    <Icon className="h-4 w-4 text-brand-accent-light" />
-                    {label}
-                  </span>
-                );
-              })}
-            </m.div>
+              {c.ctaPrimary}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+            <a
+              href="#familia"
+              className="inline-flex h-14 items-center justify-center rounded-full border border-white/20 bg-white/8 px-8 text-[1rem] font-semibold text-white backdrop-blur-md transition-colors hover:bg-white/15"
+            >
+              {c.ctaSecondary}
+            </a>
+          </m.div>
 
-            {/* CTAs */}
-            <m.div
-              {...anim(0.4)}
-              className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row"
-            >
-              <Link
-                href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
-                className="inline-flex items-center gap-2 rounded-lg bg-brand-accent px-6 py-3 font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-brand-accent-light hover:shadow-lg hover:shadow-brand-accent/30"
-              >
-                {c.ctaPrimary}
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <a
-                href="#familia"
-                className="inline-flex items-center justify-center rounded-lg border border-white/20 bg-white/5 backdrop-blur-md px-6 py-3 font-semibold text-white transition-colors hover:bg-white/10"
-              >
-                {c.ctaSecondary}
-              </a>
-            </m.div>
-
-            {/* Version info */}
-            <m.div
-              {...anim(0.5)}
-              className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-white/50"
-            >
-              <span className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                {c.versionState}
+          {/* Trust signals */}
+          <m.div
+            {...anim(0.4)}
+            className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-3"
+          >
+            {TRUST_SIGNALS.map((s) => (
+              <span key={s} className="flex items-center gap-1.5 text-sm text-white/60">
+                <CheckCircle className="h-3.5 w-3.5 text-brand-accent-light shrink-0" />
+                {s}
               </span>
-              <span className="hidden sm:inline text-brand-white/20">·</span>
-              <span>{c.version}</span>
-            </m.div>
-          </div>
+            ))}
+          </m.div>
+
+          {/* Version pill */}
+          <m.div
+            {...anim(0.5)}
+            className="mt-8 flex items-center justify-center gap-2 text-xs text-white/40"
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            {c.versionState} · {c.version}
+          </m.div>
         </div>
       </section>
     </LazyMotion>
