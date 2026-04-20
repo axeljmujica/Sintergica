@@ -4,6 +4,7 @@ import { m, LazyMotion, domAnimation } from "motion/react";
 import { ArrowRight, Megaphone, Target, PenTool, BarChart3, Users, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { BackgroundBeams } from "@/components/ui/background-beams";
+import { CTASection } from "@/components/shared/CTASection";
 import { useLocale } from "@/i18n/DictionaryProvider";
 
 const T = {
@@ -242,28 +243,13 @@ export function MaaSContent() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="relative overflow-hidden py-24 bg-brand-midnight dark:bg-brand-navy">
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-accent/20 to-transparent mix-blend-overlay"></div>
-        <div className="absolute inset-0 dot-grid opacity-20 dark:opacity-10"></div>
-
-        <div className="relative mx-auto max-w-4xl px-6 text-center lg:px-8">
-          <h2 className="font-proxima text-3xl font-bold text-white sm:text-4xl md:text-5xl">
-            {t.ctaTitle}
-          </h2>
-          <p className="mt-6 text-lg text-white/80 max-w-2xl mx-auto">
-            {t.ctaDesc}
-          </p>
-          <div className="mt-10">
-            <Link
-              href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
-              className="btn-glow inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-4 text-base font-semibold text-white transition-all hover:bg-brand-accent/90"
-            >
-              {t.ctaButton} <ArrowRight className="h-5 w-5" />
-            </Link>
-          </div>
-        </div>
-      </section>
+      <CTASection
+        badge="Siguiente paso"
+        title={t.ctaTitle}
+        subtitle={t.ctaDesc}
+        ctaLabel={t.ctaButton}
+        ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+      />
     </LazyMotion>
   );
 }
