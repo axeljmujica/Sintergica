@@ -48,7 +48,7 @@ export function LatticeHero() {
               {...anim(0)}
               className="inline-flex items-center rounded-full border border-[#006EFA]/20 bg-[#006EFA]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[#006EFA]"
             >
-              Lattice Platform
+              Lattice Plataforma
             </m.span>
 
             {/* H1 */}
