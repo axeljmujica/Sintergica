@@ -2,7 +2,8 @@
 
 import { useRef } from "react";
 import { LazyMotion, domAnimation, m, useInView, useReducedMotion } from "motion/react";
-import { ArrowRight, CheckCircle, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle } from "lucide-react";
+import Image from "next/image";
 
 interface CTASectionProps {
   badge?: string;
@@ -29,43 +30,36 @@ export function CTASection({
 
   return (
     <LazyMotion features={domAnimation}>
-      <section className="relative overflow-hidden bg-brand-surface dark:bg-brand-midnight py-20 md:py-28">
-        {/* Gradient background */}
-        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          <div className="absolute inset-0 bg-gradient-to-br from-brand-accent/[0.08] via-transparent to-brand-accent-light/[0.05]" />
-          <div className="absolute -left-40 -top-40 h-[500px] w-[500px] rounded-full bg-brand-accent/10 blur-[100px]" />
-          <div className="absolute -bottom-40 -right-40 h-[400px] w-[400px] rounded-full bg-brand-accent-light/10 blur-[100px]" />
-          {/* Grid pattern overlay */}
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px]" />
+      <section className="relative overflow-hidden bg-black py-28 sm:py-36">
+        {/* Background image */}
+        <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
+          <Image
+            src="/images/121725.jpg"
+            alt=""
+            fill
+            className="object-cover opacity-80"
+          />
+          <div className="absolute inset-0 bg-black/60 dark:bg-black/70" />
         </div>
 
-        <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+        <div className="relative z-10 mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
           <m.div
             ref={ref}
-            initial={shouldReduce ? false : { opacity: 0, y: 30 }}
+            initial={shouldReduce ? false : { opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: shouldReduce ? 0 : 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={{ duration: shouldReduce ? 0 : 0.7 }}
           >
-            {/* Badge */}
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-white dark:bg-brand-midnight/5 px-4 py-2 backdrop-blur-sm">
-              <Sparkles className="h-4 w-4 text-brand-accent" />
-              <span className="text-xs font-semibold uppercase tracking-wider text-brand-midnight/70 dark:text-brand-white/70">
-                {badge}
-              </span>
-            </div>
-
-            {/* Title */}
-            <h2 className="font-proxima text-4xl font-bold leading-tight tracking-tight text-brand-midnight dark:text-brand-white sm:text-5xl">
+            <span className="mb-4 inline-block rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-[0.75rem] font-semibold uppercase tracking-wider text-white">
+              {badge}
+            </span>
+            <h2 className="font-proxima text-balance text-[1.75rem] font-bold leading-[1.15] tracking-tight text-white sm:text-[2.25rem] lg:text-[2.75rem]">
               {title}
             </h2>
-
-            {/* Subtitle */}
-            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-brand-midnight/70 dark:text-brand-white/60">
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-[1.8] text-white/80 sm:text-lg">
               {subtitle}
             </p>
           </m.div>
 
-          {/* CTA Button */}
           <m.div
             initial={shouldReduce ? false : { opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -74,32 +68,28 @@ export function CTASection({
           >
             <a
               href={ctaHref}
-              className="group inline-flex items-center justify-center gap-3 rounded-full bg-brand-accent px-8 py-4 text-sm font-bold text-white shadow-xl shadow-brand-accent/25 transition-all duration-300 hover:scale-[1.02] hover:-translate-y-0.5 hover:bg-brand-400 hover:shadow-brand-accent/40"
+              className="group inline-flex h-14 items-center justify-center gap-2 rounded-full bg-brand-accent px-10 text-[1rem] font-bold text-white shadow-xl shadow-brand-accent/25 transition-all duration-300 hover:scale-[1.02] hover:-translate-y-0.5 hover:bg-brand-400 hover:shadow-brand-accent/40"
             >
               {ctaLabel}
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </a>
 
-            {/* Trust signals */}
             {trustSignals && trustSignals.length > 0 && (
-              <div className="mt-8 flex items-center justify-center gap-6 flex-wrap">
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
                 {trustSignals.map((signal) => (
                   <span
                     key={signal}
-                    className="flex items-center gap-2 text-sm text-brand-midnight/60 dark:text-brand-white/50"
+                    className="flex items-center gap-1.5 text-xs text-white/70"
                   >
-                    <CheckCircle className="h-4 w-4 text-brand-accent" />
+                    <CheckCircle className="h-3.5 w-3.5 text-brand-accent-light" />
                     {signal}
                   </span>
                 ))}
               </div>
             )}
 
-            {/* Footnote */}
             {footnote && (
-              <p className="mt-6 text-xs text-brand-midnight/40 dark:text-brand-white/30">
-                {footnote}
-              </p>
+              <p className="mt-6 text-xs text-white/50">{footnote}</p>
             )}
           </m.div>
         </div>

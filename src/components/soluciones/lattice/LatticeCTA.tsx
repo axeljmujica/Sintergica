@@ -2,7 +2,8 @@
 
 import { useRef } from "react";
 import { LazyMotion, domAnimation, m, useInView, useReducedMotion } from "motion/react";
-import { CheckCircle } from "lucide-react";
+import { ArrowRight, CheckCircle } from "lucide-react";
+import Image from "next/image";
 
 const BULLETS = [
   "45 minutos, sin costo, sin permanencia",
@@ -29,52 +30,72 @@ export function LatticeCTA() {
       <section
         ref={ref}
         id="contacto"
-        className="relative overflow-hidden py-28 px-6 lg:py-36"
+        className="relative overflow-hidden bg-black py-28 sm:py-36"
         aria-label="CTA final"
       >
-        {/* Gradient background */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#040615] via-[#0d101e] to-[#040615]" />
-        <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full bg-[#006EFA]/[0.08] blur-[140px]" aria-hidden="true" />
+        {/* Background image */}
+        <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
+          <Image
+            src="/images/121725.jpg"
+            alt=""
+            fill
+            className="object-cover opacity-80"
+          />
+          <div className="absolute inset-0 bg-black/60 dark:bg-black/70" />
+        </div>
 
-        <div className="relative mx-auto max-w-3xl text-center">
-          {/* Title */}
+        <div className="relative z-10 mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+          <m.div {...anim(0)}>
+            <span className="mb-4 inline-block rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-[0.75rem] font-semibold uppercase tracking-wider text-white">
+              Siguiente paso
+            </span>
+          </m.div>
+
           <m.h2
-            {...anim(0)}
-            className="font-gilroy text-3xl font-bold text-white md:text-4xl lg:text-5xl"
+            {...anim(0.05)}
+            className="font-proxima text-balance text-[1.75rem] font-bold leading-[1.15] tracking-tight text-white sm:text-[2.25rem] lg:text-[2.75rem]"
           >
             Pasa de la conversación a la ejecución.
           </m.h2>
 
           <m.p
             {...anim(0.1)}
-            className="mt-5 text-xl text-white/65"
+            className="mx-auto mt-6 max-w-2xl text-base leading-[1.8] text-white/80 sm:text-lg"
           >
             Agenda un diagnóstico inteligente y descubre cómo integrar la IA en los procesos clave de tu empresa hoy mismo.
           </m.p>
 
-          {/* CTA buttons */}
-          <m.div {...anim(0.2)} className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+          <m.div
+            {...anim(0.2)}
+            className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
+          >
             <a
               href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-glow inline-flex items-center justify-center rounded-xl bg-[#006EFA] px-10 py-4 text-base font-semibold text-white transition-all duration-300 hover:bg-[#0058CC]"
+              className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-brand-accent px-10 text-[1rem] font-bold text-white shadow-xl shadow-brand-accent/25 transition-all duration-300 hover:scale-[1.02] hover:-translate-y-0.5 hover:bg-brand-400 hover:shadow-brand-accent/40"
             >
               Agenda tu Diagnóstico Inteligente
+              <ArrowRight className="h-4 w-4" />
             </a>
             <a
               href="mailto:hola@sintergica.ai"
-              className="inline-flex items-center justify-center rounded-xl border border-white/[0.12] px-8 py-4 text-base font-semibold text-white/80 transition-colors duration-200 hover:bg-white/[0.05] hover:text-white"
+              className="inline-flex h-14 items-center justify-center rounded-full border border-white/20 bg-white/5 px-8 text-[1rem] font-semibold text-white transition-colors duration-200 hover:bg-white/10"
             >
               Escríbenos →
             </a>
           </m.div>
 
-          {/* Trust bullets */}
-          <m.ul {...anim(0.35)} className="mt-10 flex flex-wrap justify-center gap-x-8 gap-y-3">
+          <m.ul
+            {...anim(0.35)}
+            className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-3"
+          >
             {BULLETS.map((bullet) => (
-              <li key={bullet} className="flex items-center gap-2 text-sm text-white/50">
-                <CheckCircle className="h-4 w-4 shrink-0 text-emerald-400/60" />
+              <li
+                key={bullet}
+                className="flex items-center gap-1.5 text-xs text-white/70"
+              >
+                <CheckCircle className="h-3.5 w-3.5 text-brand-accent-light" />
                 {bullet}
               </li>
             ))}

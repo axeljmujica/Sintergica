@@ -2,8 +2,9 @@
 
 import { useRef } from "react";
 import { LazyMotion, domAnimation, m, useInView, useReducedMotion } from "motion/react";
-import { CheckCircle, ChevronRight } from "lucide-react";
+import { ArrowRight, CheckCircle } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const TRUST_SIGNALS = [
   "Interfaz en español",
@@ -27,82 +28,81 @@ export function SalesHubCTA() {
 
   return (
     <LazyMotion features={domAnimation}>
-    <section
-      id="contacto"
-      className="relative bg-brand-surface dark:bg-brand-navy py-24 px-6"
-      aria-label="CTA SalesHub"
-    >
-      {/* Subtle green gradient at bottom */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        aria-hidden="true"
-        style={{
-          background:
-            "linear-gradient(to top, rgba(22,163,74,0.05) 0%, transparent 50%)",
-        }}
-      />
+      <section
+        ref={ref}
+        id="contacto"
+        className="relative overflow-hidden bg-black py-28 sm:py-36"
+        aria-label="CTA SalesHub"
+      >
+        {/* Background image */}
+        <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
+          <Image
+            src="/images/121725.jpg"
+            alt=""
+            fill
+            className="object-cover opacity-80"
+          />
+          <div className="absolute inset-0 bg-black/60 dark:bg-black/70" />
+        </div>
 
-      <div ref={ref} className="relative mx-auto max-w-3xl text-center">
-        <m.div {...anim(0)}>
-          <span className="inline-block rounded-full border border-success-600/20 bg-success-600/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-success-600">
-            Siguiente paso
-          </span>
-        </m.div>
-
-        <m.h2
-          {...anim(0.1)}
-          className="mt-6 font-proxima text-3xl font-bold leading-tight text-brand-midnight dark:text-brand-white md:text-4xl"
-        >
-          Tu equipo comercial merece una mejor herramienta.
-        </m.h2>
-
-        <m.p
-          {...anim(0.2)}
-          className="mt-4 text-base text-brand-midnight/60 dark:text-brand-white/60"
-        >
-          Solicita una demo de SalesHub. Te mostramos cómo se ve tu operación
-          comercial con captación, nurturing, pipeline y reportes en un solo
-          lugar. Sin permanencia.
-        </m.p>
-
-        <m.div {...anim(0.3)}>
-          <Link
-            href="/soluciones/lattice"
-            className="group mt-8 inline-flex items-center gap-2 rounded-xl bg-brand-accent px-8 py-4 text-[1rem] font-semibold text-brand-midnight dark:text-brand-white shadow-lg shadow-brand-accent/25 transition-all duration-300 hover:scale-[1.02] hover:bg-brand-400 hover:shadow-brand-accent/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2"
-          >
-            Descubrir el ecosistema Lattice
-            <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-          </Link>
-        </m.div>
-
-        {/* Trust signals */}
-        <m.div
-          {...anim(0.4)}
-          className="mt-6 flex flex-wrap justify-center gap-6"
-        >
-          {TRUST_SIGNALS.map((signal) => (
-            <span
-              key={signal}
-              className="flex items-center gap-1.5 text-sm text-brand-midnight/50 dark:text-brand-white/50"
-            >
-              <CheckCircle className="h-4 w-4" />
-              {signal}
+        <div className="relative z-10 mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+          <m.div {...anim(0)}>
+            <span className="mb-4 inline-block rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-[0.75rem] font-semibold uppercase tracking-wider text-white">
+              Siguiente paso
             </span>
-          ))}
-        </m.div>
+          </m.div>
 
-          {/* Cross-link to Lattice */}
+          <m.h2
+            {...anim(0.1)}
+            className="font-proxima text-balance text-[1.75rem] font-bold leading-[1.15] tracking-tight text-white sm:text-[2.25rem] lg:text-[2.75rem]"
+          >
+            Tu equipo comercial merece una mejor herramienta.
+          </m.h2>
+
+          <m.p
+            {...anim(0.2)}
+            className="mx-auto mt-6 max-w-2xl text-base leading-[1.8] text-white/80 sm:text-lg"
+          >
+            Solicita una demo de SalesHub. Te mostramos cómo se ve tu operación
+            comercial con captación, nurturing, pipeline y reportes en un solo
+            lugar. Sin permanencia.
+          </m.p>
+
+          <m.div {...anim(0.3)} className="mt-10">
+            <Link
+              href="/soluciones/lattice"
+              className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-brand-accent px-10 text-[1rem] font-bold text-white shadow-xl shadow-brand-accent/25 transition-all duration-300 hover:scale-[1.02] hover:-translate-y-0.5 hover:bg-brand-400 hover:shadow-brand-accent/40"
+            >
+              Descubrir el ecosistema Lattice
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </m.div>
+
+          <m.div
+            {...anim(0.4)}
+            className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-3"
+          >
+            {TRUST_SIGNALS.map((signal) => (
+              <span
+                key={signal}
+                className="flex items-center gap-1.5 text-xs text-white/70"
+              >
+                <CheckCircle className="h-3.5 w-3.5 text-brand-accent-light" />
+                {signal}
+              </span>
+            ))}
+          </m.div>
+
           <m.p {...anim(0.5)} className="mt-8">
             <Link
               href="/soluciones/lattice"
-              className="text-sm text-brand-accent transition-colors hover:text-brand-accent/80"
+              className="text-sm text-brand-accent-light transition-colors hover:text-white"
             >
-              ¿Necesitas también IA para tu operación legal, compliance o
-              análisis? Conoce Lattice →
+              ¿Necesitas también IA para tu operación legal, compliance o análisis? Conoce Lattice →
             </Link>
           </m.p>
-      </div>
-    </section>
+        </div>
+      </section>
     </LazyMotion>
   );
 }
