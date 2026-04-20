@@ -522,7 +522,7 @@ function FineTuningHero({ t }: { t: (typeof T)[keyof typeof T] }) {
 
       <div
         ref={ref}
-        className="relative z-10 mx-auto flex w-full max-w-5xl flex-1 flex-col justify-center px-6 pt-32 pb-0 text-center"
+        className="relative z-10 mx-auto flex w-full max-w-5xl flex-1 flex-col justify-center px-6 pt-32 pb-20 text-center"
       >
         {/* Brain mark — gradient brand→purple */}
         <m.div {...anim(0)} className="flex justify-center">
