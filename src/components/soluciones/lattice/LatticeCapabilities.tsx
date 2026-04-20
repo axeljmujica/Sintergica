@@ -3,6 +3,11 @@
 import { useRef } from "react";
 import { LazyMotion, domAnimation, m, useInView, useReducedMotion } from "motion/react";
 import { MessageSquare, Terminal, Bot, Workflow, type LucideIcon } from "lucide-react";
+import { LatticeChatMockup } from "./ui/LatticeChatMockup";
+import { LatticeAgentsMockup } from "./ui/LatticeAgentsMockup";
+import { LatticeFlowsMockup } from "./ui/LatticeFlowsMockup";
+import { LatticeCodeMockup } from "./ui/LatticeCodeMockup";
+import type { ComponentType } from "react";
 
 type Capability = {
   category: string;
@@ -13,6 +18,7 @@ type Capability = {
   accent: string;
   tint: string;
   proximamente?: boolean;
+  Mockup?: ComponentType;
 };
 
 const CAPABILITIES: Capability[] = [
@@ -24,6 +30,7 @@ const CAPABILITIES: Capability[] = [
     mockupLabel: "Interfaz de chat con canales por proyecto y citación",
     accent: "text-[#006EFA]",
     tint: "from-[#EEF4FF] to-[#F0F9FF]",
+    Mockup: LatticeChatMockup,
   },
   {
     category: "LATTICE AGENTS",
@@ -33,6 +40,7 @@ const CAPABILITIES: Capability[] = [
     mockupLabel: "Dashboard de tareas y agentes en segundo plano",
     accent: "text-[#9333EA]",
     tint: "from-[#F5F0FF] to-[#FAF5FF]",
+    Mockup: LatticeAgentsMockup,
   },
   {
     category: "LATTICE FLOWS",
@@ -42,6 +50,7 @@ const CAPABILITIES: Capability[] = [
     mockupLabel: "Builder visual de automatización con nodos",
     accent: "text-[#0EA5E9]",
     tint: "from-[#ECFEFF] to-[#F0F9FF]",
+    Mockup: LatticeFlowsMockup,
   },
   {
     category: "LATTICE CODE",
@@ -52,6 +61,7 @@ const CAPABILITIES: Capability[] = [
     accent: "text-[#16A34A]",
     tint: "from-[#F0FDF4] to-[#ECFDF5]",
     proximamente: true,
+    Mockup: LatticeCodeMockup,
   },
 ];
 
@@ -89,7 +99,7 @@ export function LatticeCapabilities() {
 
           {/* Zigzag blocks */}
           <div className="mt-20 flex flex-col gap-24">
-            {CAPABILITIES.map(({ category, title, body, icon: Icon, mockupLabel, accent, tint, proximamente }, i) => {
+            {CAPABILITIES.map(({ category, title, body, icon: Icon, mockupLabel, accent, tint, proximamente, Mockup }, i) => {
               const isEven = i % 2 === 0;
               return (
                 <div
@@ -128,6 +138,9 @@ export function LatticeCapabilities() {
                     transition={{ duration: 0.6, delay: 0.3 }}
                     className="w-full lg:w-1/2"
                   >
+                    {Mockup ? (
+                      <Mockup />
+                    ) : (
                     <div
                       className={`relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-gradient-to-br ${tint} shadow-[0_20px_40px_-16px_rgba(15,23,42,0.15)] ring-1 ring-slate-200/80`}
                     >
@@ -158,6 +171,7 @@ export function LatticeCapabilities() {
                         </span>
                       </div>
                     </div>
+                    )}
                   </m.div>
                 </div>
               );

@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { LazyMotion, domAnimation, m, useInView, useReducedMotion } from "motion/react";
 import { Shield, Settings, Plug, Server, ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 const FEATURES = [
   {
@@ -48,17 +49,27 @@ export function LatticeGovernance() {
     <LazyMotion features={domAnimation}>
       <section
         ref={ref}
-        className="relative overflow-hidden bg-[#0a1628] py-24 lg:py-32"
+        className="relative overflow-hidden bg-black py-24 lg:py-32"
         aria-label="Seguridad y gobernanza"
       >
+        {/* Background image */}
+        <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+          <Image
+            src="/images/2151895873.jpg"
+            alt=""
+            fill
+            className="object-cover opacity-40"
+          />
+          <div className="absolute inset-0 bg-black/70" />
+        </div>
+
         {/* Decorative glows */}
-        <div className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 rounded-full bg-[#006EFA]/[0.08] blur-[120px]" />
-        <div className="pointer-events-none absolute -bottom-32 right-1/4 h-[400px] w-[400px] rounded-full bg-[#9333EA]/[0.06] blur-[100px]" />
+        <div className="pointer-events-none absolute left-1/2 top-0 z-[1] h-[500px] w-[700px] -translate-x-1/2 rounded-full bg-[#006EFA]/[0.06] blur-[120px]" />
 
         {/* Grid pattern overlay */}
         <svg
           aria-hidden="true"
-          className="absolute inset-0 h-full w-full text-white/[0.02]"
+          className="absolute inset-0 z-[1] h-full w-full text-white/[0.02]"
         >
           <defs>
             <pattern
@@ -78,7 +89,7 @@ export function LatticeGovernance() {
           <rect width="100%" height="100%" fill="url(#governance-grid)" />
         </svg>
 
-        <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
           {/* Header */}
           <m.div
             initial={shouldReduce ? false : { opacity: 0, y: 20 }}
