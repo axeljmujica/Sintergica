@@ -32,7 +32,7 @@ export function LatticeNaatHero() {
   return (
     <LazyMotion features={domAnimation}>
       <section
-        className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black px-6 pb-16 pt-28"
+        className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#0A0F1C] px-6 pb-16 pt-28"
         aria-label="Lattice Na'at Hero"
       >
         {/* Video background */}
@@ -45,9 +45,9 @@ export function LatticeNaatHero() {
             playsInline
             className="absolute inset-0 h-full w-full object-cover opacity-45"
           />
-          {/* Gradient overlay — heavier at edges, lighter in center */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/80" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
+          {/* Gradient overlay — dark blue from palette, heavier at edges */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0A0F1C]/70 via-brand-midnight/30 to-[#0A0F1C]/85" />
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/50 via-transparent to-brand-navy/50" />
         </div>
 
         {/* Blue glow hints */}
