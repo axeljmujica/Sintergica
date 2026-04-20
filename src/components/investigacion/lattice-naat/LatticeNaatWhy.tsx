@@ -38,15 +38,21 @@ export function LatticeNaatWhy() {
 
           {/* Stats grid */}
           <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3">
-            {c.stats.map((stat, i) => (
+            {c.stats.map((stat, i) => {
+              const colors = [
+                { border: "border-rose-500/25", bg: "bg-rose-500/[0.06]", text: "text-rose-600 dark:text-rose-400" },
+                { border: "border-amber-500/25", bg: "bg-amber-500/[0.06]", text: "text-amber-600 dark:text-amber-400" },
+                { border: "border-brand-accent/25", bg: "bg-brand-accent/[0.06]", text: "text-brand-accent" },
+              ][i] ?? { border: "border-brand-accent/25", bg: "bg-brand-accent/[0.06]", text: "text-brand-accent" };
+              return (
               <m.div
                 key={stat.label}
                 initial={shouldReduce ? false : { opacity: 0, y: 24 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: shouldReduce ? 0 : 0.5, delay: i * 0.1 }}
-                className="rounded-2xl border border-brand-accent/25 bg-brand-accent/[0.06] p-6"
+                className={`rounded-2xl border ${colors.border} ${colors.bg} p-6`}
               >
-                <p className="font-proxima font-extrabold text-3xl md:text-4xl text-brand-accent">
+                <p className={`font-proxima font-extrabold text-3xl md:text-4xl ${colors.text}`}>
                   {stat.value}
                 </p>
                 <p className="mt-3 text-sm font-semibold text-brand-midnight dark:text-brand-white">
@@ -56,7 +62,7 @@ export function LatticeNaatWhy() {
                   {stat.source}
                 </p>
               </m.div>
-            ))}
+            );})}
           </div>
 
           {/* Prose */}

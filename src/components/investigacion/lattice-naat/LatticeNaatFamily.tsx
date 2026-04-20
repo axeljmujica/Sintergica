@@ -8,12 +8,62 @@ import { NAAT_DEFAULT } from "@/lib/lattice-naat-i18n";
 
 const c = NAAT_DEFAULT.family;
 
-const MODEL_ICONS: Record<string, LucideIcon> = {
-  edge: Zap,
-  compact: Cpu,
-  standard: Layers,
-  advanced: Server,
-  full: Cloud,
+interface ModelStyle {
+  icon: LucideIcon;
+  bar: string;
+  iconBg: string;
+  iconColor: string;
+  paramColor: string;
+  border: string;
+  featuredBorder: string;
+}
+
+const MODEL_STYLES: Record<string, ModelStyle> = {
+  edge: {
+    icon: Zap,
+    bar: "bg-slate-400",
+    iconBg: "bg-slate-100 dark:bg-slate-700/50",
+    iconColor: "text-slate-500 dark:text-slate-400",
+    paramColor: "text-slate-500 dark:text-slate-400",
+    border: "border-slate-200 dark:border-slate-700/50",
+    featuredBorder: "border-slate-300",
+  },
+  compact: {
+    icon: Cpu,
+    bar: "bg-sky-500",
+    iconBg: "bg-sky-50 dark:bg-sky-900/30",
+    iconColor: "text-sky-600 dark:text-sky-400",
+    paramColor: "text-sky-600 dark:text-sky-400",
+    border: "border-sky-100 dark:border-sky-900/30",
+    featuredBorder: "border-sky-200",
+  },
+  standard: {
+    icon: Layers,
+    bar: "bg-brand-accent",
+    iconBg: "bg-blue-50 dark:bg-blue-900/30",
+    iconColor: "text-brand-accent",
+    paramColor: "text-brand-accent",
+    border: "border-brand-accent/25",
+    featuredBorder: "border-brand-accent/40",
+  },
+  advanced: {
+    icon: Server,
+    bar: "bg-violet-500",
+    iconBg: "bg-violet-50 dark:bg-violet-900/30",
+    iconColor: "text-violet-600 dark:text-violet-400",
+    paramColor: "text-violet-600 dark:text-violet-400",
+    border: "border-violet-200 dark:border-violet-800/40",
+    featuredBorder: "border-violet-400/50",
+  },
+  full: {
+    icon: Cloud,
+    bar: "bg-gradient-to-r from-violet-500 via-brand-accent to-sky-400",
+    iconBg: "bg-gradient-to-br from-violet-50 to-blue-50 dark:from-violet-900/30 dark:to-blue-900/30",
+    iconColor: "text-violet-600 dark:text-violet-400",
+    paramColor: "text-violet-600 dark:text-violet-400",
+    border: "border-violet-200 dark:border-violet-800/40",
+    featuredBorder: "border-violet-400/60",
+  },
 };
 
 export function LatticeNaatFamily() {
@@ -50,11 +100,9 @@ export function LatticeNaatFamily() {
           {/* Models grid */}
           <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
             {c.models.map((model, i) => {
-              const Icon = MODEL_ICONS[model.id] ?? Layers;
-              const borderCls = model.featured
-                ? "border-brand-accent/40 shadow-lg shadow-brand-accent/5"
-                : "border-brand-midnight/8 dark:border-brand-white/10";
-              const barCls = model.featured ? "bg-brand-accent" : "bg-brand-midnight/20 dark:bg-brand-white/20";
+              const style = MODEL_STYLES[model.id] ?? MODEL_STYLES.standard;
+              const Icon = style.icon;
+              const borderCls = model.featured ? style.featuredBorder : style.border;
 
               return (
                 <m.div
@@ -62,30 +110,30 @@ export function LatticeNaatFamily() {
                   initial={shouldReduce ? false : { opacity: 0, y: 28 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: shouldReduce ? 0 : 0.45, delay: i * 0.08 }}
-                  className={`relative flex flex-col overflow-hidden rounded-2xl border bg-brand-white dark:bg-brand-navy/60 ${borderCls}`}
+                  className={`relative flex flex-col overflow-hidden rounded-2xl border bg-white dark:bg-brand-navy/60 shadow-sm ${borderCls} ${model.featured ? "shadow-md" : ""}`}
                 >
                   {/* Featured star */}
                   {model.featured && (
-                    <span className="absolute top-4 right-4 flex items-center gap-1 rounded-full border border-brand-accent/30 bg-brand-accent/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand-accent">
-                      <Star className="h-3 w-3 fill-brand-accent" />
+                    <span className={`absolute top-4 right-4 flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${style.border} ${style.iconBg} ${style.paramColor}`}>
+                      <Star className="h-3 w-3 fill-current" />
                       Principal
                     </span>
                   )}
 
-                  {/* Top accent bar */}
-                  <div className={`h-1 w-full ${barCls}`} />
+                  {/* Colored top bar */}
+                  <div className={`h-1 w-full ${style.bar}`} />
 
                   <div className="flex flex-1 flex-col p-6">
                     {/* Icon + name */}
                     <div className="flex items-start gap-3">
-                      <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${model.featured ? "bg-brand-accent/10" : "bg-brand-midnight/5 dark:bg-brand-white/5"}`}>
-                        <Icon className={`h-5 w-5 ${model.featured ? "text-brand-accent" : "text-brand-midnight/60 dark:text-brand-white/60"}`} />
+                      <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${style.iconBg}`}>
+                        <Icon className={`h-5 w-5 ${style.iconColor}`} />
                       </div>
                       <div>
                         <p className="font-proxima text-lg font-bold leading-tight text-brand-midnight dark:text-brand-white">
                           {model.name}
                         </p>
-                        <p className={`text-sm font-semibold ${model.featured ? "text-brand-accent" : "text-brand-midnight/55 dark:text-brand-white/55"}`}>
+                        <p className={`text-sm font-semibold ${style.paramColor}`}>
                           {model.params}
                         </p>
                       </div>
