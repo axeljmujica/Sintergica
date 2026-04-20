@@ -84,7 +84,7 @@ export function LatticeNaatDifferentiators() {
     <LazyMotion features={domAnimation}>
       <section
         id="diferenciadores"
-        className="relative overflow-hidden bg-brand-surface dark:bg-brand-midnight py-24 px-6"
+        className="relative overflow-hidden bg-brand-midnight py-24 px-6"
         aria-label={c.h2}
       >
         {/* Decorative glows */}
@@ -104,7 +104,7 @@ export function LatticeNaatDifferentiators() {
             <span className="inline-flex items-center rounded-full border border-brand-accent/20 bg-brand-accent/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-accent">
               {c.badge}
             </span>
-            <h2 className="mt-4 font-proxima font-bold text-brand-midnight dark:text-brand-white text-3xl md:text-4xl text-balance">
+            <h2 className="mt-4 font-proxima font-bold text-white text-3xl md:text-4xl text-balance">
               {c.h2}
             </h2>
           </m.div>
@@ -120,7 +120,7 @@ export function LatticeNaatDifferentiators() {
                   initial={shouldReduce ? false : { opacity: 0, y: 24 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: shouldReduce ? 0 : 0.45, delay: i * 0.08 }}
-                  className={`group rounded-2xl border bg-white dark:bg-brand-navy/50 p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg ${style.border} ${style.hoverBorder} ${style.hoverShadow}`}
+                  className={`group rounded-2xl border bg-brand-navy/60 p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg ${style.border} ${style.hoverBorder} ${style.hoverShadow}`}
                 >
                   <div className={`flex h-11 w-11 items-center justify-center rounded-lg ${style.iconBg} transition-transform group-hover:scale-110`}>
                     <Icon className={`h-5 w-5 ${style.iconColor}`} />
@@ -128,7 +128,7 @@ export function LatticeNaatDifferentiators() {
                   <h3 className={`mt-5 font-proxima text-lg font-semibold ${style.accent}`}>
                     {item.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-brand-midnight/65 dark:text-brand-white/65">
+                  <p className="mt-2 text-sm leading-relaxed text-white/60">
                     {item.desc}
                   </p>
                 </m.div>

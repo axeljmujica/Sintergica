@@ -16,7 +16,7 @@ export function LatticeNaatRoadmap() {
     <LazyMotion features={domAnimation}>
       <section
         id="hoja-de-ruta"
-        className="bg-brand-surface dark:bg-brand-midnight py-24 px-6"
+        className="bg-brand-midnight py-24 px-6"
         aria-label={c.h2}
       >
         <div ref={ref} className="mx-auto max-w-5xl">
@@ -30,10 +30,10 @@ export function LatticeNaatRoadmap() {
             <span className="inline-flex items-center rounded-full border border-brand-accent/20 bg-brand-accent/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-accent">
               {c.badge}
             </span>
-            <h2 className="mt-4 font-proxima font-bold text-brand-midnight dark:text-brand-white text-3xl md:text-4xl text-balance">
+            <h2 className="mt-4 font-proxima font-bold text-white text-3xl md:text-4xl text-balance">
               {c.h2}
             </h2>
-            <p className="mt-4 text-brand-midnight/60 dark:text-brand-white/60 text-balance">
+            <p className="mt-4 text-white/60 text-balance">
               {c.subtitle}
             </p>
           </m.div>
@@ -63,7 +63,7 @@ export function LatticeNaatRoadmap() {
                           <CheckCircle2 className="relative h-6 w-6 text-brand-accent fill-brand-accent/20" />
                         </div>
                       ) : (
-                        <div className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-brand-accent/40 bg-brand-surface dark:bg-brand-midnight">
+                        <div className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-brand-accent/40 bg-brand-midnight">
                           <Circle className="h-2 w-2 fill-brand-accent/40 text-brand-accent/40" />
                         </div>
                       )}
@@ -74,10 +74,10 @@ export function LatticeNaatRoadmap() {
                       <div className={`inline-block rounded-2xl border p-6 ${
                         isCurrent
                           ? "border-brand-accent/40 bg-gradient-to-br from-brand-accent/10 to-brand-accent/5"
-                          : "border-brand-midnight/10 dark:border-brand-white/10 bg-brand-white dark:bg-brand-navy/50"
+                          : "border-white/10 bg-brand-navy/60"
                       }`}>
                         <div className="flex items-center gap-2 flex-wrap">
-                          <p className={`font-proxima font-extrabold text-2xl ${isCurrent ? "text-brand-accent" : "text-brand-midnight dark:text-brand-white"}`}>
+                          <p className={`font-proxima font-extrabold text-2xl ${isCurrent ? "text-brand-accent" : "text-white"}`}>
                             {ms.year}
                           </p>
                           {isCurrent && (
@@ -89,7 +89,7 @@ export function LatticeNaatRoadmap() {
                         <p className="mt-2 font-proxima text-lg font-semibold text-brand-midnight dark:text-brand-white">
                           {ms.title}
                         </p>
-                        <p className="mt-2 text-sm leading-relaxed text-brand-midnight/65 dark:text-brand-white/65">
+                        <p className="mt-2 text-sm leading-relaxed text-white/60">
                           {ms.desc}
                         </p>
                       </div>
