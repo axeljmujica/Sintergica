@@ -214,10 +214,10 @@ const T = {
 const BOOKING_URL = "https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4";
 
 const INCLUYE_BASE = [
-  { icon: Users,     image: "/images/implementacion-hero.jpg",           iconColor: "text-brand-accent",   iconBg: "bg-brand-accent/10",   accent: "from-brand-accent/80"   },
-  { icon: Server,    image: "/images/ai-cloud-concept-with-lit-brain.jpg", iconColor: "text-violet-400",     iconBg: "bg-violet-500/10",     accent: "from-violet-700/85"     },
-  { icon: Shield,    image: "/images/121725.jpg",                         iconColor: "text-emerald-400",    iconBg: "bg-emerald-500/10",    accent: "from-emerald-700/85"    },
-  { icon: BookOpen,  image: "/images/implementacion-hero.jpg",           iconColor: "text-amber-400",      iconBg: "bg-amber-500/10",      accent: "from-amber-700/85"      },
+  { icon: Users,    image: "/images/Lattice-Agents-configurados-implementacion.jpg", iconColor: "text-blue-400",    iconBg: "bg-blue-500/10",    borderColor: "rgba(96,165,250,0.45)",  glowColor: "rgba(59,130,246,0.5)"   },
+  { icon: Server,   image: "/images/arquitectura-flexible-implementacion.jpg",       iconColor: "text-violet-400",  iconBg: "bg-violet-500/10",  borderColor: "rgba(167,139,250,0.45)", glowColor: "rgba(139,92,246,0.5)"   },
+  { icon: Shield,   image: "/images/seguridad-implementacion.jpg",                   iconColor: "text-emerald-400", iconBg: "bg-emerald-500/10", borderColor: "rgba(52,211,153,0.45)",  glowColor: "rgba(16,185,129,0.5)"   },
+  { icon: BookOpen, image: "/images/capacitacion-implementacion.jpg",                iconColor: "text-amber-400",   iconBg: "bg-amber-500/10",   borderColor: "rgba(251,191,36,0.45)",  glowColor: "rgba(245,158,11,0.5)"   },
 ];
 
 export function ImplementacionContent() {
@@ -247,7 +247,7 @@ export function ImplementacionContent() {
         {/* Hero — seeb-style full height dark */}
         <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#0A0F1C] px-6 pb-16 pt-28">
           <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-            <Image src="/images/implementacion-hero.jpg" alt="" fill priority className="object-cover opacity-40" sizes="100vw" />
+            <Image src="/images/implementacion-hero.jpg" alt="" fill priority className="object-cover opacity-60" sizes="100vw" />
             <div className="absolute inset-0 bg-gradient-to-b from-[#0A0F1C]/65 via-brand-midnight/35 to-[#0A0F1C]/90" />
             <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/50 via-transparent to-brand-navy/50" />
           </div>
@@ -262,10 +262,10 @@ export function ImplementacionContent() {
                 {t.hero.badge}
               </span>
             </m.div>
-            <m.h1 {...anim(0.1)} className="mt-7 font-proxima text-5xl font-extrabold leading-[1.08] tracking-tight text-white md:text-6xl lg:text-7xl text-balance">
+            <m.h1 {...anim(0.1)} className="mt-6 font-proxima text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[4rem] text-balance">
               {t.hero.title}
             </m.h1>
-            <m.p {...anim(0.2)} className="mx-auto mt-6 max-w-3xl text-base leading-relaxed text-white/70 md:text-lg">
+            <m.p {...anim(0.2)} className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/75 md:text-xl">
               {t.hero.subtitle}
             </m.p>
             <m.div {...anim(0.3)} className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -296,7 +296,7 @@ export function ImplementacionContent() {
               <div className="order-2 lg:order-1 relative h-[400px] w-full rounded-2xl overflow-hidden border border-brand-midnight/10 dark:border-brand-white/10 shadow-2xl group">
                 <div className="absolute inset-0 bg-brand-midnight/10 dark:bg-brand-midnight/30 mix-blend-multiply z-10 transition-colors duration-500 group-hover:bg-transparent"></div>
                 <Image
-                  src="/images/121725.jpg"
+                  src="/images/2150061986.jpg"
                   alt={t.intro.imageAlt}
                   fill
                   className="object-cover object-left transition-transform duration-700 group-hover:scale-105"
@@ -330,10 +330,11 @@ export function ImplementacionContent() {
         </section>
 
         {/* What's included */}
-        <section className="bg-gradient-to-br from-slate-900 via-brand-midnight to-slate-900 py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-          {/* Decorative element */}
-          <div className="pointer-events-none absolute right-0 bottom-0 translate-x-1/3 translate-y-1/3 flex items-center justify-center opacity-10">
-            <div className="h-[600px] w-[600px] rounded-full bg-brand-accent blur-[150px]" />
+        <section className="bg-[#0A0F1C] py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+          {/* Ambient glows */}
+          <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+            <div className="absolute top-0 right-0 h-[500px] w-[500px] rounded-full bg-brand-accent/10 blur-[150px]" />
+            <div className="absolute bottom-0 left-0 h-[400px] w-[400px] rounded-full bg-violet-600/8 blur-[140px]" />
           </div>
 
           <div className="mx-auto max-w-6xl relative z-10">
@@ -349,15 +350,17 @@ export function ImplementacionContent() {
                 return (
                   <m.div
                     key={content.title}
-                    initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-                    animate={inclInView ? { opacity: 1, y: 0 } : {}}
+                    initial={{ opacity: 1, y: 0 }}
                     transition={{ duration: shouldReduce ? 0 : 0.5, delay: shouldReduce ? 0 : i * 0.1 }}
-                    className="group relative flex gap-5 overflow-hidden rounded-2xl border border-brand-midnight/5 dark:border-brand-white/10 bg-brand-deep/80 backdrop-blur-sm p-8 transition-all duration-500 hover:border-white/20 hover:-translate-y-1"
+                    className="group relative flex gap-5 overflow-hidden rounded-2xl bg-[#0A0F1C] p-8 transition-all duration-500 hover:-translate-y-1"
+                    style={{ border: `1px solid ${item.borderColor}`, boxShadow: `0 0 0 1px ${item.borderColor}` }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = `0 0 30px -4px ${item.glowColor}, 0 0 0 1px ${item.borderColor}`; }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = `0 0 0 1px ${item.borderColor}`; }}
                   >
-                    {/* Hover background image */}
+                    {/* Background image — only on hover */}
                     <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
                       <Image src={item.image} alt="" fill className="object-cover" sizes="(max-width:768px) 100vw, 50vw" />
-                      <div className={`absolute inset-0 bg-gradient-to-br ${item.accent} to-brand-midnight/95`} />
+                      <div className="absolute inset-0 bg-[#0A0F1C]/65" />
                     </div>
                     {/* Icon */}
                     <m.div
@@ -368,8 +371,8 @@ export function ImplementacionContent() {
                       <Icon className={`h-6 w-6 ${item.iconColor} transition-colors duration-500 group-hover:text-white`} />
                     </m.div>
                     <div className="relative z-10">
-                      <h3 className="text-[18px] font-proxima font-semibold text-brand-midnight dark:text-brand-white mb-2 transition-colors duration-500 group-hover:text-white">{content.title}</h3>
-                      <p className="text-[14px] leading-relaxed text-brand-midnight/60 dark:text-brand-white/60 transition-colors duration-500 group-hover:text-white/80">{content.description}</p>
+                      <h3 className="text-[18px] font-proxima font-semibold text-white mb-2">{content.title}</h3>
+                      <p className="text-[14px] leading-relaxed text-white/70 transition-colors duration-500 group-hover:text-white/90">{content.description}</p>
                     </div>
                   </m.div>
                 );
