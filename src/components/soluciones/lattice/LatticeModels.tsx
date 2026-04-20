@@ -50,7 +50,7 @@ const MODELS = [
     iconColor: "text-purple-600",
     description:
       "Lattice también integra los principales modelos de última generación del mercado. Tu equipo elige el modelo por canal o por sesión, con control de costos visible antes de cada ejecución.",
-    note: "GPT-4, Claude, Gemini, Llama y más.",
+    note: "GPT 5.4, Claude Opus 4.7, Gemini 3.1 Pro y más.",
     link: null,
   },
 ];

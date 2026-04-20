@@ -10,7 +10,6 @@ import { LatticeProVerticals } from "@/components/soluciones/lattice/LatticeProV
 import { LatticeGovernance } from "@/components/soluciones/lattice/LatticeGovernance";
 import { LatticeComparison } from "@/components/soluciones/lattice/LatticeComparison";
 import { LatticeSecurity16 } from "@/components/soluciones/lattice/LatticeSecurity16";
-import { LatticeEnterpriseReady } from "@/components/soluciones/lattice/LatticeEnterpriseReady";
 import { LatticeModels } from "@/components/soluciones/lattice/LatticeModels";
 import { LatticeCTA } from "@/components/soluciones/lattice/LatticeCTA";
 
@@ -84,9 +83,8 @@ export default function LatticePage() {
         <div id="pilares"><LatticeArchitecture /></div>
         <div id="capacidades"><LatticeCapabilities /></div>
         <div id="verticales"><LatticeProVerticals /></div>
-        <div id="seguridad"><LatticeGovernance /></div>
         <div id="seguridad-capas"><LatticeSecurity16 /></div>
-        <LatticeEnterpriseReady />
+        <div id="seguridad"><LatticeGovernance /></div>
         <div id="comparativa"><LatticeComparison /></div>
         <div id="modelos"><LatticeModels /></div>
         <LatticeCTA />
