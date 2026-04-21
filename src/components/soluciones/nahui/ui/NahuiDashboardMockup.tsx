@@ -60,9 +60,9 @@ export function NahuiDashboardMockup() {
 
   return (
     <LazyMotion features={domAnimation}>
-      <div className="rounded-2xl border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-surface dark:bg-brand-navy shadow-2xl backdrop-blur-xl overflow-hidden flex flex-col h-[450px] sm:h-[600px] w-full max-w-[1000px] mx-auto">
+      <div className="rounded-2xl border border-brand-white/10 bg-[#090d1a] shadow-2xl backdrop-blur-xl overflow-hidden flex flex-col h-[450px] sm:h-[600px] w-full max-w-[1000px] mx-auto">
         {/* App Top Bar */}
-        <div className="flex h-12 items-center justify-between border-b border-brand-midnight/5 dark:border-brand-white/10 bg-brand-surface dark:bg-brand-deep px-4 shrink-0">
+        <div className="flex h-12 items-center justify-between border-b border-brand-white/10 bg-[#0d101e] px-4 shrink-0">
           <div className="flex items-center gap-4">
             {/* Mac dots */}
             <div className="flex items-center gap-1.5 mr-2">
@@ -70,8 +70,8 @@ export function NahuiDashboardMockup() {
               <span className="h-3 w-3 rounded-full bg-[#FEBC2E]" />
               <span className="h-3 w-3 rounded-full bg-[#28C840]" />
             </div>
-            <div className="hidden sm:flex items-center gap-2 rounded bg-brand-white dark:bg-brand-midnight/5 px-2 py-1.5 text-[11px] font-medium text-brand-midnight dark:text-brand-white">
-              <div className="flex h-4 w-4 items-center justify-center rounded bg-brand-accent-light/20 text-brand-accent-light">
+            <div className="hidden sm:flex items-center gap-2 rounded bg-brand-midnight/5 px-2 py-1.5 text-[11px] font-medium text-brand-white">
+              <div className="flex h-4 w-4 items-center justify-center rounded bg-brand-accent/20 text-brand-accent">
                 <Truck className="h-2.5 w-2.5" />
               </div>
               Nahui Ops
@@ -79,20 +79,20 @@ export function NahuiDashboardMockup() {
           </div>
           
           <div className="flex items-center gap-3">
-            <button aria-label="Notificaciones del sistema" className="hidden sm:flex items-center justify-center h-6 w-6 rounded bg-brand-accent-light/10 text-brand-accent-light hover:bg-brand-accent-light/20 transition-colors">
+            <button aria-label="Notificaciones del sistema" className="hidden sm:flex items-center justify-center h-6 w-6 rounded bg-brand-accent/10 text-brand-accent hover:bg-brand-accent/20 transition-colors">
               <CheckCircle2 className="h-3.5 w-3.5" />
             </button>
-            <button aria-label="Ver alertas" className="text-brand-midnight/50 dark:text-brand-white/50 hover:text-brand-white transition-colors">
+            <button aria-label="Ver alertas" className="text-brand-white/50 hover:text-brand-white transition-colors">
               <Bell className="h-4 w-4" />
             </button>
-            <button aria-label="Ajustes" className="text-brand-midnight/50 dark:text-brand-white/50 hover:text-brand-white transition-colors">
+            <button aria-label="Ajustes" className="text-brand-white/50 hover:text-brand-white transition-colors">
               <Settings className="h-4 w-4" />
             </button>
-            <div className="hidden sm:flex items-center gap-2 rounded-full bg-brand-white dark:bg-brand-midnight/5 py-1 pl-1 pr-3 border border-brand-midnight/5 dark:border-brand-white/10">
-              <div className="h-5 w-5 rounded-full bg-brand-accent-light/20 flex items-center justify-center">
-                <Truck className="h-3 w-3 text-brand-accent-light" />
+            <div className="hidden sm:flex items-center gap-2 rounded-full bg-brand-midnight/5 py-1 pl-1 pr-3 border border-brand-white/10">
+              <div className="h-5 w-5 rounded-full bg-brand-accent/20 flex items-center justify-center">
+                <Truck className="h-3 w-3 text-brand-accent" />
               </div>
-              <span className="text-[11px] font-medium text-brand-midnight/70 dark:text-brand-white/70">Nahui Logistics</span>
+              <span className="text-[11px] font-medium text-brand-white/70">Nahui Logistics</span>
             </div>
           </div>
         </div>
@@ -100,15 +100,15 @@ export function NahuiDashboardMockup() {
         {/* Main Content */}
         <div className="flex flex-1 overflow-hidden">
           {/* Left Sidebar */}
-          <div className="hidden md:flex w-48 flex-col bg-brand-surface dark:bg-brand-deep/60 border-r border-brand-midnight/5 dark:border-brand-white/10 p-3 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-            <button className="mb-6 flex w-full items-center justify-center gap-2 rounded-lg bg-brand-accent-light py-2 text-xs font-semibold text-brand-midnight hover:bg-brand-accent-light/90 transition-colors">
+          <div className="hidden md:flex w-48 flex-col bg-[#0d101e]/60 border-r border-brand-white/10 p-3 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            <button className="mb-6 flex w-full items-center justify-center gap-2 rounded-lg bg-brand-accent py-2 text-xs font-semibold text-brand-midnight hover:bg-brand-accent/90 transition-colors">
               <Plus className="h-4 w-4" />
               Crear orden
             </button>
 
             {SIDEBAR_MENUS.map(section => (
               <div key={section.title} className="mb-6">
-                <h4 className="mb-2 px-2 text-[10px] font-proxima font-semibold uppercase tracking-wider text-brand-midnight/40 dark:text-brand-white/40">
+                <h4 className="mb-2 px-2 text-[10px] font-proxima font-semibold uppercase tracking-wider text-brand-white/40">
                   {section.title}
                 </h4>
                 <div className="flex flex-col gap-0.5">
@@ -117,8 +117,8 @@ export function NahuiDashboardMockup() {
                       key={item.label}
                       className={`flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-medium transition-colors ${
                         item.active
-                          ? "bg-brand-accent-light/10 text-brand-accent-light"
-                          : "text-brand-midnight/70 dark:text-brand-white/70 hover:bg-brand-white/5 hover:text-brand-white"
+                          ? "bg-brand-accent/10 text-brand-accent"
+                          : "text-brand-white/70 hover:bg-brand-white/5 hover:text-brand-white"
                       }`}
                     >
                       <item.icon className="h-4 w-4" />
@@ -131,11 +131,11 @@ export function NahuiDashboardMockup() {
           </div>
 
           {/* Map Area */}
-          <div className="relative flex-1 bg-[#0c1520] overflow-hidden">
+          <div className="relative flex-1 bg-[#090a18] overflow-hidden">
             {/* SVG Grayscale city map */}
             <svg className="absolute inset-0 h-full w-full" aria-hidden="true" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
               {/* Base */}
-              <rect width="400" height="300" fill="#0c1520"/>
+              <rect width="400" height="300" fill="#090a18"/>
               {/* City blocks */}
               <rect x="0" y="0" width="80" height="90" fill="#101d2b" rx="1"/>
               <rect x="110" y="0" width="60" height="60" fill="#101d2b" rx="1"/>
@@ -175,27 +175,27 @@ export function NahuiDashboardMockup() {
               <defs>
                 <radialGradient id="mapVignette" cx="50%" cy="50%" r="70%">
                   <stop offset="0%" stopColor="transparent"/>
-                  <stop offset="100%" stopColor="#0c1520" stopOpacity="0.4"/>
+                  <stop offset="100%" stopColor="#090a18" stopOpacity="0.4"/>
                 </radialGradient>
               </defs>
               <rect width="400" height="300" fill="url(#mapVignette)"/>
             </svg>
 
             {/* Search overlay */}
-            <div className="absolute left-4 top-4 z-10 flex w-[calc(100%-2rem)] sm:w-72 items-center gap-2.5 rounded-xl border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-surface/95 dark:bg-brand-navy/95 px-3 py-2.5 shadow-xl backdrop-blur-md">
-              <Search className="h-4 w-4 text-brand-midnight/50 dark:text-brand-white/50" />
-              <span className="text-xs text-brand-midnight/50 dark:text-brand-white/50">Buscar por palabra clave...</span>
+            <div className="absolute left-4 top-4 z-10 flex w-[calc(100%-2rem)] sm:w-72 items-center gap-2.5 rounded-xl border border-brand-white/10 bg-[#090d1a]/95 px-3 py-2.5 shadow-xl backdrop-blur-md">
+              <Search className="h-4 w-4 text-brand-white/50" />
+              <span className="text-xs text-brand-white/50">Buscar por palabra clave...</span>
             </div>
 
             {/* Floating map tools */}
-            <div className="absolute left-4 top-20 z-10 hidden sm:flex flex-col items-center gap-2 rounded-full border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-surface/95 dark:bg-brand-navy/95 py-2 shadow-xl backdrop-blur-md w-10">
-              <button aria-label="Acercar mapa" className="p-1.5 text-brand-midnight/50 dark:text-brand-white/50 hover:text-brand-white transition-colors"><Plus className="h-4 w-4" /></button>
-              <div className="h-px w-6 bg-brand-white dark:bg-brand-midnight/10" />
-              <button aria-label="Alejar mapa" className="p-1.5 text-brand-midnight/50 dark:text-brand-white/50 hover:text-brand-white transition-colors"><Minus className="h-4 w-4" /></button>
-              <div className="h-px w-6 bg-brand-white dark:bg-brand-midnight/10" />
-              <button aria-label="Navegar" className="p-1.5 text-brand-midnight/50 dark:text-brand-white/50 hover:text-brand-white transition-colors"><Navigation className="h-4 w-4" /></button>
-              <button aria-label="Centrar en ruta" className="p-1.5 text-brand-accent-light"><MapPin className="h-4 w-4" /></button>
-              <button aria-label="Ver detalles" className="p-1.5 text-brand-midnight/50 dark:text-brand-white/50 hover:text-brand-white transition-colors"><Eye className="h-4 w-4" /></button>
+            <div className="absolute left-4 top-20 z-10 hidden sm:flex flex-col items-center gap-2 rounded-full border border-brand-white/10 bg-[#090d1a]/95 py-2 shadow-xl backdrop-blur-md w-10">
+              <button aria-label="Acercar mapa" className="p-1.5 text-brand-white/50 hover:text-brand-white transition-colors"><Plus className="h-4 w-4" /></button>
+              <div className="h-px w-6 bg-brand-white/10" />
+              <button aria-label="Alejar mapa" className="p-1.5 text-brand-white/50 hover:text-brand-white transition-colors"><Minus className="h-4 w-4" /></button>
+              <div className="h-px w-6 bg-brand-white/10" />
+              <button aria-label="Navegar" className="p-1.5 text-brand-white/50 hover:text-brand-white transition-colors"><Navigation className="h-4 w-4" /></button>
+              <button aria-label="Centrar en ruta" className="p-1.5 text-brand-accent"><MapPin className="h-4 w-4" /></button>
+              <button aria-label="Ver detalles" className="p-1.5 text-brand-white/50 hover:text-brand-white transition-colors"><Eye className="h-4 w-4" /></button>
             </div>
 
             {/* SVG Route */}
@@ -204,7 +204,7 @@ export function NahuiDashboardMockup() {
               <path
                 d="M 25% 75% L 45% 50% L 55% 65% L 70% 40% L 80% 25%"
                 fill="none"
-                className="stroke-brand-surface/30"
+                className="stroke-brand-white/30"
                 strokeWidth="2"
                 strokeDasharray="6 4"
               />
@@ -229,10 +229,10 @@ export function NahuiDashboardMockup() {
                     <CheckCircle2 className="h-3.5 w-3.5" />
                   </div>
                 ) : point.status === 'active' ? (
-                  <div className="relative flex h-7 w-7 items-center justify-center rounded-full bg-brand-accent-light text-brand-midnight shadow-lg shadow-brand-accent-light/30">
+                  <div className="relative flex h-7 w-7 items-center justify-center rounded-full bg-brand-accent text-brand-midnight shadow-lg shadow-brand-accent/30">
                     {!shouldReduce && (
                       <m.span 
-                        className="absolute inset-0 rounded-full bg-brand-accent-light"
+                        className="absolute inset-0 rounded-full bg-brand-accent"
                         animate={{ scale: [1, 1.6, 1], opacity: [0.5, 0, 0.5] }}
                         transition={{ duration: 2, repeat: Infinity }}
                       />
@@ -240,7 +240,7 @@ export function NahuiDashboardMockup() {
                     <Truck className="h-3.5 w-3.5 relative z-10" />
                   </div>
                 ) : (
-                  <div className="flex h-5 w-5 items-center justify-center rounded-full bg-brand-surface dark:bg-brand-navy border-2 border-brand-surface/20 text-brand-midnight/70 dark:text-brand-white/70 shadow-lg">
+                  <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#090d1a] border-2 border-brand-white/20 text-brand-white/70 shadow-lg">
                     <span className="text-[9px] font-bold">{point.id}</span>
                   </div>
                 )}
@@ -249,11 +249,11 @@ export function NahuiDashboardMockup() {
           </div>
 
           {/* Right Sidebar (Route details) */}
-          <div className="hidden lg:flex w-72 flex-col bg-brand-surface dark:bg-brand-deep/80 border-l border-brand-midnight/5 dark:border-brand-white/10">
-            <div className="flex items-center justify-between border-b border-brand-midnight/5 dark:border-brand-white/10 p-4 bg-brand-surface/50 dark:bg-brand-navy/50">
-              <h3 className="text-sm font-proxima font-semibold text-brand-midnight dark:text-brand-white">Ruta Activa</h3>
+          <div className="hidden lg:flex w-72 flex-col bg-[#0d101e]/80 border-l border-brand-white/10">
+            <div className="flex items-center justify-between border-b border-brand-white/10 p-4 bg-[#090d1a]/50">
+              <h3 className="text-sm font-proxima font-semibold text-brand-white">Ruta Activa</h3>
               <div className="flex items-center gap-2">
-                <button className="rounded bg-brand-accent-light/10 px-2 py-1 text-[10px] font-semibold text-brand-accent-light hover:bg-brand-accent-light/20 transition-colors">
+                <button className="rounded bg-brand-accent/10 px-2 py-1 text-[10px] font-semibold text-brand-accent hover:bg-brand-accent/20 transition-colors">
                   Optimizar
                 </button>
               </div>
@@ -265,9 +265,9 @@ export function NahuiDashboardMockup() {
                   <div className="h-3 w-6 rounded-full bg-[#16A34A] flex items-center p-0.5">
                     <div className="h-2 w-2 rounded-full bg-white ml-auto" />
                   </div>
-                  <span className="text-[11px] text-brand-midnight/60 dark:text-brand-white/60 font-medium">Múltiples entregas</span>
+                  <span className="text-[11px] text-brand-white/60 font-medium">Múltiples entregas</span>
                 </div>
-                <button className="flex items-center gap-1 text-[10px] text-brand-midnight/50 dark:text-brand-white/50 hover:text-brand-white transition-colors">
+                <button className="flex items-center gap-1 text-[10px] text-brand-white/50 hover:text-brand-white transition-colors">
                   <Plus className="h-3 w-3" />
                   Punto
                 </button>
@@ -278,27 +278,27 @@ export function NahuiDashboardMockup() {
                   key={rp.id}
                   className={`flex items-center gap-3 rounded-xl border p-2.5 transition-colors ${
                     rp.status === 'active' 
-                      ? "border-brand-accent-light/30 bg-brand-accent-light/5" 
+                      ? "border-brand-accent/30 bg-brand-accent/5" 
                       : rp.status === 'completed'
-                      ? "border-brand-midnight/5 dark:border-brand-white/10 bg-brand-surface/30 dark:bg-brand-navy/30"
-                      : "border-brand-midnight/5 dark:border-brand-white/10 bg-brand-surface/60 dark:bg-brand-navy/60 hover:border-brand-white/10"
+                      ? "border-brand-white/10 bg-[#090d1a]/30"
+                      : "border-brand-white/10 bg-[#090d1a]/60 hover:border-brand-white/10"
                   }`}
                 >
                   {/* Status Indicator */}
                   <div className={`flex h-5 w-5 shrink-0 items-center justify-center rounded text-[10px] font-bold ${
                     rp.status === 'completed' ? 'bg-[#16A34A]/20 text-[#16A34A]' :
-                    rp.status === 'active' ? 'bg-brand-accent-light text-brand-midnight' :
-                    'bg-brand-surface/10 text-brand-midnight/60 dark:text-brand-white/60'
+                    rp.status === 'active' ? 'bg-brand-accent text-brand-midnight' :
+                    'bg-brand-white/10 text-brand-white/60'
                   }`}>
                     {rp.id}
                   </div>
                   
                   {/* Content */}
                   <div className="flex flex-1 flex-col overflow-hidden">
-                    <span className={`truncate text-xs font-semibold ${rp.status === 'completed' ? 'text-brand-midnight/50 dark:text-brand-white/50 line-through' : 'text-brand-midnight dark:text-brand-white'}`}>
+                    <span className={`truncate text-xs font-semibold ${rp.status === 'completed' ? 'text-brand-white/50 line-through' : 'text-brand-white'}`}>
                       {rp.label}
                     </span>
-                    <div className="flex items-center gap-1.5 mt-0.5 text-[10px] text-brand-midnight/50 dark:text-brand-white/50">
+                    <div className="flex items-center gap-1.5 mt-0.5 text-[10px] text-brand-white/50">
                       {rp.status === 'completed' ? <CheckCircle2 className="h-3 w-3 text-[#16A34A]" /> : <Package className="h-3 w-3" />}
                       <span className="truncate">{rp.customer}</span>
                     </div>
@@ -306,7 +306,7 @@ export function NahuiDashboardMockup() {
 
                   {/* Actions */}
                   <div className="flex items-center gap-1 shrink-0">
-                    <button aria-label="Editar parada" className="flex h-5 w-5 items-center justify-center rounded bg-brand-surface/10 text-brand-midnight/50 dark:text-brand-white/50 hover:text-brand-white transition-colors">
+                    <button aria-label="Editar parada" className="flex h-5 w-5 items-center justify-center rounded bg-brand-white/10 text-brand-white/50 hover:text-brand-white transition-colors">
                       <Pencil className="h-3 w-3" />
                     </button>
                     <button aria-label="Eliminar parada" className="flex h-5 w-5 items-center justify-center rounded bg-[#EF4444]/10 text-[#EF4444] hover:bg-[#EF4444]/20 transition-colors">

@@ -2,27 +2,28 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/sections/Navbar";
 import { Footer } from "@/components/sections/Footer";
 import { FloatingNav } from "@/components/ui/floating-nav";
+import { NahuiHero } from "@/components/soluciones/nahui/NahuiHero";
+import { NahuiTrustBar } from "@/components/soluciones/nahui/NahuiTrustBar";
+import { NahuiPillars } from "@/components/soluciones/nahui/NahuiPillars";
+import { NahuiCapabilities } from "@/components/soluciones/nahui/NahuiCapabilities";
+import { NahuiUseCases } from "@/components/soluciones/nahui/NahuiUseCases";
+import { NahuiFlow } from "@/components/soluciones/nahui/NahuiFlow";
+import { NahuiSecurity } from "@/components/soluciones/nahui/NahuiSecurity";
+import { NahuiComparison } from "@/components/soluciones/nahui/NahuiComparison";
+import { NahuiCTA } from "@/components/soluciones/nahui/NahuiCTA";
 
 const NAHUI_NAV = [
-  { label: "Funcionalidades", href: "#funcionalidades" },
+  { label: "Capacidades", href: "#capacidades" },
   { label: "Industrias", href: "#industrias" },
   { label: "Flujo", href: "#flujo" },
-  { label: "Diferenciadores", href: "#diferenciadores" },
-  { label: "Integraciones", href: "#integraciones" },
+  { label: "Despliegue", href: "#despliegue" },
+  { label: "Por qué Nahui", href: "#por-que" },
 ];
-import { NahuiHero } from "@/components/soluciones/nahui/NahuiHero";
-import { NahuiStats } from "@/components/soluciones/nahui/NahuiStats";
-import { NahuiCapabilities } from "@/components/soluciones/nahui/NahuiCapabilities";
-import { NahuiIndustries } from "@/components/soluciones/nahui/NahuiIndustries";
-import { NahuiFlow } from "@/components/soluciones/nahui/NahuiFlow";
-import { NahuiDifferentiators } from "@/components/soluciones/nahui/NahuiDifferentiators";
-import { NahuiIntegrations } from "@/components/soluciones/nahui/NahuiIntegrations";
-import { NahuiCTA } from "@/components/soluciones/nahui/NahuiCTA";
 
 export const metadata: Metadata = {
   title: "Nahui — Gestión Logística Inteligente | Sintérgica AI",
   description:
-    "Trazabilidad operativa, control en campo, optimización de rutas y visibilidad en tiempo real. Compatible con Lattice para habilitar IA en logística. Diseñado para México y LATAM.",
+    "Plataforma de gestión logística de Sintérgica AI. Trazabilidad completa, control operativo y agentes de IA que analizan tu operación sin que tus datos salgan de tu infraestructura. Diseñada para México y LATAM.",
 };
 
 export default function NahuiPage() {
@@ -32,12 +33,13 @@ export default function NahuiPage() {
       <FloatingNav items={NAHUI_NAV} />
       <main>
         <NahuiHero />
-        <NahuiStats />
-        <section id="funcionalidades"><NahuiCapabilities /></section>
-        <section id="industrias"><NahuiIndustries /></section>
+        <NahuiTrustBar />
+        <section id="descripcion"><NahuiPillars /></section>
+        <section id="capacidades"><NahuiCapabilities /></section>
+        <section id="industrias"><NahuiUseCases /></section>
         <section id="flujo"><NahuiFlow /></section>
-        <section id="diferenciadores"><NahuiDifferentiators /></section>
-        <section id="integraciones"><NahuiIntegrations /></section>
+        <section id="despliegue"><NahuiSecurity /></section>
+        <section id="por-que"><NahuiComparison /></section>
         <NahuiCTA />
       </main>
       <Footer />

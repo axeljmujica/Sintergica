@@ -2,51 +2,50 @@
 
 import { useRef } from "react";
 import { LazyMotion, domAnimation, m, useInView, useReducedMotion } from "motion/react";
-import {
-  ClipboardList,
-  UserCheck,
-  Navigation,
-  PackageCheck,
-  BarChart3,
-} from "lucide-react";
-import { FlowStep } from "./ui/FlowStep";
+import { FileInput, Route, Radar, CheckCircle2, LineChart, type LucideIcon } from "lucide-react";
 
-const STEPS = [
+type Step = {
+  n: string;
+  icon: LucideIcon;
+  title: string;
+  description: string;
+};
+
+const STEPS: Step[] = [
   {
-    icon: ClipboardList,
+    n: "01",
+    icon: FileInput,
     title: "Orden recibida",
     description:
-      "La orden entra al sistema desde tu ERP, e-commerce o captura manual.",
-    dotColor: "bg-brand-accent-light",
+      "La orden entra automáticamente desde tu ERP, e-commerce o captura manual. Sin retrasos de transcripción.",
   },
   {
-    icon: UserCheck,
+    n: "02",
+    icon: Route,
     title: "Asignación y despacho",
     description:
-      "Asignación inteligente de unidad y conductor. Ruta optimizada automáticamente.",
-    dotColor: "bg-brand-accent-light",
+      "Nahui asigna la unidad y el conductor óptimos, considera disponibilidad, capacidad y ventanas, genera la ruta eficiente y despacha.",
   },
   {
-    icon: Navigation,
+    n: "03",
+    icon: Radar,
     title: "En ruta",
     description:
-      "Seguimiento GPS en tiempo real. Alertas de desviación, retrasos y paradas no programadas.",
-    dotColor: "bg-[#16A34A]",
-    pulse: true,
+      "Monitoreo GPS en tiempo real. Si hay desviación, parada no programada o retraso, el sistema alerta antes de que alguien pregunte.",
   },
   {
-    icon: PackageCheck,
+    n: "04",
+    icon: CheckCircle2,
     title: "Entrega",
     description:
-      "Prueba de entrega digital: foto, firma, geolocalización y timestamp.",
-    dotColor: "bg-[#16A34A]",
+      "Prueba de entrega digital: foto de la mercancía, firma del receptor, geolocalización exacta y timestamp. Evidencia asociada a la orden para siempre.",
   },
   {
-    icon: BarChart3,
+    n: "05",
+    icon: LineChart,
     title: "Análisis",
     description:
-      "Dashboards de rendimiento, métricas de cumplimiento, KPIs operativos y predicciones con Lattice.",
-    dotColor: "bg-brand-accent",
+      "Dashboards, KPIs operativos y predicciones de Lattice. La operación aprende ciclo a ciclo — sin que tus datos salgan de tu infraestructura.",
   },
 ];
 
@@ -55,82 +54,68 @@ export function NahuiFlow() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const shouldReduce = useReducedMotion();
 
-  const anim = (delay: number) =>
-    shouldReduce
-      ? {}
-      : {
-          initial: { opacity: 0, y: 20 },
-          animate: isInView ? { opacity: 1, y: 0 } : {},
-          transition: { duration: 0.5, delay },
-        };
-
   return (
     <LazyMotion features={domAnimation}>
-    <section
-      className="bg-brand-surface dark:bg-brand-midnight py-24 px-6"
-      aria-label="Cómo funciona Nahui"
-    >
-      <div ref={ref} className="mx-auto max-w-7xl">
-        {/* Header */}
-        <m.div {...anim(0)} className="text-center">
-          <span className="inline-block rounded-full border border-brand-accent-light/20 bg-brand-accent-light/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-accent-light">
-            Cómo funciona
-          </span>
-          <h2 className="mt-5 mx-auto max-w-2xl font-proxima font-bold text-3xl leading-tight text-brand-midnight dark:text-brand-white md:text-4xl">
-            De la orden a la prueba de entrega. Sin puntos ciegos.
-          </h2>
-          <p className="mt-4 mx-auto max-w-xl text-base text-brand-midnight/60 dark:text-brand-white/60">
-            Nahui controla cada paso de tu operación logística con visibilidad
-            total.
-          </p>
-        </m.div>
+      <section
+        ref={ref}
+        className="relative overflow-hidden bg-[#020c1b] py-24 lg:py-32"
+        aria-label="Cómo funciona Nahui"
+      >
+        <div className="pointer-events-none absolute left-1/2 top-0 h-[480px] w-[780px] -translate-x-1/2 rounded-full bg-[#006EFA]/[0.07] blur-[120px]" />
 
-        {/* Flow — horizontal on desktop, vertical on mobile */}
-        <div className="relative mt-16">
-          {/* Desktop: horizontal connector line */}
-          <div className="pointer-events-none absolute left-0 right-0 top-1/2 hidden -translate-y-1/2 lg:block" aria-hidden="true">
-            <m.div
-              className="mx-auto h-0.5 bg-brand-accent-light/20"
-              style={{ maxWidth: "calc(100% - 100px)" }}
-              {...(shouldReduce
-                ? {}
-                : {
-                    initial: { scaleX: 0 },
-                    animate: isInView ? { scaleX: 1 } : {},
-                    transition: { duration: 1, delay: 0.3, ease: "easeOut" },
-                  })}
+        <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+          <m.div
+            initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="mx-auto max-w-[720px] text-center"
+          >
+            <span className="inline-block rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-white/80">
+              Cómo funciona
+            </span>
+            <h2 className="mt-5 font-proxima text-3xl font-bold text-white md:text-4xl lg:text-5xl">
+              Del pedido a la prueba de entrega
+            </h2>
+            <p className="mt-5 text-lg text-white/70">
+              Cinco pasos, una sola plataforma. Así se ve una orden desde que entra hasta
+              que tu dirección de operaciones la ve reflejada en el dashboard.
+            </p>
+          </m.div>
+
+          <div className="mx-auto mt-14 max-w-[1100px] relative">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute left-8 top-12 bottom-12 w-px bg-gradient-to-b from-[#006EFA]/50 via-white/10 to-transparent lg:hidden"
             />
-          </div>
-
-          {/* Mobile: vertical connector line */}
-          <div className="pointer-events-none absolute bottom-0 left-1/2 top-0 -translate-x-1/2 lg:hidden" aria-hidden="true">
-            <m.div
-              className="h-full w-0.5 bg-brand-accent-light/20"
-              {...(shouldReduce
-                ? {}
-                : {
-                    initial: { scaleY: 0 },
-                    animate: isInView ? { scaleY: 1 } : {},
-                    transition: { duration: 1, delay: 0.3, ease: "easeOut" },
-                  })}
-            />
-          </div>
-
-          {/* Steps grid */}
-          <div className="relative flex flex-col items-center gap-6 lg:flex-row lg:justify-between">
-            {STEPS.map((step, i) => (
-              <m.div
-                key={step.title}
-                {...anim(0.15 + i * 0.15)}
-                className="relative z-10 w-full lg:w-auto"
-              >
-                <FlowStep {...step} />
-              </m.div>
-            ))}
+            <div className="grid grid-cols-1 gap-5 lg:grid-cols-5 lg:gap-4">
+              {STEPS.map(({ n, icon: Icon, title, description }, i) => (
+                <m.div
+                  key={n}
+                  initial={shouldReduce ? false : { opacity: 0, y: 16 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
+                  className="relative rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#006EFA]/15 text-[#5DB0F5] ring-1 ring-[#006EFA]/30">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <span className="font-proxima text-[28px] font-bold leading-none text-white/15">
+                      {n}
+                    </span>
+                  </div>
+                  <h3 className="mt-5 font-proxima text-base font-semibold text-white">
+                    {title}
+                  </h3>
+                  <p className="mt-2 text-[13px] leading-relaxed text-white/65">
+                    {description}
+                  </p>
+                </m.div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
     </LazyMotion>
   );
 }
