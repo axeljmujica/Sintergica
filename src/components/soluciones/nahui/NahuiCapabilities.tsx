@@ -4,50 +4,77 @@ import { useRef } from "react";
 import { LazyMotion, domAnimation, m, useInView, useReducedMotion } from "motion/react";
 import {
   Truck,
-  PackageSearch,
-  BarChart3,
-  Route,
+  PackageCheck,
+  Gauge,
+  ClipboardList,
   Plug,
-  Sparkles,
+  Brain,
+  type LucideIcon,
 } from "lucide-react";
 
-const CAPABILITIES = [
+type Capability = {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  accent: string;
+  tint: string;
+  ring: string;
+};
+
+const CAPABILITIES: Capability[] = [
   {
     icon: Truck,
     title: "Gestión de flotas",
     description:
-      "Seguimiento GPS en tiempo real, asignación inteligente de unidades y optimización de rutas. El sistema sabe dónde está cada vehículo, qué lleva y cuándo llegará.",
+      "Seguimiento GPS en vivo para cada vehículo. Asignación inteligente de unidades. Optimización de rutas que considera casetas, zonas de riesgo y ventanas de entrega reales.",
+    accent: "text-[#006EFA]",
+    tint: "bg-[#006EFA]/10",
+    ring: "ring-[#006EFA]/20",
   },
   {
-    icon: PackageSearch,
+    icon: PackageCheck,
     title: "Trazabilidad de envíos",
     description:
-      "Visibilidad completa del ciclo de entrega: desde la orden hasta la prueba de entrega digital (foto, firma, geolocalización, timestamp). Cada paquete tiene historia.",
+      "Visibilidad del ciclo completo, desde la orden hasta la prueba de entrega digital — con foto, firma, geolocalización y timestamp. Cada paquete tiene evidencia.",
+    accent: "text-[#9333EA]",
+    tint: "bg-[#9333EA]/10",
+    ring: "ring-[#9333EA]/20",
   },
   {
-    icon: BarChart3,
+    icon: Gauge,
     title: "Control operativo",
     description:
-      "Dashboards de rendimiento, alertas de desviación, SLAs y métricas de cumplimiento. Detecta problemas antes de que escalen a incidentes.",
+      "Dashboards de rendimiento, alertas de desviación, métricas de cumplimiento y SLAs. El sistema detecta problemas antes de que escalen — no espera a que alguien los reporte.",
+    accent: "text-[#16A34A]",
+    tint: "bg-[#16A34A]/10",
+    ring: "ring-[#16A34A]/20",
   },
   {
-    icon: Route,
+    icon: ClipboardList,
     title: "Despacho y planeación",
     description:
       "Planeación de rutas, despacho automático, gestión de capacidad y ventanas de entrega. Operación optimizada desde el primer kilómetro.",
+    accent: "text-[#F59E0B]",
+    tint: "bg-[#F59E0B]/10",
+    ring: "ring-[#F59E0B]/20",
   },
   {
     icon: Plug,
     title: "Integración con tu stack",
     description:
       "Conectores nativos a ERP, sistemas de almacén (WMS), plataformas de e-commerce y facturación. Nahui se adapta a tu infraestructura, no al revés.",
+    accent: "text-[#0EA5E9]",
+    tint: "bg-[#0EA5E9]/10",
+    ring: "ring-[#0EA5E9]/20",
   },
   {
-    icon: Sparkles,
+    icon: Brain,
     title: "IA privada integrada (Lattice)",
     description:
-      "Copilotos de IA que analizan operaciones, detectan anomalías, predicen retrasos y optimizan rutas con el contexto real de tu operación. Sin enviar datos fuera.",
-    featured: true,
+      "Predice retrasos, detecta ineficiencias y optimiza rutas con el contexto real de tu territorio. A diferencia de otros sistemas que envían datos a APIs genéricas, Lattice procesa todo dentro de tu infraestructura. Tu información operativa nunca sale.",
+    accent: "text-[#DF4288]",
+    tint: "bg-[#DF4288]/10",
+    ring: "ring-[#DF4288]/20",
   },
 ];
 
@@ -56,71 +83,53 @@ export function NahuiCapabilities() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const shouldReduce = useReducedMotion();
 
-  const anim = (delay: number) =>
-    shouldReduce
-      ? {}
-      : {
-          initial: { opacity: 0, y: 20 },
-          animate: isInView ? { opacity: 1, y: 0 } : {},
-          transition: { duration: 0.5, delay },
-        };
-
   return (
     <LazyMotion features={domAnimation}>
-    <section
-      id="capacidades"
-      className="bg-brand-surface dark:bg-brand-midnight py-24 px-6"
-      aria-label="Capacidades de Nahui"
-    >
-      <div ref={ref} className="mx-auto max-w-7xl">
-        {/* Header */}
-        <m.div {...anim(0)}>
-          <span className="inline-block rounded-full border border-brand-accent-light/20 bg-brand-accent-light/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-accent-light">
-            Capacidades
-          </span>
-          <h2 className="mt-5 max-w-2xl font-proxima font-bold text-3xl leading-tight text-brand-midnight dark:text-brand-white md:text-4xl">
-            Control total de tu operación logística.
-          </h2>
-          <p className="mt-4 max-w-xl text-base text-brand-midnight/60 dark:text-brand-white/60">
-            Desde la orden hasta la prueba de entrega. Visibilidad completa, en
-            tiempo real, diseñada para la complejidad de México y LATAM.
-          </p>
-        </m.div>
+      <section
+        ref={ref}
+        className="relative bg-slate-50 py-24 lg:py-32"
+        aria-label="Capacidades de Nahui"
+      >
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <m.div
+            initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="mx-auto max-w-[680px] text-center"
+          >
+            <span className="inline-block rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-slate-600">
+              Capacidades
+            </span>
+            <h2 className="mt-5 font-proxima text-3xl font-bold text-slate-900 md:text-4xl lg:text-5xl">
+              Todo lo que tu operación necesita — en una sola plataforma
+            </h2>
+          </m.div>
 
-        {/* Grid */}
-        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {CAPABILITIES.map((cap, i) => {
-            const Icon = cap.icon;
-            return (
+          <div className="mx-auto mt-14 grid max-w-[1180px] grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {CAPABILITIES.map(({ icon: Icon, title, description, accent, tint, ring }, i) => (
               <m.div
-                key={cap.title}
-                {...anim(0.1 + i * 0.1)}
-                className={`relative rounded-xl border p-8 transition-all duration-300 hover:shadow-lg ${
-                  cap.featured
-                    ? "border-brand-accent/30 bg-brand-surface/50 dark:bg-brand-navy/50 hover:border-brand-accent/50"
-                    : "border-brand-midnight/5 dark:border-brand-white/10 bg-brand-surface/50 dark:bg-brand-navy/50 hover:border-brand-accent-light/20"
-                }`}
+                key={title}
+                initial={shouldReduce ? false : { opacity: 0, y: 16 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
+                className="group rounded-2xl border border-slate-200 bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
               >
-                {cap.featured && (
-                  <span className="absolute right-4 top-4 rounded-full bg-brand-accent/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-brand-accent">
-                    Diferenciador
-                  </span>
-                )}
-                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-accent-light/10 text-brand-accent-light">
-                  <Icon className="h-6 w-6" />
+                <div
+                  className={`inline-flex h-11 w-11 items-center justify-center rounded-xl ${tint} ${accent} ring-1 ${ring}`}
+                >
+                  <Icon className="h-5 w-5" />
                 </div>
-                <h3 className="mb-3 text-lg font-proxima font-semibold text-brand-midnight dark:text-brand-white">
-                  {cap.title}
+                <h3 className="mt-5 font-proxima text-lg font-semibold text-slate-900">
+                  {title}
                 </h3>
-                <p className="text-sm leading-relaxed text-brand-midnight/60 dark:text-brand-white/60">
-                  {cap.description}
+                <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                  {description}
                 </p>
               </m.div>
-            );
-          })}
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
     </LazyMotion>
   );
 }

@@ -3,13 +3,12 @@
 import { useRef } from "react";
 import { LazyMotion, domAnimation, m, useInView, useReducedMotion } from "motion/react";
 import { ArrowRight, CheckCircle } from "lucide-react";
-import Link from "next/link";
 import Image from "next/image";
 
-const TRUST_SIGNALS = [
-  "Implementación en 3 semanas",
-  "Compatible con Lattice",
-  "Sin permanencia",
+const BULLETS = [
+  "Diagnóstico de 45 min, sin costo ni permanencia",
+  "Demo con datos de tu operación",
+  "Plan de implementación incluido",
 ];
 
 export function NahuiCTA() {
@@ -21,19 +20,19 @@ export function NahuiCTA() {
     shouldReduce
       ? {}
       : {
-          initial: { opacity: 0, y: 20 },
+          initial: { opacity: 0, y: 16 },
           animate: isInView ? { opacity: 1, y: 0 } : {},
-          transition: { duration: 0.5, delay },
+          transition: { duration: 0.55, delay },
         };
 
   return (
     <LazyMotion features={domAnimation}>
       <section
         ref={ref}
+        id="contacto"
         className="relative overflow-hidden bg-black py-28 sm:py-36"
-        aria-label="CTA Nahui"
+        aria-label="CTA final de Nahui"
       >
-        {/* Background image */}
         <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
           <Image
             src="/images/121725.jpg"
@@ -52,53 +51,56 @@ export function NahuiCTA() {
           </m.div>
 
           <m.h2
-            {...anim(0.1)}
+            {...anim(0.05)}
             className="font-proxima text-balance text-[1.75rem] font-bold leading-[1.15] tracking-tight text-white sm:text-[2.25rem] lg:text-[2.75rem]"
           >
-            Tu operación logística merece visibilidad total.
+            Haz que cada entrega cuente.
           </m.h2>
 
           <m.p
-            {...anim(0.2)}
+            {...anim(0.1)}
             className="mx-auto mt-6 max-w-2xl text-base leading-[1.8] text-white/80 sm:text-lg"
           >
-            Solicita una demo de Nahui. Te mostramos cómo funciona con un caso de
-            uso de tu industria. Operativo en semanas, sin permanencia.
+            Agenda un diagnóstico y descubre cómo Nahui convierte tu operación logística en
+            una ventaja competitiva — con IA privada, despliegue en tu infraestructura y el
+            contexto de LATAM.
           </m.p>
 
-          <m.div {...anim(0.3)} className="mt-10">
-            <Link
-              href="/soluciones/lattice"
+          <m.div
+            {...anim(0.2)}
+            className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
+          >
+            <a
+              href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-brand-accent px-10 text-[1rem] font-bold text-white shadow-xl shadow-brand-accent/25 transition-all duration-300 hover:scale-[1.02] hover:-translate-y-0.5 hover:bg-brand-400 hover:shadow-brand-accent/40"
             >
-              Descubrir Lattice
+              Agenda tu Diagnóstico Inteligente
               <ArrowRight className="h-4 w-4" />
-            </Link>
+            </a>
+            <a
+              href="mailto:hola@sintergica.ai"
+              className="inline-flex h-14 items-center justify-center rounded-full border border-white/20 bg-white/5 px-8 text-[1rem] font-semibold text-white transition-colors duration-200 hover:bg-white/10"
+            >
+              Escríbenos →
+            </a>
           </m.div>
 
-          <m.div
-            {...anim(0.4)}
+          <m.ul
+            {...anim(0.35)}
             className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-3"
           >
-            {TRUST_SIGNALS.map((signal) => (
-              <span
-                key={signal}
+            {BULLETS.map((bullet) => (
+              <li
+                key={bullet}
                 className="flex items-center gap-1.5 text-xs text-white/70"
               >
                 <CheckCircle className="h-3.5 w-3.5 text-brand-accent-light" />
-                {signal}
-              </span>
+                {bullet}
+              </li>
             ))}
-          </m.div>
-
-          <m.p {...anim(0.5)} className="mt-8">
-            <Link
-              href="/soluciones/lattice"
-              className="text-sm text-brand-accent-light transition-colors hover:text-white"
-            >
-              ¿Ya usas Lattice? Nahui se integra directamente.
-            </Link>
-          </m.p>
+          </m.ul>
         </div>
       </section>
     </LazyMotion>
