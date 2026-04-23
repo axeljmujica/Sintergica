@@ -4,8 +4,8 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { LazyMotion, domAnimation, motion, AnimatePresence, useReducedMotion } from "motion/react";
-import { Menu, X, ArrowRight, Globe, ChevronDown } from "lucide-react";
-import { NAV_MENUS, LANGUAGES } from "@/lib/data";
+import { Menu, X, ArrowRight, ChevronDown } from "lucide-react";
+import { NAV_MENUS } from "@/lib/data";
 
 const MENU_KEYS = ["lattice", "soluciones", "industrias", "investigacion", "empresa"] as const;
 type MenuKey = (typeof MENU_KEYS)[number];
@@ -13,8 +13,6 @@ type MenuKey = (typeof MENU_KEYS)[number];
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<MenuKey | null>(null);
-  const [lang, setLang] = useState<"es" | "en" | "pt">("es");
-  const [langOpen, setLangOpen] = useState(false);
   const [mobileExpanded, setMobileExpanded] = useState<MenuKey | null>(null);
 
   const shouldReduce = useReducedMotion();
@@ -112,39 +110,6 @@ export function Navbar() {
             </nav>
 
             <div className="hidden items-center gap-3 lg:flex">
-              <div
-                className="relative"
-                onMouseEnter={() => setLangOpen(true)}
-                onMouseLeave={() => setLangOpen(false)}
-              >
-                <button
-                  type="button"
-                  className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-[0.85rem] font-semibold transition-all duration-200 text-brand-midnight/70 hover:text-brand-midnight hover:bg-gray-100`}
-                >
-                  <Globe className="h-4 w-4" />
-                  {lang.toUpperCase()}
-                </button>
-                {langOpen && (
-                  <div className="absolute right-0 top-full z-50 pt-1">
-                    <div className="rounded-xl border border-brand-midnight/[0.06] bg-brand-white p-1.5 shadow-xl shadow-black/5">
-                      {LANGUAGES.map((l) => (
-                        <button
-                          key={l.code}
-                          type="button"
-                          onClick={() => { setLang(l.code); setLangOpen(false); }}
-                          className={`block w-full rounded-lg px-6 py-2.5 text-center text-[0.85rem] font-semibold transition-all duration-200 ${
-                            lang === l.code
-                              ? "bg-gray-100 text-brand-midnight"
-                              : "text-brand-midnight/70 hover:bg-gray-50 hover:text-brand-midnight"
-                          }`}
-                        >
-                          {l.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
               <Link
                 href="/diagnostico"
                 className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[0.85rem] font-semibold transition-all duration-300 bg-brand-midnight text-brand-white hover:scale-105 hover:bg-[#1C2636] hover:shadow-lg hover:shadow-brand-midnight/20`}
@@ -155,17 +120,6 @@ export function Navbar() {
             </div>
 
             <div className="flex items-center gap-2 lg:hidden">
-              <button
-                type="button"
-                className="rounded-lg px-2 py-1.5 text-xs font-semibold text-brand-midnight/50"
-                onClick={() => {
-                  const codes = LANGUAGES.map((l) => l.code);
-                  const next = codes[(codes.indexOf(lang) + 1) % codes.length];
-                  setLang(next);
-                }}
-              >
-                <Globe className="inline h-3.5 w-3.5" /> {lang.toUpperCase()}
-              </button>
               <button
                 type="button"
                 aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}
