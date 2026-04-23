@@ -9,9 +9,20 @@ const nextConfig: NextConfig = {
   ...(isStaticExport ? { output: "export" as const } : {}),
   trailingSlash: true,
   compress: true,
+  poweredByHeader: false,
+  reactStrictMode: true,
+  experimental: {
+    optimizePackageImports: [
+      "lucide-react",
+      "motion",
+      "react-icons",
+      "@icons-pack/react-simple-icons",
+    ],
+  },
   images: {
-    // Required for static export; harmless in dev.
-    unoptimized: true,
+    // Only disable optimization for static export (cPanel/shared hosting).
+    // On Vercel / server deployments Next's optimizer handles AVIF/WebP + resizing.
+    unoptimized: isStaticExport,
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1400, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
