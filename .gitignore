@@ -38,3 +38,8 @@ next-env.d.ts
 
 # Claude Code
 .claude/
+
+# local deploy artifacts (cPanel / manual)
+.npmrc
+htaccess-SUBIR-MANUAL.txt
+sintergica-cpanel-export.zip
