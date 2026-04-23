@@ -40,10 +40,10 @@ export function SalesHubHero() {
         aria-label="SalesHub Hero"
       >
         {/* Glow */}
-        <div className="pointer-events-none absolute left-1/2 top-32 -translate-x-1/2 h-[520px] w-[820px] rounded-full bg-[#10B981]/[0.09] blur-[130px]" aria-hidden />
-        <div className="pointer-events-none absolute right-1/4 top-[480px] h-[360px] w-[360px] rounded-full bg-[#0EA5E9]/[0.06] blur-[100px]" aria-hidden />
+        <div className="pointer-events-none absolute left-1/2 top-32 -translate-x-1/2 h-[260px] w-[320px] md:h-[520px] md:w-[820px] rounded-full bg-[#10B981]/[0.09] blur-[130px]" aria-hidden />
+        <div className="pointer-events-none absolute right-1/4 top-[380px] md:top-[480px] h-[200px] w-[200px] md:h-[360px] md:w-[360px] rounded-full bg-[#0EA5E9]/[0.06] blur-[100px]" aria-hidden />
 
-        <div className="relative mx-auto w-full max-w-7xl px-6 py-24 pt-32 lg:px-8 text-center flex flex-col items-center">
+        <div className="relative mx-auto w-full max-w-7xl px-6 py-16 pt-24 md:py-24 md:pt-32 lg:px-8 text-center flex flex-col items-center">
           <div className="max-w-4xl flex flex-col items-center">
             <m.span
               {...anim(0)}

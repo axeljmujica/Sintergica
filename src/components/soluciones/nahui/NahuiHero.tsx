@@ -13,13 +13,13 @@ export function NahuiHero() {
       className="relative overflow-hidden bg-[#030716]"
       aria-label="Nahui Hero"
     >
-      <div className="relative mx-auto w-full max-w-7xl px-6 py-24 pt-32 lg:px-8 text-center flex flex-col items-center">
+      <div className="relative mx-auto w-full max-w-7xl px-6 py-16 pt-24 md:py-24 md:pt-32 lg:px-8 text-center flex flex-col items-center">
         <div className="max-w-4xl flex flex-col items-center">
           <span className="inline-flex items-center rounded-full border border-[#53abe6]/25 bg-[#53abe6]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[#53abe6]">
             Nahui TMS Inteligente
           </span>
 
-          <h1 className="mt-6 font-proxima text-4xl font-extrabold leading-tight text-white md:text-5xl lg:text-6xl text-balance">
+          <h1 className="mt-6 font-proxima text-3xl sm:text-4xl font-extrabold leading-tight text-white md:text-5xl lg:text-6xl text-balance">
             Gestión logística inteligente para operaciones reales.
           </h1>
 

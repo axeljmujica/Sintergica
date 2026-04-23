@@ -26,7 +26,7 @@ const MODELS: ModelItem[] = [
       "Open source con atribución: descargable, auditable, sin licencia propietaria.",
     ],
     linkText: "Conocer Lattice Na'at",
-    linkHref: "/soluciones/naat",
+    linkHref: "/investigacion/lattice-naat",
   },
   {
     id: "seeb",
@@ -48,10 +48,10 @@ export function ModelFeatures() {
   return (
     <LazyMotion features={domAnimation}>
       {/* Usando fondo oscuro y min-h-screen para centrar el contenido verticalmente y dar un aspecto inmersivo */}
-      <section className="bg-[#0A0F1C] min-h-[100svh] flex items-center py-16 lg:py-12 relative overflow-hidden">
+      <section className="bg-[#0A0F1C] lg:min-h-[100svh] flex items-center py-16 lg:py-12 relative overflow-hidden">
         {/* Glow de fondo para integrar la imagen conceptual */}
         <div className="absolute top-1/4 left-0 w-full md:w-1/2 h-1/2 bg-brand-accent/20 blur-[150px] pointer-events-none rounded-full" />
-        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-600/10 blur-[150px] pointer-events-none rounded-full" />
+        <div className="absolute bottom-0 right-0 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-blue-600/10 blur-[150px] pointer-events-none rounded-full" />
 
         <div className="w-full mx-auto max-w-[1400px] px-6 md:px-12 relative z-10">
           
@@ -163,7 +163,7 @@ export function ModelFeatures() {
                   </p>
                 </div>
                 <Link
-                  href="/soluciones/fine-tuning"
+                  href="/servicios/fine-tuning"
                   className="shrink-0 relative z-10 flex items-center justify-center rounded-full bg-blue-600 text-white px-8 py-4 text-[15px] font-bold shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)] transition-all hover:-translate-y-1 w-full md:w-auto mt-4 md:mt-0"
                 >
                   Conoce más
