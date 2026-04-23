@@ -8,12 +8,12 @@ import { AppleCardsCarousel, type AppleCardData } from "@/components/ui/apple-ca
 import { useDictionary } from "@/i18n/DictionaryProvider";
 
 const IMAGE_MAP: Record<string, string> = {
-  Legal:        "/images/home/legal.jpg",
-  Gobierno:     "/images/home/gobierno.jpg",
-  "Logística y Com. Ext.":  "/images/home/logistica.jpg",
-  Energía:      "/images/home/energia.jpg",
-  Salud:        "/images/home/salud.jpg",
-  Financiero:   "/images/home/financiero.jpg",
+  Legal:        "/images/industries/seeb-legal.jpg",
+  Gobierno:     "/images/industries/seeb-gob.jpg",
+  "Logística y Com. Ext.":  "/images/industries/seeb-logistica.jpg",
+  Energía:      "/images/industries/seeb-energia.jpg",
+  Salud:        "/images/industries/seeb-salud.jpg",
+  Financiero:   "/images/industries/seeb-finanzas.jpg",
 };
 
 export function Industrias() {
@@ -75,7 +75,7 @@ export function Industrias() {
       useCase: itemDict.useCase || ind.useCase,
       agent: itemDict.agent || ind.agent,
       impact: itemDict.impact || ind.impact,
-      imageSrc: IMAGE_MAP[ind.name] ?? "/images/home/Desarrollador-TI-con-café.jpg",
+      imageSrc: IMAGE_MAP[ind.name] ?? "/images/industries/1238.jpg",
       imageAlt: `Sector ${itemDict.name || ind.name}`,
       Icon: ind.icon,
       colorClass,

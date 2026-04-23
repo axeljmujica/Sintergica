@@ -9,45 +9,72 @@ import {
   Handshake,
   BarChart3,
   Sparkles,
+  type LucideIcon,
 } from "lucide-react";
 
-const CAPABILITIES = [
+type Capability = {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  accent: string;
+  tint: string;
+  ring: string;
+};
+
+const CAPABILITIES: Capability[] = [
   {
     icon: Target,
     title: "Captación de leads",
     description:
-      "Landing pages, formularios inteligentes y funnels de conversión. Integración directa con Meta Ads y Google Ads. Cada lead entra al sistema automáticamente, sin trabajo manual.",
+      "Landing pages, formularios inteligentes y funnels de conversión. Integración directa con Meta Ads y Google Ads. Cada lead entra al sistema automáticamente — sin captura manual, sin errores de transcripción, sin prospectos que se pierden entre la campaña y el CRM.",
+    accent: "text-[#10B981]",
+    tint: "bg-[#10B981]/10",
+    ring: "ring-[#10B981]/20",
   },
   {
     icon: Users,
     title: "CRM integrado",
     description:
-      "Gestión de contactos, historial completo de interacciones, pipeline visual y scoring de leads. El sistema sabe quién es tu prospecto, qué ha hecho y cuándo darle seguimiento.",
+      "Contactos, historial completo de interacciones, pipeline visual y scoring de leads. El sistema sabe quién es tu prospecto, qué páginas visitó, qué emails abrió y cuándo es el mejor momento para contactarlo.",
+    accent: "text-[#4F46E5]",
+    tint: "bg-[#4F46E5]/10",
+    ring: "ring-[#4F46E5]/20",
   },
   {
     icon: Mail,
     title: "Automatización de marketing",
     description:
-      "Email marketing, workflows automatizados, secuencias de nurturing y segmentación avanzada. El prospecto recibe el mensaje correcto en el momento correcto, sin intervención manual.",
+      "Email marketing, workflows, secuencias de nurturing y segmentación avanzada. El prospecto recibe el mensaje correcto en el momento correcto — sin que nadie de tu equipo tenga que hacer clic.",
+    accent: "text-[#0EA5E9]",
+    tint: "bg-[#0EA5E9]/10",
+    ring: "ring-[#0EA5E9]/20",
   },
   {
     icon: Handshake,
     title: "Gestión de ventas",
     description:
-      "Seguimiento de oportunidades, tareas automatizadas, alertas de inactividad y reportes de rendimiento. Tu equipo nunca pierde un deal por falta de seguimiento.",
+      "Seguimiento de oportunidades, tareas automatizadas, alertas de inactividad y reportes por vendedor. Tu equipo nunca pierde un deal por falta de seguimiento — el sistema se lo recuerda antes de que sea tarde.",
+    accent: "text-[#F59E0B]",
+    tint: "bg-[#F59E0B]/10",
+    ring: "ring-[#F59E0B]/20",
   },
   {
     icon: BarChart3,
     title: "Analytics y reportes",
     description:
-      "Dashboards de conversión, ROI por canal, métricas de equipo y predicciones. Visibilidad total para tomar decisiones basadas en datos reales.",
+      "Dashboards de conversión, ROI por canal, métricas de equipo y visibilidad del funnel. Sabes qué campaña genera leads, qué vendedor cierra y qué etapa tiene fugas — en tiempo real, no en un Excel de la semana pasada.",
+    accent: "text-[#0C6E8C]",
+    tint: "bg-[#0C6E8C]/10",
+    ring: "ring-[#0C6E8C]/20",
   },
   {
     icon: Sparkles,
-    title: "IA integrada (Lattice)",
+    title: "IA comercial integrada",
     description:
-      "Activa copilotos de IA para calificar leads automáticamente, generar contenido personalizado, analizar oportunidades y detectar patrones de compra. Inteligencia comercial con contexto mexicano.",
-    highlight: true,
+      "Copilotos de Lattice que califican leads, generan contenido personalizado, responden preguntas frecuentes por chat, agendan citas y detectan patrones de compra. Un equipo de ventas que nunca duerme, nunca olvida y nunca pierde un lead.",
+    accent: "text-[#DF4288]",
+    tint: "bg-[#DF4288]/10",
+    ring: "ring-[#DF4288]/20",
   },
 ];
 
@@ -56,71 +83,53 @@ export function SalesHubCapabilities() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const shouldReduce = useReducedMotion();
 
-  const anim = (delay: number) =>
-    shouldReduce
-      ? {}
-      : {
-          initial: { opacity: 0, y: 20 },
-          animate: isInView ? { opacity: 1, y: 0 } : {},
-          transition: { duration: 0.5, delay },
-        };
-
   return (
     <LazyMotion features={domAnimation}>
-    <section
-      id="capacidades"
-      className="bg-brand-surface dark:bg-brand-midnight py-24 px-6"
-      aria-label="Capacidades de SalesHub"
-    >
-      <div ref={ref} className="mx-auto max-w-7xl">
-        {/* Header */}
-        <m.div {...anim(0)} className="text-center">
-          <span className="inline-block rounded-full border border-success-600/20 bg-success-600/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-success-600">
-            Capacidades
-          </span>
-          <h2 className="mx-auto mt-5 max-w-2xl font-proxima text-3xl font-bold leading-tight text-brand-midnight dark:text-brand-white md:text-4xl">
-            Todo tu motor comercial. Un solo sistema.
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base text-brand-midnight/60 dark:text-brand-white/60">
-            Captación, nurturing, pipeline, automatización, reportes y ahora
-            inteligencia artificial — sin salir de SalesHub.
-          </p>
-        </m.div>
+      <section
+        ref={ref}
+        className="relative bg-slate-50 py-24 lg:py-32"
+        aria-label="Capacidades de SalesHub"
+      >
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <m.div
+            initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="mx-auto max-w-[720px] text-center"
+          >
+            <span className="inline-block rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-slate-600">
+              Capacidades
+            </span>
+            <h2 className="mt-5 font-proxima text-3xl font-bold text-slate-900 md:text-4xl lg:text-5xl">
+              Todo tu motor comercial — en una sola plataforma
+            </h2>
+          </m.div>
 
-        {/* Grid */}
-        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {CAPABILITIES.map((cap, i) => {
-            const Icon = cap.icon;
-            return (
+          <div className="mx-auto mt-14 grid max-w-[1180px] grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {CAPABILITIES.map(({ icon: Icon, title, description, accent, tint, ring }, i) => (
               <m.div
-                key={cap.title}
-                {...anim(0.1 + i * 0.1)}
-                className={`relative rounded-xl border p-8 transition-all duration-300 hover:shadow-lg ${
-                  cap.highlight
-                    ? "border-brand-accent/30 bg-brand-surface/50 dark:bg-brand-navy/50 hover:border-brand-accent/50"
-                    : "border-brand-midnight/5 dark:border-brand-white/10 bg-brand-surface/50 dark:bg-brand-navy/50 hover:border-success-600/20"
-                }`}
+                key={title}
+                initial={shouldReduce ? false : { opacity: 0, y: 16 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
+                className="group rounded-2xl border border-slate-200 bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
               >
-                {cap.highlight && (
-                  <span className="absolute right-4 top-4 rounded bg-brand-accent/10 px-2 py-0.5 text-[10px] text-brand-accent">
-                    IA INTEGRADA
-                  </span>
-                )}
-                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-success-600/10 text-success-600">
-                  <Icon className="h-6 w-6" />
+                <div
+                  className={`inline-flex h-11 w-11 items-center justify-center rounded-xl ${tint} ${accent} ring-1 ${ring}`}
+                >
+                  <Icon className="h-5 w-5" />
                 </div>
-                <h3 className="mb-3 text-lg font-proxima font-semibold text-brand-midnight dark:text-brand-white">
-                  {cap.title}
+                <h3 className="mt-5 font-proxima text-lg font-semibold text-slate-900">
+                  {title}
                 </h3>
-                <p className="text-sm leading-relaxed text-brand-midnight/60 dark:text-brand-white/60">
-                  {cap.description}
+                <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                  {description}
                 </p>
               </m.div>
-            );
-          })}
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
     </LazyMotion>
   );
 }

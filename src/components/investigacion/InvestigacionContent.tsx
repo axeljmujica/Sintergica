@@ -206,7 +206,7 @@ export function InvestigacionContent() {
           title={t.ctaTitle}
           subtitle={t.ctaSubtitle}
           ctaLabel={t.ctaCtaLabel}
-          ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+          ctaHref="/diagnostico"
         />
       </>
     </LazyMotion>

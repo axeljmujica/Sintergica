@@ -39,8 +39,9 @@ export function useDictionary() {
 
 export function useLocale(): Locale {
   const ctx = useContext(DictionaryContext);
+  // Fallback to default locale when outside provider (e.g., not-found boundary)
   if (!ctx) {
-    throw new Error("useLocale must be used within a DictionaryProvider");
+    return "es";
   }
   return ctx.locale;
 }

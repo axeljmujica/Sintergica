@@ -88,7 +88,7 @@ export function LatticeNaatHero() {
             className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
           >
             <Link
-              href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+              href="/diagnostico"
               className="inline-flex h-14 items-center gap-2 rounded-full bg-brand-accent px-9 text-[1rem] font-bold text-white shadow-lg shadow-brand-accent/30 transition-all duration-300 hover:scale-[1.02] hover:-translate-y-0.5 hover:bg-brand-accent-light hover:shadow-brand-accent/40"
             >
               {c.ctaPrimary}

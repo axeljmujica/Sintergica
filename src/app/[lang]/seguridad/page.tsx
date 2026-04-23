@@ -85,7 +85,7 @@ export default async function SeguridadPage({
           title={t.ctaTitle}
           subtitle={t.ctaSubtitle}
           ctaLabel={t.ctaLabel}
-          ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+          ctaHref="/diagnostico"
           trustSignals={[...t.ctaTrust]}
         />
       </main>

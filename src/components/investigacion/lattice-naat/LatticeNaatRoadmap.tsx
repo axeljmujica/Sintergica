@@ -61,7 +61,7 @@ export function LatticeNaatRoadmap() {
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4 lg:items-stretch">
               {c.milestones.map((ms, i) => {
                 const isCurrent = ms.state === "actual";
-                const isCompleted = ms.state === "completado";
+                const isCompleted = (ms.state as string) === "completado";
                 const Icon = MILESTONE_ICONS[i] ?? MILESTONE_ICONS[0];
 
                 return (

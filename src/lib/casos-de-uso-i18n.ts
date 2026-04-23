@@ -194,7 +194,7 @@ export const CASOS_DE_USO_I18N: Record<LangCode, CasosDeUsoI18nContent> = {
       subtitle:
         "Agenda un Diagnóstico Inteligente. Analizamos tus procesos, identificamos los casos de uso con mayor impacto y entregamos un mapa de implementación con ROI estimado.",
       label: "Solicitar Diagnóstico",
-      href: "https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4",
+      href: "/diagnostico",
       trustSignals: ["Sin permanencia", "Demo con tus datos reales", "ROI estimado en 1 semana"],
     },
   },
@@ -315,7 +315,7 @@ export const CASOS_DE_USO_I18N: Record<LangCode, CasosDeUsoI18nContent> = {
       subtitle:
         "Schedule an Intelligent Diagnostic. We analyze your processes, identify the highest-impact use cases, and deliver an implementation roadmap with estimated ROI.",
       label: "Request Diagnostic",
-      href: "https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4",
+      href: "/diagnostico",
       trustSignals: ["No lock-in", "Demo with your real data", "Estimated ROI in 1 week"],
     },
   },
@@ -436,7 +436,7 @@ export const CASOS_DE_USO_I18N: Record<LangCode, CasosDeUsoI18nContent> = {
       subtitle:
         "Agende um Diagnóstico Inteligente. Analisamos seus processos, identificamos os casos de uso de maior impacto e entregamos um mapa de implementação com ROI estimado.",
       label: "Solicitar Diagnóstico",
-      href: "https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4",
+      href: "/diagnostico",
       trustSignals: ["Sem fidelidade", "Demo com seus dados reais", "ROI estimado em 1 semana"],
     },
   },

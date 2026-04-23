@@ -1,28 +1,27 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/sections/Navbar";
+import { LatticeNavbar as Navbar } from "@/components/soluciones/lattice/LatticeNavbar";
 import { Footer } from "@/components/sections/Footer";
 import { FloatingNav } from "@/components/ui/floating-nav";
+import { SalesHubHero } from "@/components/soluciones/saleshub/SalesHubHero";
+import { SalesHubTrustBar } from "@/components/soluciones/saleshub/SalesHubTrustBar";
+import { SalesHubPillars } from "@/components/soluciones/saleshub/SalesHubPillars";
+import { SalesHubCapabilities } from "@/components/soluciones/saleshub/SalesHubCapabilities";
+import { SalesHubFunnel } from "@/components/soluciones/saleshub/SalesHubFunnel";
+import { SalesHubReplaces } from "@/components/soluciones/saleshub/SalesHubReplaces";
+import { SalesHubDifferentiators } from "@/components/soluciones/saleshub/SalesHubDifferentiators";
+import { SalesHubCTA } from "@/components/soluciones/saleshub/SalesHubCTA";
 
 const SALESHUB_NAV = [
   { label: "Capacidades", href: "#capacidades" },
-  { label: "Pipeline", href: "#funnel" },
-  { label: "Diferenciadores", href: "#diferenciadores" },
+  { label: "Journey", href: "#journey" },
   { label: "Reemplaza", href: "#reemplaza" },
-  { label: "Integraciones", href: "#integraciones" },
+  { label: "Por qué", href: "#por-que" },
 ];
-import { SalesHubHero } from "@/components/soluciones/saleshub/SalesHubHero";
-import { SalesHubProblem } from "@/components/soluciones/saleshub/SalesHubProblem";
-import { SalesHubCapabilities } from "@/components/soluciones/saleshub/SalesHubCapabilities";
-import { SalesHubFunnel } from "@/components/soluciones/saleshub/SalesHubFunnel";
-import { SalesHubDifferentiators } from "@/components/soluciones/saleshub/SalesHubDifferentiators";
-import { SalesHubReplaces } from "@/components/soluciones/saleshub/SalesHubReplaces";
-import { SalesHubIntegrations } from "@/components/soluciones/saleshub/SalesHubIntegrations";
-import { SalesHubCTA } from "@/components/soluciones/saleshub/SalesHubCTA";
 
 export const metadata: Metadata = {
-  title: "SalesHub — Ventas y Marketing en una sola plataforma | Sintérgica AI",
+  title: "SalesHub — Motor Comercial Completo con IA | Sintérgica AI",
   description:
-    "CRM, email marketing, funnels, automatización de ventas y visibilidad comercial completa. Compatible con Lattice para inteligencia comercial con IA. Diseñado para México y LATAM.",
+    "CRM, email marketing, funnels, agenda, WhatsApp, reportes e IA en una sola plataforma. En español. Con soporte local. Con factura en pesos. Diseñado para México y LATAM.",
 };
 
 export default function SalesHubPage() {
@@ -32,12 +31,12 @@ export default function SalesHubPage() {
       <FloatingNav items={SALESHUB_NAV} />
       <main>
         <SalesHubHero />
-        <SalesHubProblem />
+        <SalesHubTrustBar />
+        <section id="descripcion"><SalesHubPillars /></section>
         <section id="capacidades"><SalesHubCapabilities /></section>
-        <section id="funnel"><SalesHubFunnel /></section>
-        <section id="diferenciadores"><SalesHubDifferentiators /></section>
+        <section id="journey"><SalesHubFunnel /></section>
         <section id="reemplaza"><SalesHubReplaces /></section>
-        <section id="integraciones"><SalesHubIntegrations /></section>
+        <section id="por-que"><SalesHubDifferentiators /></section>
         <SalesHubCTA />
       </main>
       <Footer />

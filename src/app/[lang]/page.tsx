@@ -11,7 +11,7 @@ const LogoStrip = dynamic(
   { ssr: true }
 );
 const StatsBar = dynamic(
-  () => import("@/components/sections/StatsBar").then((m) => ({ default: m.default ?? m.StatsBar })),
+  () => import("@/components/sections/StatsBar").then((m) => ({ default: m.default })),
   { ssr: true }
 );
 const Services = dynamic(
@@ -46,6 +46,12 @@ const Footer = dynamic(
   () => import("@/components/sections/Footer").then((m) => ({ default: m.Footer })),
   { ssr: true }
 );
+
+import { i18n } from "@/i18n/config";
+
+export async function generateStaticParams() {
+  return i18n.locales.map((locale) => ({ lang: locale }));
+}
 
 export default function Home() {
   return (

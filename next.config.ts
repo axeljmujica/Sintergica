@@ -1,11 +1,17 @@
 import type { NextConfig } from "next";
 
+// Static export is opt-in via STATIC_EXPORT=1 (used for cPanel/shared hosting).
+// On Vercel / server deployments we leave it off so middleware, ISR, headers,
+// and image optimization work natively.
+const isStaticExport = process.env.STATIC_EXPORT === "1";
+
 const nextConfig: NextConfig = {
-  // output: 'export', // Disabled for dev server - re-enable for static build
+  ...(isStaticExport ? { output: "export" as const } : {}),
   trailingSlash: true,
   compress: true,
   images: {
-    unoptimized: process.env.NODE_ENV === "development",
+    // Required for static export; harmless in dev.
+    unoptimized: true,
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1400, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
@@ -24,6 +30,17 @@ const nextConfig: NextConfig = {
         hostname: "blog.sintergica.ai",
       },
     ],
+  },
+  async redirects() {
+    // On server deployments (Vercel), /, /investigacion/blog, etc. need to
+    // resolve to the localized routes. On static export these are handled by
+    // .htaccess (Apache); here we replicate the minimum needed set.
+    if (isStaticExport) return [];
+    return [
+      { source: "/investigacion/blog", destination: "/recursos/blog", permanent: true },
+      { source: "/investigacion/prensa", destination: "/recursos/prensa", permanent: true },
+      { source: "/empresa/eventos", destination: "/recursos/eventos", permanent: true },
+    ];
   },
   async headers() {
     return [

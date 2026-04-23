@@ -57,7 +57,7 @@ export function NahuiSecurity() {
       >
         <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
           <Image
-            src="/images/2151895873.jpg"
+            src="/images/2152031809.jpg"
             alt=""
             fill
             className="object-cover opacity-30"
@@ -131,9 +131,7 @@ export function NahuiSecurity() {
                 </p>
               </div>
               <a
-                href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/diagnostico"
                 className="inline-flex h-12 items-center justify-center rounded-full bg-[#006EFA] px-7 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#0058CC] hover:shadow-lg hover:shadow-[#006EFA]/25"
               >
                 Cotizar mi despliegue →

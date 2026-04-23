@@ -8,10 +8,11 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 
 type Testimonial = {
   id: string;
-  logo: string;
+  company: string;
+  logoSrc: string;
+  logoAlt: string;
+  sector: string;
   quote: string;
-  author: string;
-  role: string;
   linkText: string;
   linkHref: string;
   image: string;
@@ -20,26 +21,28 @@ type Testimonial = {
 
 const TESTIMONIALS: Testimonial[] = [
   {
-    id: "t1",
-    logo: "Logística Corp", // Mockup text for now, could be an SVG later
-    quote: "Sintérgica ha transformado nuestra manera de acceder y procesar la normativa aduanera. Sus modelos entienden el contexto técnico de nuestras operaciones internacionales mejor que cualquier LLM genérico que hayamos evaluado.",
-    author: "Elena Ramírez",
-    role: "Directora de Comercio Exterior",
-    linkText: "Lee el caso de estudio",
+    id: "swivel-energy",
+    company: "Swivel Energy",
+    logoSrc: "/images/clientes/SWIVEL-ENERGY-BRANDING-NV-3.png",
+    logoAlt: "Logo de Swivel Energy",
+    sector: "Energía Solar",
+    quote: "Sintérgica nos construyó un cotizador y un CRM con IA que cambió cómo vendemos. Lo que antes tomaba días en hojas de cálculo, hoy lo cerramos en minutos —con propuestas técnicas precisas y seguimiento automático a cada prospecto.",
+    linkText: "Conoce el caso",
     linkHref: "#",
-    image: "/images/testimonial_logistics.png",
-    altText: "Puerto logístico moderno al atardecer",
+    image: "/images/industries/seeb-energia-2.jpg",
+    altText: "Planta de paneles solares",
   },
   {
-    id: "t2",
-    logo: "Finanzas Capital",
-    quote: "La seguridad y la precisión on-premise de los modelos Séeb nos ayudaron a implementar análisis de riesgo corporativo sin comprometer ni un solo dato de nuestros clientes. Es verdaderamente IA enterprise-grade.",
-    author: "Carlos Mendoza",
-    role: "Chief Innovation Officer",
-    linkText: "Descubre cómo lo logramos",
+    id: "sj-medica",
+    company: "SJ Médica Estética",
+    logoSrc: "/images/clientes/SJ.png",
+    logoAlt: "Logo de SJ Médica Estética",
+    sector: "Salud · Medicina estética",
+    quote: "Los agentes de Sintérgica atienden a nuestros pacientes, agendan y confirman citas sin que alguien del equipo levante el teléfono. Todo conectado a un sistema de gestión hospitalaria hecho a la medida —nuestra operación dejó de depender de la disponibilidad humana.",
+    linkText: "Conoce el caso",
     linkHref: "#",
-    image: "/images/testimonial_corporate.png",
-    altText: "Rascacielos corporativos desde abajo",
+    image: "/images/industries/seeb-salud.jpg",
+    altText: "Consultorio médico moderno",
   },
 ];
 
@@ -111,19 +114,29 @@ export function TestimonialsCarousel() {
                       className="h-full w-full p-10 lg:p-14 flex flex-col justify-between"
                     >
                       <div className="w-[90%] lg:w-10/12">
-                        {/* Company Logo Mockup */}
-                        <div className="mb-8 lg:mb-12">
-                          <h3 className="font-extrabold text-2xl tracking-tighter text-brand-midnight flex items-center gap-2">
-                             <div className="w-8 h-8 rounded-full bg-brand-midnight text-white flex items-center justify-center text-xs">◆</div>
-                             {TESTIMONIALS[currentIndex].logo}
-                          </h3>
+                        {/* Company Logo */}
+                        <div className="mb-8 lg:mb-12 flex items-center gap-4">
+                          <div className="relative h-12 w-12 lg:h-14 lg:w-14 shrink-0">
+                            <Image
+                              src={TESTIMONIALS[currentIndex].logoSrc}
+                              alt={TESTIMONIALS[currentIndex].logoAlt}
+                              fill
+                              className="object-contain"
+                              sizes="56px"
+                            />
+                          </div>
+                          <div>
+                            <h3 className="font-proxima font-bold text-lg lg:text-xl tracking-tight text-brand-midnight leading-tight">
+                              {TESTIMONIALS[currentIndex].company}
+                            </h3>
+                            <p className="text-brand-midnight/60 text-sm">
+                              {TESTIMONIALS[currentIndex].sector}
+                            </p>
+                          </div>
                         </div>
                         <h4 className="font-proxima text-xl lg:text-2xl xl:text-3xl text-brand-midnight font-medium leading-relaxed mb-8">
                           “{TESTIMONIALS[currentIndex].quote}”
                         </h4>
-                        <p className="text-brand-midnight/70 font-proxima text-base md:text-lg">
-                          — {TESTIMONIALS[currentIndex].author}, <span className="font-bold text-brand-midnight">{TESTIMONIALS[currentIndex].role}</span>
-                        </p>
                       </div>
 
                       <Link href={TESTIMONIALS[currentIndex].linkHref} className="inline-flex items-center gap-2 text-brand-midnight font-bold group mt-8 w-max">
@@ -185,18 +198,28 @@ export function TestimonialsCarousel() {
                    </div>
                    <div className="p-6 md:p-8 flex-1 flex flex-col justify-between">
                       <div>
-                        <div className="mb-6">
-                          <h3 className="font-extrabold text-xl tracking-tighter text-brand-midnight flex items-center gap-2">
-                             <div className="w-6 h-6 rounded-full bg-brand-midnight text-white flex items-center justify-center text-[10px]">◆</div>
-                             {TESTIMONIALS[currentIndex].logo}
-                          </h3>
+                        <div className="mb-6 flex items-center gap-3">
+                          <div className="relative h-10 w-10 shrink-0">
+                            <Image
+                              src={TESTIMONIALS[currentIndex].logoSrc}
+                              alt={TESTIMONIALS[currentIndex].logoAlt}
+                              fill
+                              className="object-contain"
+                              sizes="40px"
+                            />
+                          </div>
+                          <div>
+                            <h3 className="font-proxima font-bold text-base tracking-tight text-brand-midnight leading-tight">
+                              {TESTIMONIALS[currentIndex].company}
+                            </h3>
+                            <p className="text-brand-midnight/60 text-xs">
+                              {TESTIMONIALS[currentIndex].sector}
+                            </p>
+                          </div>
                         </div>
                         <h4 className="font-proxima text-lg text-brand-midnight font-medium leading-relaxed mb-6">
                           “{TESTIMONIALS[currentIndex].quote}”
                         </h4>
-                        <p className="text-brand-midnight/70 text-sm">
-                          — {TESTIMONIALS[currentIndex].author}, <span className="font-bold text-brand-midnight">{TESTIMONIALS[currentIndex].role}</span>
-                        </p>
                       </div>
                       <Link href={TESTIMONIALS[currentIndex].linkHref} className="inline-flex items-center gap-2 text-brand-midnight font-bold group mt-6 text-sm w-max">
                         {TESTIMONIALS[currentIndex].linkText}

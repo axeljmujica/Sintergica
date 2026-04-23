@@ -4,58 +4,64 @@ import Link from "next/link";
 import { useRef } from "react";
 import { LazyMotion, domAnimation, m, useInView, useReducedMotion } from "motion/react";
 import {
-  ArrowRight, FlaskConical, Github, ExternalLink,
+  ArrowRight, ArrowUpRight, FlaskConical, Github, ExternalLink,
   CheckCircle2, GraduationCap, Code2, Building2, Users,
-  ChevronRight, Box, FileText, Database,
+  Box, FileText, Database, Sparkles,
   type LucideIcon,
 } from "lucide-react";
 import { useLocale } from "@/i18n/DictionaryProvider";
 import { LABS_I18N } from "@/lib/labs-i18n";
 import type { ResearchLine, RoadmapPhase } from "@/lib/labs-i18n";
 
-/* ── Inline translations for hardcoded strings ─────────────── */
+/* ── Inline translations ───────────────────────────────────── */
 const T = {
   es: {
-    missionBadge: "Misión",
+    missionBadge: "Ciencia abierta",
     viewOnHuggingFace: "Ver en HuggingFace",
     viewAllPublications: "Ver todas las publicaciones",
     featuredParamsLabel: "1T Parámetros · Activo",
-    featuredDesc: "Primer modelo fundacional desarrollado en México. 120 mil millones de parámetros entrenados con corpus normativo, cultural y lingüístico de México y LATAM. Open source.",
-    viewFullModel: "Ver modelo completo \u2192",
-    moreLines: "líneas más...",
+    featuredDesc: "Modelo fundacional de mayor escala desarrollado en LATAM. 1 billón (1T) de parámetros entrenados con corpus normativo, cultural y lingüístico de México y América Latina.",
+    viewFullModel: "Ver modelo completo",
+    moreLines: "líneas más",
     terminalLabel: "Sintérgica Labs · Output abierto",
     geoNote: "Sintérgica AI implementa IA privada para sectores regulados en México y Latinoamérica.",
-    naatDetail: "Conocer Na\u2019at en detalle \u2192",
+    naatDetail: "Conocer Na\u2019at en detalle",
+    chapter: "Capítulo",
+    anchor: "Proyecto ancla",
   },
   en: {
-    missionBadge: "Mission",
+    missionBadge: "Open science",
     viewOnHuggingFace: "View on HuggingFace",
     viewAllPublications: "View all publications",
     featuredParamsLabel: "1T Parameters · Active",
-    featuredDesc: "First foundational model developed in Mexico. 120 billion parameters trained on a regulatory, cultural, and linguistic corpus from Mexico and LATAM. Open source.",
-    viewFullModel: "View full model \u2192",
-    moreLines: "more lines...",
+    featuredDesc: "Largest foundational model built in LATAM. 1 trillion (1T) parameters trained on a regulatory, cultural, and linguistic corpus from Mexico and Latin America.",
+    viewFullModel: "View full model",
+    moreLines: "more lines",
     terminalLabel: "Sintérgica Labs · Open output",
     geoNote: "Sintérgica AI implements private AI for regulated sectors in Mexico and Latin America.",
-    naatDetail: "Learn about Na\u2019at in detail \u2192",
+    naatDetail: "Explore Na\u2019at in detail",
+    chapter: "Chapter",
+    anchor: "Anchor project",
   },
   "pt-br": {
-    missionBadge: "Missão",
+    missionBadge: "Ciência aberta",
     viewOnHuggingFace: "Ver no HuggingFace",
     viewAllPublications: "Ver todas as publicações",
     featuredParamsLabel: "1T Parâmetros · Ativo",
-    featuredDesc: "Primeiro modelo fundacional desenvolvido no México. 120 bilhões de parâmetros treinados com corpus regulatório, cultural e linguístico do México e LATAM. Open source.",
-    viewFullModel: "Ver modelo completo \u2192",
-    moreLines: "linhas a mais...",
+    featuredDesc: "Modelo fundacional de maior escala desenvolvido na LATAM. 1 trilhão (1T) de parâmetros treinados com corpus regulatório, cultural e linguístico do México e da América Latina.",
+    viewFullModel: "Ver modelo completo",
+    moreLines: "linhas a mais",
     terminalLabel: "Sintérgica Labs · Output aberto",
     geoNote: "Sintérgica AI implementa IA privada para setores regulados no México e na América Latina.",
-    naatDetail: "Conhecer Na\u2019at em detalhe \u2192",
+    naatDetail: "Conhecer Na\u2019at em detalhe",
+    chapter: "Capítulo",
+    anchor: "Projeto âncora",
   },
 } as const;
 
-const BOOKING_URL = "https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4";
+const BOOKING_URL = "/diagnostico";
 
-/* ── HuggingFace SVG icon ──────────────────────────────────── */
+/* ── HuggingFace icon ──────────────────────────────────────── */
 function HuggingFaceIcon({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
@@ -69,45 +75,51 @@ function HuggingFaceIcon({ className }: { className?: string }) {
   );
 }
 
-/* ── Category styles for research lines ───────────────────── */
-const CAT_STYLES: Record<ResearchLine["category"], { badge: string; num: string; border: string; dot: string }> = {
-  modelos:     { badge: "bg-violet-500/10 text-violet-300",  num: "text-violet-400",  border: "border-violet-500/20",  dot: "bg-violet-400" },
-  datos:       { badge: "bg-emerald-500/10 text-emerald-300",num: "text-emerald-400", border: "border-emerald-500/20", dot: "bg-emerald-400" },
-  evaluacion:  { badge: "bg-sky-500/10 text-sky-300",        num: "text-sky-400",     border: "border-sky-500/20",     dot: "bg-sky-400" },
-  razonamiento:{ badge: "bg-amber-500/10 text-amber-300",    num: "text-amber-400",   border: "border-amber-500/20",   dot: "bg-amber-400" },
+/* ── Unified accent system (4 tones aligned to brand) ─────── */
+type Tone = "accent" | "emerald" | "amber" | "violet";
+const TONE: Record<Tone, { text: string; bg: string; border: string; dot: string; ring: string }> = {
+  accent:  { text: "text-brand-accent",  bg: "bg-brand-accent/10",  border: "border-brand-accent/25",  dot: "bg-brand-accent",  ring: "ring-brand-accent/30" },
+  emerald: { text: "text-emerald-500 dark:text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/25", dot: "bg-emerald-500", ring: "ring-emerald-500/30" },
+  amber:   { text: "text-amber-600 dark:text-amber-400",     bg: "bg-amber-500/10",   border: "border-amber-500/25",   dot: "bg-amber-500",   ring: "ring-amber-500/30" },
+  violet:  { text: "text-violet-600 dark:text-violet-400",   bg: "bg-violet-500/10",  border: "border-violet-500/25",  dot: "bg-violet-500",  ring: "ring-violet-500/30" },
 };
 
-/* ── Phase styles for roadmap ──────────────────────────────── */
-const PHASE_STYLES: Record<RoadmapPhase["statusVariant"], { card: string; border: string; chip: string; accent: string }> = {
-  active: { card: "bg-emerald-500/[0.06]", border: "border-emerald-500/35", chip: "bg-emerald-500/15 text-emerald-300", accent: "text-emerald-400" },
-  dev:    { card: "bg-violet-500/[0.06]",  border: "border-violet-500/25",  chip: "bg-violet-500/15 text-violet-300",  accent: "text-violet-400" },
-  goal:   { card: "bg-amber-500/[0.04]",   border: "border-amber-500/20 border-dashed", chip: "bg-amber-500/10 text-amber-400", accent: "text-amber-400" },
+const CAT_TONE: Record<ResearchLine["category"], Tone> = {
+  modelos: "accent",
+  datos: "emerald",
+  evaluacion: "amber",
+  razonamiento: "violet",
 };
 
-/* ── Audience icons ────────────────────────────────────────── */
+const PHASE_TONE: Record<RoadmapPhase["statusVariant"], Tone> = {
+  active: "emerald",
+  dev: "accent",
+  goal: "amber",
+};
+
 const AUDIENCE_ICONS: Record<string, LucideIcon> = {
   investigadores: GraduationCap,
-  universidades:  Building2,
+  universidades: Building2,
   desarrolladores: Code2,
   organizaciones: Users,
 };
-const AUDIENCE_STYLES: Record<string, { border: string; bg: string; color: string; hover: string }> = {
-  investigadores:  { border: "border-violet-500/20", bg: "bg-violet-500/10", color: "text-violet-400", hover: "hover:border-violet-500/40" },
-  universidades:   { border: "border-sky-500/20",    bg: "bg-sky-500/10",    color: "text-sky-400",    hover: "hover:border-sky-500/40" },
-  desarrolladores: { border: "border-emerald-500/20",bg: "bg-emerald-500/10",color: "text-emerald-400",hover: "hover:border-emerald-500/40" },
-  organizaciones:  { border: "border-amber-500/20",  bg: "bg-amber-500/10",  color: "text-amber-400",  hover: "hover:border-amber-500/40" },
+const AUDIENCE_TONE: Record<string, Tone> = {
+  investigadores: "violet",
+  universidades: "accent",
+  desarrolladores: "emerald",
+  organizaciones: "amber",
 };
 
-function getTagStyle(tag: string) {
-  if (tag.includes("Modelo") || tag.includes("Model")) return "text-emerald-400 bg-emerald-500/10 border-emerald-500/20";
-  if (tag.includes("Dataset"))   return "text-violet-400 bg-violet-500/10 border-violet-500/20";
-  if (tag.includes("Nuevo") || tag.includes("New") || tag.includes("Novo")) return "text-amber-400 bg-amber-500/10 border-amber-500/20";
-  return "text-sky-400 bg-sky-500/10 border-sky-500/20";
+function getTagTone(tag: string): Tone {
+  if (tag.includes("Modelo") || tag.includes("Model") || tag.includes("Nuevo") || tag.includes("New") || tag.includes("Novo")) return "emerald";
+  if (tag.includes("Dataset")) return "violet";
+  if (tag.includes("Paper") || tag.includes("Artigo") || tag.includes("Artículo")) return "accent";
+  return "amber";
 }
 function getTagIcon(tag: string) {
-  if (tag.includes("Modelo") || tag.includes("Model") || tag.includes("Nuevo") || tag.includes("New") || tag.includes("Novo")) return <Box className="h-3 w-3" />;
-  if (tag.includes("Dataset")) return <Database className="h-3 w-3" />;
-  return <FileText className="h-3 w-3" />;
+  if (tag.includes("Modelo") || tag.includes("Model")) return <Box className="h-3 w-3" aria-hidden />;
+  if (tag.includes("Dataset")) return <Database className="h-3 w-3" aria-hidden />;
+  return <FileText className="h-3 w-3" aria-hidden />;
 }
 
 /* ═══════════════════════════════════════════════════════════ */
@@ -119,174 +131,187 @@ export function LabsContent() {
 
   const shouldReduce = useReducedMotion();
 
-  const impactRef    = useRef<HTMLDivElement>(null);
-  const researchRef  = useRef<HTMLDivElement>(null);
-  const linesRef     = useRef<HTMLDivElement>(null);
-  const roadmapRef   = useRef<HTMLDivElement>(null);
-  const collabRef    = useRef<HTMLDivElement>(null);
-  const linksRef     = useRef<HTMLDivElement>(null);
+  const impactRef = useRef<HTMLDivElement>(null);
+  const naatRef = useRef<HTMLDivElement>(null);
+  const linesRef = useRef<HTMLDivElement>(null);
+  const pubsRef = useRef<HTMLDivElement>(null);
+  const collabRef = useRef<HTMLDivElement>(null);
+  const linksRef = useRef<HTMLDivElement>(null);
 
-  const impactInView   = useInView(impactRef,   { once: true, margin: "-80px" });
-  const researchInView = useInView(researchRef, { once: true, margin: "-80px" });
-  const linesInView    = useInView(linesRef,    { once: true, margin: "-80px" });
-  const roadmapInView  = useInView(roadmapRef,  { once: true, margin: "-80px" });
-  const collabInView   = useInView(collabRef,   { once: true, margin: "-80px" });
-  const linksInView    = useInView(linksRef,    { once: true, margin: "-80px" });
+  const impactInView = useInView(impactRef, { once: true, margin: "-80px" });
+  const naatInView = useInView(naatRef, { once: true, margin: "-80px" });
+  const linesInView = useInView(linesRef, { once: true, margin: "-80px" });
+  const pubsInView = useInView(pubsRef, { once: true, margin: "-80px" });
+  const collabInView = useInView(collabRef, { once: true, margin: "-80px" });
+  const linksInView = useInView(linksRef, { once: true, margin: "-80px" });
+
+  const fade = (delay = 0) =>
+    shouldReduce
+      ? { initial: false, animate: { opacity: 1, y: 0 }, transition: { duration: 0 } }
+      : {
+          initial: { opacity: 0, y: 20 },
+          transition: { duration: 0.55, delay, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+        };
+
+  // Non-featured papers only (Na'at is its own anchor section now)
+  const papers = c.featuredResearch.papers.filter((p) => !p.featured);
 
   return (
     <LazyMotion features={domAnimation}>
 
-      {/* ── 1. HERO ──────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-brand-surface dark:bg-brand-midnight px-4 pb-0 pt-28 sm:px-6 lg:px-8 md:pt-32">
-        {/* Background glows */}
+      {/* ══════════════ 1. HERO — Editorial ══════════════ */}
+      <section
+        className="relative overflow-hidden bg-brand-surface dark:bg-brand-midnight px-4 pt-28 sm:px-6 lg:px-8 md:pt-36"
+        aria-labelledby="labs-hero-h1"
+      >
+        {/* Background: subtle radial + grid */}
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          <div className="absolute -left-40 -top-20 h-[560px] w-[560px] rounded-full bg-emerald-600/6 blur-[100px]" />
-          <div className="absolute right-0 top-1/3 h-[400px] w-[400px] rounded-full bg-brand-accent/5 blur-[100px]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(54,101,245,0.08),transparent_55%)]" />
+          <div className="absolute -left-40 top-1/4 h-[520px] w-[520px] rounded-full bg-emerald-500/5 blur-[120px]" />
+          <div
+            className="absolute inset-0 opacity-[0.04] dark:opacity-[0.06]"
+            style={{
+              backgroundImage:
+                "linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)",
+              backgroundSize: "64px 64px",
+              color: "var(--brand-midnight)",
+              maskImage: "radial-gradient(ellipse at center, black 40%, transparent 80%)",
+            }}
+          />
         </div>
 
-        <div className="relative mx-auto max-w-7xl">
-          <div className="grid min-h-[84vh] items-center gap-12 pb-16 pt-8 lg:grid-cols-2 lg:gap-20 lg:pb-20 lg:pt-12">
+        <div className="relative mx-auto grid max-w-6xl items-center pb-24 pt-10 md:pt-14 lg:pb-28">
+          <m.div {...fade(0)} animate={{ opacity: 1, y: 0 }} className="flex justify-center">
+            <span className="inline-flex items-center gap-2 rounded-full border border-brand-midnight/10 bg-white/60 px-4 py-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-midnight/70 backdrop-blur dark:border-brand-white/10 dark:bg-brand-midnight/40 dark:text-brand-white/70">
+              <FlaskConical className="h-3.5 w-3.5 text-emerald-500 dark:text-emerald-400" />
+              {c.hero.badge}
+            </span>
+          </m.div>
 
-            {/* Left: Text */}
-            <m.div
-              initial={shouldReduce ? false : { opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: shouldReduce ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] }}
+          <m.h1
+            id="labs-hero-h1"
+            {...fade(0.08)}
+            animate={{ opacity: 1, y: 0 }}
+            className="font-proxima mx-auto mt-8 max-w-4xl text-balance text-center text-4xl font-extrabold leading-[1.03] tracking-tight text-brand-midnight dark:text-brand-white sm:text-6xl lg:text-7xl"
+          >
+            {c.hero.h1}
+          </m.h1>
+
+          <m.p
+            {...fade(0.16)}
+            animate={{ opacity: 1, y: 0 }}
+            className="mx-auto mt-7 max-w-2xl text-pretty text-center text-lg leading-relaxed text-brand-midnight/65 dark:text-brand-white/65 sm:text-xl"
+          >
+            {c.hero.subtitle}
+          </m.p>
+
+          <m.div
+            {...fade(0.24)}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-5"
+          >
+            <Link
+              href={BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 rounded-lg bg-brand-accent px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-brand-accent/25 transition-all hover:-translate-y-0.5 hover:bg-brand-accent/90 hover:shadow-xl hover:shadow-brand-accent/30"
             >
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/8 px-4 py-1.5">
-                <FlaskConical className="h-3.5 w-3.5 text-emerald-400" />
-                <span className="text-[0.7rem] font-semibold uppercase tracking-widest text-emerald-400">
-                  {c.hero.badge}
-                </span>
-              </div>
-
-              <h1 className="font-proxima text-balance text-4xl font-extrabold leading-[1.05] tracking-tight text-brand-midnight dark:text-brand-white sm:text-5xl lg:text-[3.5rem]">
-                {c.hero.h1}
-              </h1>
-
-              <p className="mt-6 max-w-lg text-lg leading-relaxed text-brand-midnight/55 dark:text-brand-white/55">
-                {c.hero.subtitle}
-              </p>
-
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Link
-                  href={BOOKING_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-emerald-600/20 transition-all hover:-translate-y-0.5 hover:bg-emerald-500"
-                >
-                  {c.hero.ctaPrimary}
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
-                <a
-                  href="#lineas"
-                  className="text-sm font-semibold text-brand-midnight/50 dark:text-brand-white/50 transition-colors hover:text-brand-accent dark:hover:text-brand-white"
-                >
-                  {c.hero.ctaSecondary} →
-                </a>
-              </div>
-
-              <div className="mt-8 flex flex-wrap gap-x-5 gap-y-2">
-                {c.hero.trustSignals.map((s) => (
-                  <span key={s} className="flex items-center gap-1.5 text-xs text-brand-midnight/30 dark:text-brand-white/30">
-                    <span className="h-1 w-1 rounded-full bg-emerald-400/60" />
-                    {s}
-                  </span>
-                ))}
-              </div>
-            </m.div>
-
-            {/* Right: Research stats + lines preview */}
-            <m.div
-              initial={shouldReduce ? false : { opacity: 0, x: 24 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: shouldReduce ? 0 : 0.8, delay: shouldReduce ? 0 : 0.15, ease: [0.16, 1, 0.3, 1] }}
-              className="hidden lg:block"
+              {c.hero.ctaPrimary}
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </Link>
+            <a
+              href="#lineas"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-midnight/70 transition-colors hover:text-brand-accent dark:text-brand-white/70 dark:hover:text-brand-white"
             >
-              <div className="overflow-hidden rounded-2xl border border-brand-midnight/8 dark:border-brand-white/10 bg-brand-surface dark:bg-brand-deep/60 backdrop-blur-sm">
-                {/* Header bar */}
-                <div className="flex items-center gap-2 border-b border-brand-midnight/8 dark:border-brand-white/10 px-5 py-3.5">
-                  <div className="flex gap-1.5">
-                    <div className="h-2.5 w-2.5 rounded-full bg-red-500/50" />
-                    <div className="h-2.5 w-2.5 rounded-full bg-yellow-500/50" />
-                    <div className="h-2.5 w-2.5 rounded-full bg-emerald-500/50" />
-                  </div>
-                  <span className="mx-auto text-[0.65rem] text-brand-midnight/30 dark:text-brand-white/30">{t.terminalLabel}</span>
-                </div>
+              {c.hero.ctaSecondary}
+              <ArrowRight className="h-3.5 w-3.5" />
+            </a>
+          </m.div>
 
-                {/* Stats row */}
-                <div className="grid grid-cols-3 divide-x divide-brand-white/8 border-b border-brand-midnight/8 dark:border-brand-white/10">
-                  {c.impact.stats.map((s) => (
-                    <div key={s.label} className="flex flex-col items-center py-5">
-                      <span className="text-2xl font-extrabold text-brand-midnight dark:text-brand-white">{s.value}</span>
-                      <span className="mt-0.5 text-[0.65rem] uppercase tracking-wider text-brand-midnight/35 dark:text-brand-white/35">{s.label}</span>
-                    </div>
-                  ))}
-                </div>
+          <m.div
+            {...fade(0.32)}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-12 flex flex-wrap items-center justify-center gap-x-6 gap-y-2"
+          >
+            {c.hero.trustSignals.map((s) => (
+              <span
+                key={s}
+                className="flex items-center gap-2 text-xs font-medium text-brand-midnight/45 dark:text-brand-white/45"
+              >
+                <span className="h-1 w-1 rounded-full bg-emerald-500/80" />
+                {s}
+              </span>
+            ))}
+          </m.div>
+        </div>
 
-                {/* Research lines preview */}
-                <div className="flex flex-col gap-2 p-4">
-                  {c.researchLines.lines.slice(0, 5).map((line) => {
-                    const s = CAT_STYLES[line.category];
-                    return (
-                      <div key={line.num} className="flex items-center gap-3 rounded-lg bg-brand-white dark:bg-brand-midnight/3 px-3 py-2.5">
-                        <span className={`font-mono text-[0.65rem] font-bold ${s.num}`}>{line.num}</span>
-                        <span className="flex-1 truncate text-xs text-brand-midnight/60 dark:text-brand-white/60">{line.title}</span>
-                        <span className={`rounded-full px-2 py-0.5 text-[0.6rem] font-medium ${s.badge}`}>
-                          {c.researchLines.categoryLabels[line.category]}
-                        </span>
-                      </div>
-                    );
-                  })}
-                  <div className="px-3 py-1 text-[0.65rem] text-brand-midnight/20 dark:text-brand-white/20">
-                    + {c.researchLines.lines.length - 5} {t.moreLines}
-                  </div>
+        {/* Impact stats strip — bottom of hero, builds trust immediately */}
+        <div className="relative border-t border-brand-midnight/8 dark:border-brand-white/10">
+          <div className="mx-auto max-w-6xl">
+            <dl className="grid grid-cols-3 divide-x divide-brand-midnight/8 dark:divide-brand-white/10">
+              {c.impact.stats.map((s) => (
+                <div key={s.label} className="flex flex-col items-center justify-center py-6 sm:py-8">
+                  <dt className="order-2 mt-1.5 text-[0.65rem] font-medium uppercase tracking-[0.14em] text-brand-midnight/45 dark:text-brand-white/45 sm:text-xs">
+                    {s.label}
+                  </dt>
+                  <dd className="order-1 font-proxima text-3xl font-extrabold text-brand-midnight dark:text-brand-white sm:text-4xl lg:text-5xl">
+                    {s.value}
+                  </dd>
                 </div>
-              </div>
-            </m.div>
+              ))}
+            </dl>
           </div>
         </div>
       </section>
 
-      {/* ── 2. OPEN SCIENCE PILLARS ──────────────────────────── */}
-      <section className="border-t border-brand-midnight/5 dark:border-brand-white/10 bg-brand-surface dark:bg-brand-deep py-24 px-4 sm:px-6 lg:px-8">
-        <div ref={impactRef} className="mx-auto max-w-6xl">
-          <m.div
-            initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-            animate={impactInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: shouldReduce ? 0 : 0.6 }}
-            className="mb-14"
-          >
-            <span className="text-[0.7rem] font-semibold uppercase tracking-widest text-emerald-400">
-              {t.missionBadge}
-            </span>
-            <h2 className="font-proxima mt-3 max-w-3xl text-balance text-3xl font-bold text-brand-midnight dark:text-brand-white sm:text-4xl">
+      {/* ══════════════ 2. MISSION — Open science pillars ══════════════ */}
+      <section
+        ref={impactRef}
+        className="border-t border-brand-midnight/5 bg-white px-4 py-24 dark:border-brand-white/10 dark:bg-brand-deep sm:px-6 lg:px-8 lg:py-32"
+        aria-labelledby="labs-mission-h2"
+      >
+        <div className="mx-auto max-w-6xl">
+          <m.div {...fade(0)} animate={impactInView ? { opacity: 1, y: 0 } : {}} className="mb-16 grid gap-8 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+            <div>
+              <span className="flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-emerald-600 dark:text-emerald-400">
+                <span className="h-px w-8 bg-emerald-500/60" />
+                {t.missionBadge}
+              </span>
+            </div>
+            <h2
+              id="labs-mission-h2"
+              className="font-proxima text-balance text-3xl font-bold leading-[1.15] text-brand-midnight dark:text-brand-white sm:text-4xl lg:text-5xl"
+            >
               {c.impact.title}
             </h2>
           </m.div>
 
-          <div className="grid gap-6 sm:grid-cols-3">
+          <div className="grid gap-px overflow-hidden rounded-2xl border border-brand-midnight/10 bg-brand-midnight/10 dark:border-brand-white/10 dark:bg-brand-white/10 sm:grid-cols-3">
             {c.impact.features.map((feat, i) => (
               <m.div
                 key={feat.title}
-                initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+                {...fade(0.08 * i)}
                 animate={impactInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: shouldReduce ? 0 : 0.5, delay: shouldReduce ? 0 : 0.1 + i * 0.1 }}
-                className="group relative flex flex-col rounded-2xl border border-brand-midnight/8 dark:border-brand-white/10 bg-brand-surface dark:bg-brand-midnight p-7 transition-all hover:border-emerald-500/25 hover:shadow-lg hover:shadow-emerald-600/5"
+                className="group relative flex flex-col bg-white p-8 transition-colors hover:bg-brand-surface dark:bg-brand-midnight dark:hover:bg-brand-deep/60 lg:p-10"
               >
-                <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10">
-                  <span className="text-[0.65rem] font-bold text-emerald-400">0{i + 1}</span>
-                </div>
-                <h3 className="text-base font-proxima font-semibold text-brand-midnight dark:text-brand-white">{feat.title}</h3>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-brand-midnight/50 dark:text-brand-white/50">{feat.desc}</p>
+                <span className="font-mono text-xs font-semibold text-brand-accent/70 dark:text-brand-accent-light/70">
+                  0{i + 1}
+                </span>
+                <h3 className="font-proxima mt-4 text-lg font-semibold leading-snug text-brand-midnight dark:text-brand-white">
+                  {feat.title}
+                </h3>
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-brand-midnight/60 dark:text-brand-white/60">
+                  {feat.desc}
+                </p>
                 {feat.url && (
                   <Link
                     href={feat.url}
                     target={feat.url.startsWith("http") ? "_blank" : undefined}
                     rel={feat.url.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="mt-5 inline-flex items-center gap-1 text-xs font-semibold text-emerald-400/70 transition-colors group-hover:text-emerald-400"
+                    className="mt-6 inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-600 transition-colors hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"
                   >
-                    {t.viewOnHuggingFace} <ChevronRight className="h-3 w-3" />
+                    {t.viewOnHuggingFace}
+                    <ArrowUpRight className="h-3.5 w-3.5" />
                   </Link>
                 )}
               </m.div>
@@ -295,141 +320,203 @@ export function LabsContent() {
         </div>
       </section>
 
-      {/* ── 3. PUBLICATIONS & MODELS ─────────────────────────── */}
-      <section className="relative overflow-hidden bg-brand-surface dark:bg-brand-midnight py-24 px-4 sm:px-6 lg:px-8">
-        <div className="pointer-events-none absolute right-0 top-0 h-[400px] w-[400px] rounded-full bg-brand-accent/5 blur-[100px]" />
-        <div ref={researchRef} className="relative mx-auto max-w-7xl">
-          <m.div
-            initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-            animate={researchInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: shouldReduce ? 0 : 0.6 }}
-            className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
-          >
+      {/* ══════════════ 3. NA'AT — Anchor project + Roadmap ══════════════ */}
+      <section
+        ref={naatRef}
+        className="relative overflow-hidden border-t border-brand-midnight/5 bg-brand-surface px-4 py-24 dark:border-brand-white/10 dark:bg-brand-midnight sm:px-6 lg:px-8 lg:py-32"
+        aria-labelledby="labs-naat-h2"
+      >
+        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <div className="absolute right-[-10%] top-0 h-[500px] w-[500px] rounded-full bg-brand-accent/6 blur-[130px]" />
+        </div>
+
+        <div className="relative mx-auto max-w-6xl">
+          <m.div {...fade(0)} animate={naatInView ? { opacity: 1, y: 0 } : {}} className="mb-14 grid gap-8 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
             <div>
-              <span className="text-[0.7rem] font-semibold uppercase tracking-widest text-emerald-400">
-                {c.featuredResearch.badge}
+              <span className="flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-accent">
+                <span className="h-px w-8 bg-brand-accent/60" />
+                {t.anchor}
               </span>
-              <h2 className="font-proxima mt-3 text-3xl font-bold text-brand-midnight dark:text-brand-white sm:text-4xl">
-                {c.featuredResearch.h2}
-              </h2>
             </div>
-            <Link
-              href="/investigacion"
-              className="inline-flex items-center gap-1 text-sm text-brand-midnight/40 dark:text-brand-white/40 transition-colors hover:text-brand-accent dark:hover:text-brand-white"
-            >
-              {t.viewAllPublications} <ArrowRight className="h-4 w-4" />
-            </Link>
+            <div>
+              <h2
+                id="labs-naat-h2"
+                className="font-proxima text-balance text-3xl font-bold leading-[1.15] text-brand-midnight dark:text-brand-white sm:text-4xl lg:text-5xl"
+              >
+                {c.roadmap.h2}
+              </h2>
+              <p className="mt-5 max-w-xl text-base leading-relaxed text-brand-midnight/60 dark:text-brand-white/60 lg:text-lg">
+                {c.roadmap.subtitle}
+              </p>
+            </div>
           </m.div>
 
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {c.featuredResearch.papers.map((paper, i) => (
-              <m.div
-                key={paper.title}
-                initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-                animate={researchInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: shouldReduce ? 0 : 0.5, delay: shouldReduce ? 0 : i * 0.08 }}
-                className={`group relative flex flex-col overflow-hidden rounded-2xl border transition-all duration-300 ${
-                  paper.featured
-                    ? "md:col-span-2 lg:col-span-3 border-brand-accent/25 bg-gradient-to-br from-brand-deep to-brand-midnight hover:border-brand-accent/40"
-                    : "border-brand-midnight/8 dark:border-brand-white/10 bg-brand-surface dark:bg-brand-deep hover:border-brand-accent/20 hover:bg-brand-surface/80 dark:hover:border-brand-white/20 dark:hover:bg-brand-deep/80"
-                }`}
-              >
-                {paper.url !== "#" && (
-                  <Link href={paper.url} className="absolute inset-0 z-10" aria-label={`Ver ${paper.title}`} />
-                )}
+          {/* Na'at featured card */}
+          <m.div
+            {...fade(0.08)}
+            animate={naatInView ? { opacity: 1, y: 0 } : {}}
+            className="mb-12 overflow-hidden rounded-3xl border border-brand-midnight/10 bg-white shadow-sm dark:border-brand-white/10 dark:bg-brand-deep"
+          >
+            <div className="grid lg:grid-cols-[5fr_7fr]">
+              {/* Visual panel */}
+              <div className="relative flex min-h-[280px] items-center justify-center overflow-hidden border-b border-brand-midnight/10 bg-gradient-to-br from-brand-accent/8 via-brand-surface to-emerald-500/5 dark:border-brand-white/10 dark:from-brand-accent/15 dark:via-brand-midnight dark:to-emerald-500/10 lg:border-b-0 lg:border-r">
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(54,101,245,0.15)_0%,transparent_65%)]" />
+                <div className="relative z-10 flex flex-col items-center gap-4 text-center">
+                  <div className="relative">
+                    <div className="absolute inset-0 animate-pulse-glow rounded-full bg-brand-accent/30 blur-2xl" />
+                    <Box className="relative h-20 w-20 text-brand-accent drop-shadow-[0_0_20px_rgba(54,101,245,0.5)]" strokeWidth={1.2} />
+                  </div>
+                  <span className="font-proxima text-3xl font-extrabold tracking-tight text-brand-midnight dark:text-brand-white">
+                    Lattice Na&rsquo;at
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/15 px-3 py-1 text-[0.7rem] font-semibold text-emerald-700 dark:text-emerald-300">
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
+                    {t.featuredParamsLabel}
+                  </span>
+                </div>
+              </div>
 
-                {paper.featured ? (
-                  <div className="grid lg:grid-cols-[1fr_2fr]">
-                    {/* Visual panel */}
-                    <div className="relative flex min-h-[200px] items-center justify-center overflow-hidden border-b border-brand-midnight/8 dark:border-brand-white/10 bg-brand-surface dark:bg-brand-midnight/50 lg:border-b-0 lg:border-r">
-                      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.12)_0%,transparent_70%)]" />
-                      <div className="relative flex flex-col items-center gap-3">
-                        <Box className="h-16 w-16 text-emerald-400/70 drop-shadow-[0_0_20px_rgba(16,185,129,0.4)]" />
-                        <span className="font-proxima text-2xl font-bold text-brand-midnight/80 dark:text-brand-white/80">Lattice Na&apos;at</span>
-                        <span className="rounded-full bg-emerald-500/15 px-3 py-0.5 text-xs font-semibold text-emerald-300">
-                          {t.featuredParamsLabel}
-                        </span>
-                      </div>
+              {/* Content panel */}
+              <div className="flex flex-col justify-center p-8 lg:p-12">
+                <span className="inline-flex w-fit items-center gap-1.5 rounded-full border border-brand-accent/25 bg-brand-accent/10 px-2.5 py-1 text-[0.65rem] font-semibold text-brand-accent">
+                  <Sparkles className="h-3 w-3" aria-hidden />
+                  {c.featuredResearch.papers.find((p) => p.featured)?.tag ?? "Lattice Na'at"}
+                </span>
+                <h3 className="font-proxima mt-5 text-2xl font-bold leading-tight text-brand-midnight dark:text-brand-white sm:text-3xl">
+                  {c.featuredResearch.papers.find((p) => p.featured)?.title ?? "Lattice Na'at 1T"}
+                </h3>
+                <p className="mt-4 text-base leading-relaxed text-brand-midnight/60 dark:text-brand-white/60">
+                  {t.featuredDesc}
+                </p>
+                <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
+                  <Link
+                    href="/investigacion/lattice-naat"
+                    className="group inline-flex items-center gap-1.5 text-sm font-semibold text-brand-accent transition-colors hover:text-brand-accent/80"
+                  >
+                    {t.viewFullModel}
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  </Link>
+                  <Link
+                    href="https://huggingface.co/sintergica"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-brand-midnight/60 transition-colors hover:text-brand-midnight dark:text-brand-white/60 dark:hover:text-brand-white"
+                  >
+                    {t.viewOnHuggingFace}
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </m.div>
+
+          {/* Roadmap phases — horizontal timeline */}
+          <div className="relative">
+            {/* Desktop connector */}
+            <div
+              className="absolute left-0 right-0 top-[38px] hidden h-px bg-gradient-to-r from-emerald-500/40 via-brand-accent/30 to-amber-500/30 lg:block"
+              aria-hidden="true"
+            />
+
+            <ol className="grid gap-6 lg:grid-cols-3">
+              {c.roadmap.phases.map((phase, i) => {
+                const tone = TONE[PHASE_TONE[phase.statusVariant]];
+                const isGoal = phase.statusVariant === "goal";
+                return (
+                  <m.li
+                    key={phase.year + phase.label}
+                    {...fade(0.1 * i)}
+                    animate={naatInView ? { opacity: 1, y: 0 } : {}}
+                    className={`relative rounded-2xl border bg-white p-7 dark:bg-brand-deep ${tone.border} ${isGoal ? "border-dashed" : ""}`}
+                  >
+                    {/* Timeline dot (desktop) */}
+                    <div
+                      className={`absolute left-7 top-[-15px] hidden h-7 w-7 items-center justify-center rounded-full border-2 bg-brand-surface dark:bg-brand-midnight lg:flex ${tone.border}`}
+                      aria-hidden="true"
+                    >
+                      <span className={`h-2 w-2 rounded-full ${tone.dot}`} />
                     </div>
-                    {/* Content panel */}
-                    <div className="flex flex-col justify-center p-8 lg:p-12">
-                      <div className="flex items-center justify-between">
-                        <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[0.65rem] font-medium ${getTagStyle(paper.tag)}`}>
-                          {getTagIcon(paper.tag)}
-                          {paper.tag}
-                        </span>
-                        {paper.url !== "#" && (
-                          <ExternalLink className="h-4 w-4 text-brand-accent/40 transition-colors group-hover:text-brand-accent" />
-                        )}
-                      </div>
-                      <h3 className="mt-5 text-2xl font-proxima font-semibold text-brand-midnight dark:text-brand-white sm:text-3xl">{paper.title}</h3>
-                      <p className="mt-3 text-sm leading-relaxed text-brand-midnight/50 dark:text-brand-white/50">
-                        {t.featuredDesc}
-                      </p>
-                      <div className="mt-5 flex items-center gap-4">
-                        {paper.date && <span className="text-xs text-brand-midnight/35 dark:text-brand-white/35">{paper.date}</span>}
-                        <Link
-                          href={paper.url}
-                          className="text-xs font-semibold text-emerald-400 transition-colors hover:text-emerald-300"
-                        >
-                          {t.viewFullModel}
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="flex flex-1 flex-col p-6">
-                    <div className="flex items-start justify-between">
-                      <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[0.65rem] font-medium ${getTagStyle(paper.tag)}`}>
-                        {getTagIcon(paper.tag)}
-                        {paper.tag}
+
+                    <div className="flex items-center justify-between">
+                      <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.65rem] font-semibold ${tone.bg} ${tone.text}`}>
+                        {phase.statusVariant === "active" && <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />}
+                        {phase.status}
                       </span>
-                      {paper.url !== "#" && (
-                        <ExternalLink className="h-4 w-4 text-brand-midnight/25 dark:text-brand-white/25 transition-colors group-hover:text-brand-accent/60 dark:group-hover:text-brand-white/60" />
-                      )}
+                      <span className="font-mono text-xs text-brand-midnight/40 dark:text-brand-white/40">
+                        {phase.year}
+                      </span>
                     </div>
-                    <h3 className="mt-4 flex-1 text-base font-proxima font-semibold leading-snug text-brand-midnight dark:text-brand-white">{paper.title}</h3>
-                    {paper.date && (
-                      <p className="mt-4 text-xs text-brand-midnight/30 dark:text-brand-white/30">{paper.date}</p>
+
+                    <p className={`mt-6 font-proxima text-4xl font-extrabold tracking-tight ${tone.text}`}>
+                      {phase.params}
+                    </p>
+                    <p className="mt-2 font-proxima text-base font-semibold text-brand-midnight dark:text-brand-white">
+                      {phase.label}
+                    </p>
+                    {phase.arch && (
+                      <p className="mt-1 font-mono text-xs text-brand-midnight/45 dark:text-brand-white/45">
+                        {phase.arch}
+                      </p>
                     )}
-                  </div>
-                )}
-              </m.div>
-            ))}
+                    <p className="mt-5 text-sm leading-relaxed text-brand-midnight/60 dark:text-brand-white/60">
+                      {phase.desc}
+                    </p>
+                  </m.li>
+                );
+              })}
+            </ol>
+          </div>
+
+          <div className="mt-10 flex flex-col items-start gap-2 text-xs text-brand-midnight/45 dark:text-brand-white/45 sm:flex-row sm:items-center sm:gap-4">
+            <p className="max-w-xl">{t.geoNote}</p>
+            <Link
+              href="/investigacion/lattice-naat"
+              className="inline-flex items-center gap-1 font-semibold text-brand-accent transition-colors hover:text-brand-accent/80"
+            >
+              {t.naatDetail} <ArrowRight className="h-3 w-3" />
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* ── 4. RESEARCH LINES ────────────────────────────────── */}
-      <section id="lineas" className="bg-brand-surface dark:bg-brand-deep py-24 px-4 sm:px-6 lg:px-8">
-        <div ref={linesRef} className="mx-auto max-w-7xl">
-          <m.div
-            initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-            animate={linesInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: shouldReduce ? 0 : 0.6 }}
-            className="mb-4"
-          >
-            <span className="text-[0.7rem] font-semibold uppercase tracking-widest text-emerald-400">
-              {c.researchLines.badge}
-            </span>
-            <h2 className="font-proxima mt-3 max-w-2xl text-balance text-3xl font-bold text-brand-midnight dark:text-brand-white sm:text-4xl lg:text-5xl">
-              {c.researchLines.h2}
-            </h2>
-            <p className="mt-4 max-w-2xl text-base text-brand-midnight/50 dark:text-brand-white/50">{c.researchLines.subtitle}</p>
+      {/* ══════════════ 4. RESEARCH LINES ══════════════ */}
+      <section
+        id="lineas"
+        ref={linesRef}
+        className="border-t border-brand-midnight/5 bg-white px-4 py-24 dark:border-brand-white/10 dark:bg-brand-deep sm:px-6 lg:px-8 lg:py-32"
+        aria-labelledby="labs-lines-h2"
+      >
+        <div className="mx-auto max-w-6xl">
+          <m.div {...fade(0)} animate={linesInView ? { opacity: 1, y: 0 } : {}} className="mb-12 grid gap-8 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+            <div>
+              <span className="flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-accent">
+                <span className="h-px w-8 bg-brand-accent/60" />
+                {c.researchLines.badge}
+              </span>
+            </div>
+            <div>
+              <h2
+                id="labs-lines-h2"
+                className="font-proxima text-balance text-3xl font-bold leading-[1.15] text-brand-midnight dark:text-brand-white sm:text-4xl lg:text-5xl"
+              >
+                {c.researchLines.h2}
+              </h2>
+              <p className="mt-5 max-w-xl text-base leading-relaxed text-brand-midnight/60 dark:text-brand-white/60 lg:text-lg">
+                {c.researchLines.subtitle}
+              </p>
+            </div>
           </m.div>
 
           {/* Category legend */}
-          <m.div
-            initial={shouldReduce ? false : { opacity: 0 }}
-            animate={linesInView ? { opacity: 1 } : {}}
-            transition={{ duration: shouldReduce ? 0 : 0.5, delay: 0.2 }}
-            className="mt-8 flex flex-wrap gap-2"
-          >
+          <m.div {...fade(0.12)} animate={linesInView ? { opacity: 1, y: 0 } : {}} className="mb-8 flex flex-wrap gap-2">
             {(Object.entries(c.researchLines.categoryLabels) as [ResearchLine["category"], string][]).map(([key, label]) => {
-              const s = CAT_STYLES[key];
+              const tone = TONE[CAT_TONE[key]];
               return (
-                <span key={key} className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${s.badge}`}>
-                  <span className={`h-1.5 w-1.5 rounded-full ${s.dot}`} />
+                <span
+                  key={key}
+                  className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium ${tone.border} ${tone.bg} ${tone.text}`}
+                >
+                  <span className={`h-1.5 w-1.5 rounded-full ${tone.dot}`} />
                   {label}
                 </span>
               );
@@ -437,153 +524,164 @@ export function LabsContent() {
           </m.div>
 
           {/* Lines grid */}
-          <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <ol className="grid gap-px overflow-hidden rounded-2xl border border-brand-midnight/10 bg-brand-midnight/10 dark:border-brand-white/10 dark:bg-brand-white/10 md:grid-cols-2 lg:grid-cols-3">
             {c.researchLines.lines.map((line, i) => {
-              const s = CAT_STYLES[line.category];
+              const tone = TONE[CAT_TONE[line.category]];
               return (
-                <m.div
+                <m.li
                   key={line.num}
-                  initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+                  {...fade(0.04 * i)}
                   animate={linesInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: shouldReduce ? 0 : 0.45, delay: shouldReduce ? 0 : 0.05 + i * 0.06 }}
-                  className={`group rounded-2xl border bg-brand-surface dark:bg-brand-midnight p-7 transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-midnight/80 ${s.border}`}
+                  className="group relative flex flex-col bg-white p-7 transition-colors hover:bg-brand-surface dark:bg-brand-midnight dark:hover:bg-brand-deep/60"
                 >
-                  <div className="mb-6 flex items-center justify-between">
-                    <span className={`font-mono text-xs font-bold ${s.num}`}>{line.num}</span>
-                    <span className={`rounded-full px-2.5 py-0.5 text-[0.65rem] font-semibold ${s.badge}`}>
+                  <div className="flex items-start justify-between">
+                    <span className={`font-mono text-sm font-bold ${tone.text}`}>{line.num}</span>
+                    <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.6rem] font-semibold uppercase tracking-wide ${tone.bg} ${tone.text}`}>
+                      <span className={`h-1 w-1 rounded-full ${tone.dot}`} />
                       {c.researchLines.categoryLabels[line.category]}
                     </span>
                   </div>
-                  <h3 className="text-base font-proxima font-semibold leading-snug text-brand-midnight dark:text-brand-white transition-colors group-hover:text-emerald-400">
+                  <h3 className="font-proxima mt-6 text-base font-semibold leading-snug text-brand-midnight transition-colors group-hover:text-brand-accent dark:text-brand-white dark:group-hover:text-brand-accent-light">
                     {line.title}
                   </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-brand-midnight/45 dark:text-brand-white/45">{line.desc}</p>
-                </m.div>
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-brand-midnight/55 dark:text-brand-white/55">
+                    {line.desc}
+                  </p>
+                </m.li>
               );
             })}
-          </div>
+          </ol>
         </div>
       </section>
 
-      {/* ── 5. NA'AT ROADMAP ─────────────────────────────────── */}
-      <section id="roadmap" className="bg-brand-surface dark:bg-brand-midnight py-24 px-4 sm:px-6 lg:px-8">
-        <div ref={roadmapRef} className="mx-auto max-w-7xl">
-          <m.div
-            initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-            animate={roadmapInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: shouldReduce ? 0 : 0.6 }}
-            className="mb-14 text-center"
-          >
-            <span className="text-[0.7rem] font-semibold uppercase tracking-widest text-emerald-400">
-              {c.roadmap.badge}
-            </span>
-            <h2 className="font-proxima mt-3 text-3xl font-bold text-brand-midnight dark:text-brand-white sm:text-4xl lg:text-5xl">
-              {c.roadmap.h2}
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-base text-brand-midnight/50 dark:text-brand-white/50">{c.roadmap.subtitle}</p>
+      {/* ══════════════ 5. PUBLICATIONS & MODELS ══════════════ */}
+      <section
+        ref={pubsRef}
+        className="relative overflow-hidden border-t border-brand-midnight/5 bg-brand-surface px-4 py-24 dark:border-brand-white/10 dark:bg-brand-midnight sm:px-6 lg:px-8 lg:py-32"
+        aria-labelledby="labs-pubs-h2"
+      >
+        <div className="mx-auto max-w-6xl">
+          <m.div {...fade(0)} animate={pubsInView ? { opacity: 1, y: 0 } : {}} className="mb-12 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <span className="flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-violet-600 dark:text-violet-400">
+                <span className="h-px w-8 bg-violet-500/60" />
+                {c.featuredResearch.badge}
+              </span>
+              <h2
+                id="labs-pubs-h2"
+                className="font-proxima mt-3 text-balance text-3xl font-bold leading-[1.15] text-brand-midnight dark:text-brand-white sm:text-4xl lg:text-5xl"
+              >
+                {c.featuredResearch.h2}
+              </h2>
+            </div>
+            <Link
+              href="https://huggingface.co/sintergica"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-1.5 self-start text-sm font-semibold text-brand-midnight/60 transition-colors hover:text-brand-accent dark:text-brand-white/60 dark:hover:text-brand-white sm:self-end"
+            >
+              {t.viewAllPublications}
+              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </Link>
           </m.div>
 
-          {/* Connector bar (desktop) */}
-          <div className="relative mb-0 hidden lg:flex" aria-hidden="true">
-            <div className="h-px flex-1 bg-gradient-to-r from-emerald-500/30 via-violet-500/20 to-amber-500/15" />
-          </div>
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {papers.map((paper, i) => {
+              const tone = TONE[getTagTone(paper.tag)];
+              const isLive = paper.url !== "#";
+              const Wrapper: React.ElementType = isLive ? Link : "div";
+              const wrapperProps = isLive ? { href: paper.url, ...(paper.url.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {}) } : {};
 
-          <div className="grid gap-5 lg:grid-cols-3">
-            {c.roadmap.phases.map((phase, i) => {
-              const s = PHASE_STYLES[phase.statusVariant];
               return (
                 <m.div
-                  key={phase.statusVariant}
-                  initial={shouldReduce ? false : { opacity: 0, y: 24 }}
-                  animate={roadmapInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: shouldReduce ? 0 : 0.5, delay: shouldReduce ? 0 : i * 0.12 }}
-                  className={`relative rounded-2xl border p-6 ${s.card} ${s.border}`}
+                  key={paper.title}
+                  {...fade(0.06 * i)}
+                  animate={pubsInView ? { opacity: 1, y: 0 } : {}}
                 >
-                  {/* Phase dot (desktop connector) */}
-                  <div
-                    className={`absolute -top-3 left-6 hidden h-6 w-6 items-center justify-center rounded-full border-2 lg:flex ${
-                      phase.statusVariant === "active" ? "border-emerald-500 bg-emerald-500/20"
-                      : phase.statusVariant === "dev"  ? "border-violet-500 bg-violet-500/20"
-                      : "border-amber-500 bg-amber-500/10"
-                    }`}
-                    aria-hidden="true"
+                  <Wrapper
+                    {...wrapperProps}
+                    className={`group flex h-full flex-col rounded-2xl border border-brand-midnight/10 bg-white p-6 transition-all duration-200 dark:border-brand-white/10 dark:bg-brand-deep ${isLive ? "hover:-translate-y-0.5 hover:border-brand-accent/30 hover:shadow-lg" : "opacity-80"}`}
                   >
-                    <span className={`text-[0.5rem] font-bold ${s.accent}`}>{String(i + 1).padStart(2, "0")}</span>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${s.chip}`}>{phase.status}</span>
-                    <span className={`text-xs font-medium ${s.accent} opacity-60`}>{phase.year}</span>
-                  </div>
-                  <p className={`mt-4 text-4xl font-extrabold ${s.accent}`}>{phase.params}</p>
-                  <p className="mt-1 text-base font-bold text-brand-midnight dark:text-brand-white">{phase.label}</p>
-                  {phase.arch && <p className="mt-0.5 text-xs text-brand-midnight/35 dark:text-brand-white/35">{phase.arch}</p>}
-                  <p className="mt-4 text-sm leading-relaxed text-brand-midnight/50 dark:text-brand-white/50">{phase.desc}</p>
-
-                  {i < c.roadmap.phases.length - 1 && (
-                    <div className="mt-4 flex justify-center lg:hidden" aria-hidden="true">
-                      <ArrowRight className="h-5 w-5 rotate-90 text-brand-midnight/15 dark:text-brand-white/15" />
+                    <div className="flex items-start justify-between">
+                      <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[0.6rem] font-semibold uppercase tracking-wide ${tone.border} ${tone.bg} ${tone.text}`}>
+                        {getTagIcon(paper.tag)}
+                        {paper.tag}
+                      </span>
+                      {isLive && (
+                        <ExternalLink className="h-4 w-4 text-brand-midnight/25 transition-colors group-hover:text-brand-accent dark:text-brand-white/25" />
+                      )}
                     </div>
-                  )}
+                    <h3 className="font-proxima mt-5 flex-1 text-base font-semibold leading-snug text-brand-midnight dark:text-brand-white">
+                      {paper.title}
+                    </h3>
+                    {paper.date && (
+                      <p className="mt-4 font-mono text-xs text-brand-midnight/40 dark:text-brand-white/40">
+                        {paper.date}
+                      </p>
+                    )}
+                  </Wrapper>
                 </m.div>
               );
             })}
           </div>
-
-          <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            <p className="text-xs text-brand-midnight/30 dark:text-brand-white/30">
-              {t.geoNote}
-            </p>
-            <Link
-              href="/investigacion/lattice-naat"
-              className="text-xs font-semibold text-emerald-400 transition-opacity hover:opacity-75"
-            >
-              {t.naatDetail}
-            </Link>
-          </div>
         </div>
       </section>
 
-      {/* ── 6. COLLABORATE ───────────────────────────────────── */}
-      <section id="colaborar" className="bg-brand-surface dark:bg-brand-deep py-24 px-4 sm:px-6 lg:px-8">
-        <div ref={collabRef} className="mx-auto max-w-7xl">
-          <m.div
-            initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-            animate={collabInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: shouldReduce ? 0 : 0.6 }}
-            className="mb-14 text-center"
-          >
-            <span className="text-[0.7rem] font-semibold uppercase tracking-widest text-emerald-400">
-              {c.collaborate.badge}
-            </span>
-            <h2 className="font-proxima mt-3 text-3xl font-bold text-brand-midnight dark:text-brand-white sm:text-4xl lg:text-5xl">
-              {c.collaborate.h2}
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-base text-brand-midnight/50 dark:text-brand-white/50">{c.collaborate.subtitle}</p>
+      {/* ══════════════ 6. COLLABORATE ══════════════ */}
+      <section
+        id="colaborar"
+        ref={collabRef}
+        className="border-t border-brand-midnight/5 bg-white px-4 py-24 dark:border-brand-white/10 dark:bg-brand-deep sm:px-6 lg:px-8 lg:py-32"
+        aria-labelledby="labs-collab-h2"
+      >
+        <div className="mx-auto max-w-6xl">
+          <m.div {...fade(0)} animate={collabInView ? { opacity: 1, y: 0 } : {}} className="mb-14 grid gap-8 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+            <div>
+              <span className="flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-emerald-600 dark:text-emerald-400">
+                <span className="h-px w-8 bg-emerald-500/60" />
+                {c.collaborate.badge}
+              </span>
+            </div>
+            <div>
+              <h2
+                id="labs-collab-h2"
+                className="font-proxima text-balance text-3xl font-bold leading-[1.15] text-brand-midnight dark:text-brand-white sm:text-4xl lg:text-5xl"
+              >
+                {c.collaborate.h2}
+              </h2>
+              <p className="mt-5 max-w-xl text-base leading-relaxed text-brand-midnight/60 dark:text-brand-white/60 lg:text-lg">
+                {c.collaborate.subtitle}
+              </p>
+            </div>
           </m.div>
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {c.collaborate.audiences.map((audience, i) => {
               const Icon = AUDIENCE_ICONS[audience.id] ?? Users;
-              const st = AUDIENCE_STYLES[audience.id];
+              const tone = TONE[AUDIENCE_TONE[audience.id] ?? "accent"];
               return (
                 <m.div
                   key={audience.id}
-                  initial={shouldReduce ? false : { opacity: 0, y: 24 }}
+                  {...fade(0.08 * i)}
                   animate={collabInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: shouldReduce ? 0 : 0.45, delay: shouldReduce ? 0 : i * 0.1 }}
-                  className={`flex flex-col rounded-2xl border bg-brand-surface dark:bg-brand-midnight p-6 transition-all duration-200 ${st.border} ${st.hover}`}
+                  className={`group flex flex-col rounded-2xl border bg-brand-surface p-7 transition-all duration-200 hover:-translate-y-0.5 dark:bg-brand-midnight ${tone.border} hover:shadow-lg`}
                 >
-                  <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${st.bg}`}>
-                    <Icon className={`h-5 w-5 ${st.color}`} />
+                  <div className={`flex h-11 w-11 items-center justify-center rounded-xl ${tone.bg}`}>
+                    <Icon className={`h-5 w-5 ${tone.text}`} strokeWidth={1.8} aria-hidden />
                   </div>
-                  <p className="mt-4 text-base font-bold text-brand-midnight dark:text-brand-white">{audience.title}</p>
-                  <p className={`text-xs font-medium ${st.color}`}>{audience.subtitle}</p>
-                  <ul className="mt-4 flex flex-1 flex-col gap-2">
+                  <h3 className="font-proxima mt-5 text-base font-bold text-brand-midnight dark:text-brand-white">
+                    {audience.title}
+                  </h3>
+                  <p className={`text-xs font-semibold uppercase tracking-wide ${tone.text}`}>
+                    {audience.subtitle}
+                  </p>
+                  <ul className="mt-5 flex flex-1 flex-col gap-2.5">
                     {audience.items.map((item) => (
                       <li key={item} className="flex items-start gap-2">
-                        <CheckCircle2 className={`mt-0.5 h-3.5 w-3.5 shrink-0 ${st.color} opacity-60`} />
-                        <span className="text-sm text-brand-midnight/55 dark:text-brand-white/55">{item}</span>
+                        <CheckCircle2 className={`mt-0.5 h-3.5 w-3.5 shrink-0 ${tone.text}`} strokeWidth={2} aria-hidden />
+                        <span className="text-sm leading-snug text-brand-midnight/65 dark:text-brand-white/65">
+                          {item}
+                        </span>
                       </li>
                     ))}
                   </ul>
@@ -593,40 +691,46 @@ export function LabsContent() {
           </div>
 
           <m.div
-            initial={shouldReduce ? false : { opacity: 0, y: 16 }}
+            {...fade(0.4)}
             animate={collabInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: shouldReduce ? 0 : 0.5, delay: 0.5 }}
-            className="mt-10 text-center"
+            className="mt-12 flex justify-center"
           >
             <Link
               href={BOOKING_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-emerald-600/20 transition-all hover:-translate-y-0.5 hover:bg-emerald-500"
+              className="group inline-flex items-center gap-2 rounded-lg bg-brand-accent px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-brand-accent/25 transition-all hover:-translate-y-0.5 hover:bg-brand-accent/90"
             >
               {c.collaborate.ctaLabel}
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
           </m.div>
         </div>
       </section>
 
-      {/* ── 7. OPEN LINKS ────────────────────────────────────── */}
-      <section id="links" className="bg-brand-surface dark:bg-brand-midnight py-24 px-4 sm:px-6 lg:px-8">
-        <div ref={linksRef} className="mx-auto max-w-4xl">
-          <m.div
-            initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-            animate={linksInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: shouldReduce ? 0 : 0.6 }}
-            className="mb-12 text-center"
-          >
-            <span className="text-[0.7rem] font-semibold uppercase tracking-widest text-emerald-400">
+      {/* ══════════════ 7. OPEN LINKS ══════════════ */}
+      <section
+        id="links"
+        ref={linksRef}
+        className="border-t border-brand-midnight/5 bg-brand-surface px-4 py-24 dark:border-brand-white/10 dark:bg-brand-midnight sm:px-6 lg:px-8 lg:py-28"
+        aria-labelledby="labs-links-h2"
+      >
+        <div className="mx-auto max-w-5xl">
+          <m.div {...fade(0)} animate={linksInView ? { opacity: 1, y: 0 } : {}} className="mb-12 text-center">
+            <span className="inline-flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-midnight/50 dark:text-brand-white/50">
+              <span className="h-px w-8 bg-brand-midnight/30 dark:bg-brand-white/30" />
               {c.links.badge}
+              <span className="h-px w-8 bg-brand-midnight/30 dark:bg-brand-white/30" />
             </span>
-            <h2 className="font-proxima mt-3 text-3xl font-bold text-brand-midnight dark:text-brand-white sm:text-4xl">
+            <h2
+              id="labs-links-h2"
+              className="font-proxima mt-4 text-balance text-3xl font-bold text-brand-midnight dark:text-brand-white sm:text-4xl"
+            >
               {c.links.h2}
             </h2>
-            <p className="mx-auto mt-3 max-w-lg text-base text-brand-midnight/50 dark:text-brand-white/50">{c.links.subtitle}</p>
+            <p className="mx-auto mt-4 max-w-lg text-base text-brand-midnight/60 dark:text-brand-white/60">
+              {c.links.subtitle}
+            </p>
           </m.div>
 
           <div className="grid gap-5 sm:grid-cols-2">
@@ -635,21 +739,26 @@ export function LabsContent() {
               href={`https://${c.links.github.url}`}
               target="_blank"
               rel="noopener noreferrer"
-              initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+              {...fade(0.08)}
               animate={linksInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: shouldReduce ? 0 : 0.45, delay: 0.1 }}
-              className="group flex flex-col rounded-2xl border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-surface dark:bg-brand-deep p-7 transition-all duration-200 hover:border-brand-accent/20 hover:shadow-lg dark:hover:border-brand-white/25 dark:hover:bg-brand-deep/80"
+              className="group flex flex-col rounded-2xl border border-brand-midnight/10 bg-white p-8 transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-midnight/20 hover:shadow-lg dark:border-brand-white/10 dark:bg-brand-deep dark:hover:border-brand-white/25"
             >
               <div className="flex items-start justify-between">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-white dark:bg-brand-midnight/8">
-                  <Github className="h-6 w-6 text-brand-midnight/70 dark:text-brand-white/70" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-midnight/5 dark:bg-brand-white/5">
+                  <Github className="h-6 w-6 text-brand-midnight/80 dark:text-brand-white/80" strokeWidth={1.5} />
                 </div>
-                <ExternalLink className="h-4 w-4 text-brand-midnight/25 dark:text-brand-white/25 transition-colors group-hover:text-brand-accent/60 dark:group-hover:text-brand-white/60" />
+                <ArrowUpRight className="h-5 w-5 text-brand-midnight/30 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand-midnight dark:text-brand-white/30 dark:group-hover:text-brand-white" />
               </div>
-              <p className="mt-5 text-xl font-bold text-brand-midnight dark:text-brand-white">{c.links.github.label}</p>
-              <p className="mt-0.5 font-mono text-xs text-brand-midnight/30 dark:text-brand-white/30">{c.links.github.url}</p>
-              <p className="mt-4 flex-1 text-sm leading-relaxed text-brand-midnight/50 dark:text-brand-white/50">{c.links.github.desc}</p>
-              <p className="mt-6 text-sm font-semibold text-brand-midnight/60 dark:text-brand-white/60 transition-colors group-hover:text-brand-accent dark:group-hover:text-brand-white">
+              <p className="font-proxima mt-6 text-xl font-bold text-brand-midnight dark:text-brand-white">
+                {c.links.github.label}
+              </p>
+              <p className="mt-1 font-mono text-xs text-brand-midnight/40 dark:text-brand-white/40">
+                {c.links.github.url}
+              </p>
+              <p className="mt-4 flex-1 text-sm leading-relaxed text-brand-midnight/60 dark:text-brand-white/60">
+                {c.links.github.desc}
+              </p>
+              <p className="mt-6 text-sm font-semibold text-brand-midnight/70 transition-colors group-hover:text-brand-accent dark:text-brand-white/70 dark:group-hover:text-brand-accent-light">
                 {c.links.github.cta}
               </p>
             </m.a>
@@ -659,21 +768,26 @@ export function LabsContent() {
               href={`https://${c.links.huggingface.url}`}
               target="_blank"
               rel="noopener noreferrer"
-              initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+              {...fade(0.16)}
               animate={linksInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: shouldReduce ? 0 : 0.45, delay: 0.2 }}
-              className="group flex flex-col rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.04] p-7 transition-all duration-200 hover:border-emerald-500/40 hover:bg-emerald-500/[0.08] hover:shadow-lg hover:shadow-emerald-600/10"
+              className="group flex flex-col rounded-2xl border border-emerald-500/25 bg-emerald-500/[0.04] p-8 transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-500/40 hover:bg-emerald-500/[0.08] hover:shadow-lg hover:shadow-emerald-500/10"
             >
               <div className="flex items-start justify-between">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/12">
-                  <HuggingFaceIcon className="h-6 w-6 text-emerald-400" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/15">
+                  <HuggingFaceIcon className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
                 </div>
-                <ExternalLink className="h-4 w-4 text-brand-midnight/25 dark:text-brand-white/25 transition-colors group-hover:text-emerald-400/60" />
+                <ArrowUpRight className="h-5 w-5 text-emerald-600/40 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-emerald-600 dark:text-emerald-400/40 dark:group-hover:text-emerald-400" />
               </div>
-              <p className="mt-5 text-xl font-bold text-brand-midnight dark:text-brand-white">{c.links.huggingface.label}</p>
-              <p className="mt-0.5 font-mono text-xs text-brand-midnight/30 dark:text-brand-white/30">{c.links.huggingface.url}</p>
-              <p className="mt-4 flex-1 text-sm leading-relaxed text-brand-midnight/50 dark:text-brand-white/50">{c.links.huggingface.desc}</p>
-              <p className="mt-6 text-sm font-semibold text-emerald-400 transition-colors group-hover:text-emerald-300">
+              <p className="font-proxima mt-6 text-xl font-bold text-brand-midnight dark:text-brand-white">
+                {c.links.huggingface.label}
+              </p>
+              <p className="mt-1 font-mono text-xs text-brand-midnight/40 dark:text-brand-white/40">
+                {c.links.huggingface.url}
+              </p>
+              <p className="mt-4 flex-1 text-sm leading-relaxed text-brand-midnight/60 dark:text-brand-white/60">
+                {c.links.huggingface.desc}
+              </p>
+              <p className="mt-6 text-sm font-semibold text-emerald-600 transition-colors group-hover:text-emerald-700 dark:text-emerald-400 dark:group-hover:text-emerald-300">
                 {c.links.huggingface.cta}
               </p>
             </m.a>

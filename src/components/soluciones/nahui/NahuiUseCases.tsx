@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { LazyMotion, domAnimation, m, useInView, useReducedMotion } from "motion/react";
 import { Truck, Warehouse, ShoppingCart, Boxes, PackageOpen, Factory } from "lucide-react";
+import { NahuiIndustryMockup } from "./ui/NahuiIndustryMockups";
 
 type UseCase = {
   id: string;
@@ -182,7 +183,7 @@ export function NahuiUseCases() {
 
           <div
             key={activeTab}
-            className="mt-12 grid grid-cols-1 items-center gap-10 lg:grid-cols-[55%_45%] motion-safe:animate-[fadeIn_0.3s_ease-out]"
+            className="mt-12 grid grid-cols-1 items-center gap-10 lg:grid-cols-[45%_55%] motion-safe:animate-[fadeIn_0.3s_ease-out]"
           >
             <div>
               <p className="text-base leading-relaxed text-white/75">
@@ -193,7 +194,7 @@ export function NahuiUseCases() {
                 {active.metrics.map((metric) => (
                   <div
                     key={metric.label}
-                    className="rounded-xl border border-white/15 bg-white/10 px-5 py-4 backdrop-blur-sm"
+                    className="rounded-xl border border-white/10 bg-white/[0.04] px-5 py-4 backdrop-blur-sm"
                   >
                     <span className={`block text-[28px] font-bold leading-none ${active.accent}`}>
                       {metric.value}
@@ -207,37 +208,9 @@ export function NahuiUseCases() {
             </div>
 
             <div
-              className={`relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-gradient-to-br ${active.tint} shadow-[0_20px_40px_-16px_rgba(15,23,42,0.15)] ring-1 ${active.ring}`}
+              className={`relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-[#070b16] shadow-[0_20px_60px_-16px_rgba(0,0,0,0.6)] ring-1 ${active.ring}`}
             >
-              <svg
-                aria-hidden="true"
-                className="absolute inset-0 h-full w-full text-slate-900/[0.04]"
-              >
-                <defs>
-                  <pattern
-                    id={`usecases-grid-${active.id}`}
-                    width="32"
-                    height="32"
-                    patternUnits="userSpaceOnUse"
-                  >
-                    <path
-                      d="M 32 0 L 0 0 0 32"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1"
-                    />
-                  </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill={`url(#usecases-grid-${active.id})`} />
-              </svg>
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-md ring-1 ring-slate-200">
-                  <ActiveIcon className={`h-7 w-7 ${active.accent}`} />
-                </div>
-                <span className="max-w-[240px] text-center text-sm font-medium text-slate-500">
-                  {active.mockupLabel}
-                </span>
-              </div>
+              <NahuiIndustryMockup id={active.id} />
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/sections/Navbar";
+import { LatticeNavbar as Navbar } from "@/components/soluciones/lattice/LatticeNavbar";
 import { Footer } from "@/components/sections/Footer";
 import { FloatingNav } from "@/components/ui/floating-nav";
 import { NahuiHero } from "@/components/soluciones/nahui/NahuiHero";

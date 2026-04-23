@@ -137,9 +137,7 @@ export function LatticeNavbar() {
                 )}
               </div>
               <Link
-                href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/diagnostico"
                 className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[0.85rem] font-semibold transition-all duration-300 bg-brand-accent text-white hover:scale-105 hover:bg-brand-accent/90 hover:shadow-lg hover:shadow-brand-accent/25"
               >
                 Agendar diagnóstico
@@ -413,9 +411,7 @@ export function LatticeNavbar() {
             })}
             <div className="mt-4">
               <Link
-                href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/diagnostico"
                 onClick={closeAll}
                 className="flex w-full items-center justify-center gap-2 rounded-full bg-brand-accent px-5 py-3 text-sm font-semibold text-white hover:bg-brand-accent/90 transition-colors"
               >

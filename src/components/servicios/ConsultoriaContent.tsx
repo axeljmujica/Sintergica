@@ -249,7 +249,7 @@ export function ConsultoriaContent() {
           bgImage="/img/corporate-team.jpg"
           bgImageAlt={t.hero.bgImageAlt}
           ctaLabel={t.hero.ctaLabel}
-          ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+          ctaHref="/diagnostico"
           trustSignals={[...t.hero.trustSignals]}
         />
 
@@ -275,7 +275,7 @@ export function ConsultoriaContent() {
               <div className="relative h-[400px] w-full rounded-2xl overflow-hidden border border-brand-midnight/10 dark:border-brand-white/10 shadow-2xl group">
                 <div className="absolute inset-0 bg-brand-midnight/10 dark:bg-brand-midnight/30 mix-blend-multiply z-10 transition-colors duration-500 group-hover:bg-transparent"></div>
                 <Image
-                  src="/img/corporate-team.jpg"
+                  src="/images/1238.jpg"
                   alt={t.intro.imageAlt}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -312,7 +312,7 @@ export function ConsultoriaContent() {
                     initial={shouldReduce ? false : { opacity: 0, y: 20 }}
                     animate={entregInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: shouldReduce ? 0 : 0.5, delay: shouldReduce ? 0 : i * 0.1 }}
-                    className="group flex flex-col sm:flex-row gap-5 rounded-2xl border border-brand-midnight/5 dark:border-brand-white/10 bg-brand-deep/80 backdrop-blur-sm p-8 transition-all hover:border-brand-accent/30 hover:bg-brand-deep"
+                    className="group flex flex-col sm:flex-row gap-5 rounded-2xl border border-brand-midnight/5 dark:border-brand-white/10 bg-brand-surface dark:bg-brand-deep/80 backdrop-blur-sm p-8 transition-all hover:border-brand-accent/30 hover:bg-brand-white dark:hover:bg-brand-midnight"
                   >
                     <m.div
                       whileHover={shouldReduce ? {} : { scale: 1.1, rotate: -5 }}
@@ -363,7 +363,7 @@ export function ConsultoriaContent() {
                 {t.diagnostic.description} <strong className="text-brand-midnight dark:text-brand-white">{t.diagnostic.highlight}</strong>.
               </p>
               <Link
-                href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+                href="/diagnostico"
                 className="mt-10 inline-flex h-14 items-center gap-3 rounded-xl bg-brand-accent px-8 text-[15px] font-bold text-white shadow-lg transition-all hover:-translate-y-1 hover:bg-brand-accent/90 hover:shadow-brand-accent/25"
               >
                 {t.diagnostic.ctaLabel}
@@ -395,7 +395,7 @@ export function ConsultoriaContent() {
                     initial={shouldReduce ? false : { opacity: 0, y: 20 }}
                     animate={paraQuienInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: shouldReduce ? 0 : 0.5, delay: shouldReduce ? 0 : i * 0.08 }}
-                    className="rounded-2xl border border-brand-midnight/5 dark:border-brand-white/10 bg-brand-surface dark:bg-brand-midnight p-8 text-center transition-colors hover:bg-brand-deep"
+                    className="rounded-2xl border border-brand-midnight/5 dark:border-brand-white/10 bg-brand-surface dark:bg-brand-midnight p-8 text-center transition-colors hover:bg-brand-white dark:hover:bg-brand-deep"
                   >
                     <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-white dark:bg-brand-midnight/5">
                       <Icon className="h-6 w-6 text-brand-midnight/80 dark:text-brand-white/80" />
@@ -447,7 +447,7 @@ export function ConsultoriaContent() {
           title={t.cta.title}
           subtitle={t.cta.subtitle}
           ctaLabel={t.cta.ctaLabel}
-          ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+          ctaHref="/diagnostico"
           trustSignals={[...t.cta.trustSignals]}
         />
       </>

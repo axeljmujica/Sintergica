@@ -2,26 +2,65 @@
 
 import { useRef } from "react";
 import { LazyMotion, domAnimation, m, useInView, useReducedMotion } from "motion/react";
-import { LayoutGrid, Sparkles, Globe } from "lucide-react";
+import {
+  Rocket,
+  Languages,
+  CreditCard,
+  Brain,
+  BadgeCheck,
+  FileText,
+  type LucideIcon,
+} from "lucide-react";
 
-const DIFFERENTIATORS = [
+type Reason = {
+  n: string;
+  icon: LucideIcon;
+  title: string;
+  description: string;
+};
+
+const REASONS: Reason[] = [
   {
-    icon: LayoutGrid,
-    title: "No necesitas 5 herramientas distintas",
+    n: "01",
+    icon: Rocket,
+    title: "Un login, una factura, una curva de aprendizaje",
     description:
-      "CRM, email marketing, funnels, agenda de citas y reportes en una sola plataforma. Un login, una factura, una curva de aprendizaje. Tu equipo opera en minutos, no en meses.",
+      "Tu equipo opera en minutos, no en meses. Sin pasar de una herramienta a otra. Sin copiar datos entre sistemas. Sin perder contexto en cada salto.",
   },
   {
-    icon: Sparkles,
-    title: "El único CRM con IA privada integrada",
+    n: "02",
+    icon: Languages,
+    title: "Soporte local en español — tu zona horaria",
     description:
-      "Habilita copilotos de IA para calificar leads automáticamente, generar contenido personalizado, analizar a la competencia y detectar oportunidades que tu equipo no ve. Inteligencia comercial con contexto mexicano.",
+      "No tickets en inglés. No respuestas automáticas con jetlag. Gente que entiende tu mercado, responde rápido y acompaña la implementación hasta el go-live.",
   },
   {
-    icon: Globe,
-    title: "Interfaz en español. Soporte local.",
+    n: "03",
+    icon: CreditCard,
+    title: "Integraciones de pago y comunicación locales",
     description:
-      "Integraciones con plataformas de pago y comunicación locales: Mercado Pago, OXXO Pay, WhatsApp Business, Conekta. Soporte en tu idioma, en tu zona horaria, con gente que entiende tu mercado.",
+      "Mercado Pago, OXXO Pay, WhatsApp Business, Stripe, PayPal. Tus clientes pagan como quieren pagar — y tu equipo cobra desde donde ya trabaja.",
+  },
+  {
+    n: "04",
+    icon: Brain,
+    title: "IA privada integrada — conectada a Lattice",
+    description:
+      "Copilotos que califican leads mientras tu equipo duerme, responden preguntas mientras tu equipo come, y agendan citas mientras tu equipo cierra. Contexto del mercado mexicano, no APIs genéricas.",
+  },
+  {
+    n: "05",
+    icon: BadgeCheck,
+    title: "Meta Business Partner — integración oficial",
+    description:
+      "Integración oficial y verificada con el ecosistema de Meta Ads. Campañas que generan leads directo al CRM — sin webhooks frágiles ni exportaciones manuales.",
+  },
+  {
+    n: "06",
+    icon: FileText,
+    title: "Todo en una factura, en MXN, con CFDI 4.0",
+    description:
+      "Plataforma, consumos de WhatsApp, SMS, llamadas e IA — todo facturado en pesos. Sin conversiones de moneda. Sin facturas de cinco proveedores distintos. Sin sorpresas en dólares.",
   },
 ];
 
@@ -30,61 +69,56 @@ export function SalesHubDifferentiators() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const shouldReduce = useReducedMotion();
 
-  const anim = (delay: number) =>
-    shouldReduce
-      ? {}
-      : {
-          initial: { opacity: 0, y: 20 },
-          animate: isInView ? { opacity: 1, y: 0 } : {},
-          transition: { duration: 0.5, delay },
-        };
-
   return (
     <LazyMotion features={domAnimation}>
-    <section
-      className="bg-brand-surface dark:bg-brand-midnight py-24 px-6"
-      aria-label="Diferenciadores de SalesHub"
-    >
-      <div ref={ref} className="mx-auto max-w-7xl">
-        {/* Header */}
-        <m.div {...anim(0)} className="text-center">
-          <span className="inline-block rounded-full border border-success-600/20 bg-success-600/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-success-600">
-            ¿Por qué SalesHub?
-          </span>
-          <h2 className="mx-auto mt-5 max-w-3xl font-proxima text-3xl font-bold leading-tight text-brand-midnight dark:text-brand-white md:text-4xl">
-            No es otro CRM. Es tu motor comercial completo.
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base text-brand-midnight/60 dark:text-brand-white/60">
-            La diferencia entre SalesHub y las demás herramientas: todo está
-            conectado, en español, con soporte local y con IA disponible.
-          </p>
-        </m.div>
+      <section
+        ref={ref}
+        className="relative bg-slate-50 py-24 lg:py-32"
+        aria-label="Por qué SalesHub"
+      >
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <m.div
+            initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="mx-auto max-w-[720px] text-center"
+          >
+            <span className="inline-block rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-slate-600">
+              Por qué SalesHub
+            </span>
+            <h2 className="mt-5 font-proxima text-3xl font-bold text-slate-900 md:text-4xl lg:text-5xl">
+              Seis razones por las que los equipos comerciales lo eligen
+            </h2>
+          </m.div>
 
-        {/* 3 cards */}
-        <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-3">
-          {DIFFERENTIATORS.map((diff, i) => {
-            const Icon = diff.icon;
-            return (
+          <div className="mx-auto mt-14 max-w-[1160px] grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {REASONS.map(({ n, icon: Icon, title, description }, i) => (
               <m.div
-                key={diff.title}
-                {...anim(0.1 + i * 0.15)}
-                className="rounded-2xl border border-brand-midnight/5 dark:border-brand-white/10 bg-brand-surface/60 dark:bg-brand-navy/60 p-10 text-center transition-all duration-300 hover:border-success-600/20"
+                key={n}
+                initial={shouldReduce ? false : { opacity: 0, y: 16 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
+                className="relative rounded-2xl border border-slate-200 bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
               >
-                <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-success-600/10 text-success-600">
-                  <Icon className="h-8 w-8" />
+                <div className="flex items-center justify-between">
+                  <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[#10B981]/10 text-[#047857] ring-1 ring-[#10B981]/20">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <span className="font-proxima text-[28px] font-bold leading-none text-slate-200">
+                    {n}
+                  </span>
                 </div>
-                <h3 className="mb-4 text-xl font-proxima font-semibold text-brand-midnight dark:text-brand-white">
-                  {diff.title}
+                <h3 className="mt-5 font-proxima text-lg font-semibold text-slate-900">
+                  {title}
                 </h3>
-                <p className="text-base leading-relaxed text-brand-midnight/60 dark:text-brand-white/60">
-                  {diff.description}
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  {description}
                 </p>
               </m.div>
-            );
-          })}
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
     </LazyMotion>
   );
 }

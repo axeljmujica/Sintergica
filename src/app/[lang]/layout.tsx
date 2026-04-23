@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import localFont from "next/font/local";
 import { Mulish } from "next/font/google";
 import "../globals.css";
 import { i18n, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { DictionaryProvider } from "@/i18n/DictionaryProvider";
+
+function isValidLocale(lang: string): lang is Locale {
+  return (i18n.locales as readonly string[]).includes(lang);
+}
 
 const proximaNova = localFont({
   src: [
@@ -38,6 +43,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
+  if (!isValidLocale(lang)) notFound();
   const locale = lang as Locale;
   const dictionary = await getDictionary(locale);
 
@@ -45,8 +51,10 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     title: dictionary.metadata?.title || "Sintérgica AI — IA Privada para México y Latinoamérica",
     description: dictionary.metadata?.description || "Sintérgica AI diseña, implementa y opera Lattice: IA privada con modelos especializados, agentes autónomos y gobernanza verificable para sectores regulados de México y LATAM.",
     icons: {
-      icon: "/favicon/Sintergica-ai-icon@4x.png",
-      apple: "/favicon/Sintergica-ai-icon@4x.png",
+      icon: [
+        { url: "/favicon/favicon.ico" },
+        { url: "/favicon/favicon.svg", type: "image/svg+xml" }
+      ],
     },
   };
 }
@@ -59,6 +67,7 @@ export default async function RootLayout({
   params: Promise<{ lang: string }>;
 }>) {
   const { lang } = await params;
+  if (!isValidLocale(lang)) notFound();
   const locale = lang as Locale;
   const dictionary = await getDictionary(locale);
   

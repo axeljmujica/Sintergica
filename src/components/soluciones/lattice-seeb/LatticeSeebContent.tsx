@@ -291,9 +291,7 @@ function HeroSeeb() {
           className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
         >
           <a
-            href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/diagnostico"
             className="group inline-flex items-center justify-center gap-2 rounded-full bg-purple-600 px-9 py-3.5 text-[1rem] font-bold text-white shadow-xl shadow-purple-600/30 transition-all duration-300 hover:scale-[1.02] hover:-translate-y-0.5 hover:bg-purple-500 hover:shadow-purple-500/40"
           >
             Agenda un diagnóstico
@@ -587,7 +585,7 @@ export function LatticeSeebContent() {
           title="Agenda un diagnóstico para tu industria"
           subtitle="Identifica qué modelo de Lattice Séeb es el adecuado para tus procesos y recibe una propuesta de implementación con ROI estimado."
           ctaLabel="Agendar diagnóstico"
-          ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+          ctaHref="/diagnostico"
           trustSignals={[
             "Despliegue API, VPC u On-premise",
             "Datos nunca salen de tu entorno",

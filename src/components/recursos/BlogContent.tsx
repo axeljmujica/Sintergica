@@ -306,9 +306,7 @@ export function BlogContent() {
                     <p className="text-brand-midnight/80 dark:text-brand-white/80 text-sm">Descubre cómo nuestras soluciones de IA privada pueden optimizar tus operaciones y reducir costos hoy mismo.</p>
                   </div>
                   <a 
-                    href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href="/diagnostico"
                     className="inline-flex items-center justify-center rounded-full bg-brand-accent px-8 py-3.5 text-sm font-bold text-brand-midnight transition-all hover:bg-brand-accent-light hover:scale-105"
                   >
                     Agendar Consultoría
@@ -380,7 +378,7 @@ export function BlogContent() {
         title="¿Quieres saber más?"
         subtitle="Agenda una conversación con nuestro equipo para conocer cómo la IA privada puede transformar tu operación."
         ctaLabel="Contactar"
-        ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+        ctaHref="/diagnostico"
       />
     </>
     </LazyMotion>

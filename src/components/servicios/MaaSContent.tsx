@@ -100,62 +100,6 @@ const AI_CAPABILITIES = [
   },
 ];
 
-const PLANS = [
-  {
-    name: "MaaS Starter",
-    price: "$17,900",
-    period: "MXN / mes",
-    tagline: "Para PyMEs que quieren presencia consistente.",
-    highlight: false,
-    features: [
-      "8 piezas de contenido al mes (blog, redes, email)",
-      "1 campaña activa en Meta o Google",
-      "Diseño generativo para 1 canal",
-      "Dashboard con métricas base",
-      "Reunión de lectura mensual",
-    ],
-  },
-  {
-    name: "MaaS Pro",
-    price: "$35,800",
-    period: "MXN / mes",
-    tagline: "Para empresas que quieren crecimiento medible.",
-    highlight: true,
-    features: [
-      "20 piezas de contenido al mes, multi-formato",
-      "3 campañas activas + optimización continua",
-      "Diseño generativo multi-canal + A/B testing",
-      "SalesHub configurado con nurturing y scoring",
-      "Outbound personalizado hasta 500 contactos",
-      "Dashboard completo + lectura quincenal",
-    ],
-  },
-  {
-    name: "MaaS Business",
-    price: "$89,600",
-    period: "MXN / mes",
-    tagline: "Para operaciones con pipeline grande y múltiples mercados.",
-    highlight: false,
-    features: [
-      "Contenido ilimitado dentro del scope definido",
-      "Campañas multi-mercado y multi-idioma",
-      "Diseño generativo enterprise con guidelines",
-      "SalesHub + integraciones a tu stack actual",
-      "Outbound hasta 5,000 contactos al mes",
-      "Agente dedicado + lectura semanal",
-      "Modelos ajustados a tu voz de marca",
-    ],
-  },
-];
-
-const INCLUDED_ALWAYS = [
-  "Onboarding guiado y brief estratégico",
-  "Acceso al dashboard en tiempo real",
-  "Modelos de IA operados por Sintérgica",
-  "Soporte por email y chat",
-  "Propiedad total de tu contenido y datos",
-];
-
 const PROCESS_WEEKS = [
   {
     week: "Semana 1",
@@ -232,8 +176,6 @@ export function MaaSContent() {
   const probInView = useInView(probRef, { once: true, margin: "-80px" });
   const aiRef = useRef<HTMLDivElement>(null);
   const aiInView = useInView(aiRef, { once: true, margin: "-80px" });
-  const plansRef = useRef<HTMLDivElement>(null);
-  const plansInView = useInView(plansRef, { once: true, margin: "-80px" });
   const processRef = useRef<HTMLDivElement>(null);
   const processInView = useInView(processRef, { once: true, margin: "-80px" });
   const audRef = useRef<HTMLDivElement>(null);
@@ -249,9 +191,7 @@ export function MaaSContent() {
           bgImage="/images/121725.jpg"
           bgImageAlt="Marketing as a Service con IA agéntica"
           ctaLabel={HERO.ctaLabel}
-          ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
-          ctaSecondaryLabel="Ver planes"
-          ctaSecondaryHref="#planes"
+          ctaHref="/diagnostico"
           trustSignals={HERO.trustSignals}
         />
 
@@ -317,85 +257,6 @@ export function MaaSContent() {
                   </p>
                 </m.div>
               ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Planes */}
-        <section id="planes" className="bg-brand-surface dark:bg-brand-midnight py-24 px-6">
-          <div className="mx-auto max-w-6xl">
-            <SectionHeader
-              badge="Planes"
-              title="Tres niveles. Precio claro. Sin permanencia."
-              subtitle="Empiezas donde tu operación lo requiera y escalas cuando los números lo justifiquen."
-              centered
-            />
-            <div ref={plansRef} className="mt-14 grid gap-6 lg:grid-cols-3">
-              {PLANS.map((plan, i) => (
-                <m.div
-                  key={plan.name}
-                  initial={shouldReduce ? false : { opacity: 0, y: 16 }}
-                  animate={plansInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: i * 0.1 }}
-                  className={`relative flex flex-col rounded-2xl border p-8 ${
-                    plan.highlight
-                      ? "border-brand-accent bg-brand-white dark:bg-brand-deep shadow-xl shadow-brand-accent/10"
-                      : "border-brand-midnight/10 dark:border-brand-white/10 bg-brand-white dark:bg-brand-deep"
-                  }`}
-                >
-                  {plan.highlight && (
-                    <span className="absolute -top-3 left-8 inline-flex items-center rounded-full bg-brand-accent px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wider text-white">
-                      Más elegido
-                    </span>
-                  )}
-                  <h3 className="font-proxima text-xl font-bold text-brand-midnight dark:text-brand-white">
-                    {plan.name}
-                  </h3>
-                  <p className="mt-2 text-sm text-brand-midnight/60 dark:text-brand-white/60">
-                    {plan.tagline}
-                  </p>
-                  <div className="mt-6 flex items-baseline gap-2">
-                    <span className="font-proxima text-4xl font-extrabold text-brand-midnight dark:text-brand-white">
-                      {plan.price}
-                    </span>
-                    <span className="text-sm text-brand-midnight/50 dark:text-brand-white/50">
-                      {plan.period}
-                    </span>
-                  </div>
-                  <ul className="mt-8 flex-1 space-y-3">
-                    {plan.features.map((f) => (
-                      <li key={f} className="flex items-start gap-3 text-sm text-brand-midnight/75 dark:text-brand-white/75">
-                        <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-accent" />
-                        <span>{f}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <Link
-                    href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
-                    className={`mt-8 inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold transition-all ${
-                      plan.highlight
-                        ? "bg-brand-accent text-white shadow-lg shadow-brand-accent/25 hover:bg-brand-400"
-                        : "border border-brand-midnight/15 text-brand-midnight hover:bg-brand-midnight/5 dark:border-brand-white/15 dark:text-brand-white dark:hover:bg-brand-white/5"
-                    }`}
-                  >
-                    Agendar diagnóstico
-                  </Link>
-                </m.div>
-              ))}
-            </div>
-
-            <div className="mt-14 rounded-2xl border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-white dark:bg-brand-deep p-8">
-              <h3 className="font-proxima text-lg font-semibold text-brand-midnight dark:text-brand-white">
-                Incluido en todos los planes
-              </h3>
-              <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-                {INCLUDED_ALWAYS.map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-sm text-brand-midnight/75 dark:text-brand-white/75">
-                    <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-accent" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
             </div>
           </div>
         </section>
@@ -549,7 +410,7 @@ export function MaaSContent() {
           title="Acelera tu crecimiento con agentes de marketing"
           subtitle="Una conversación de 45 minutos basta para dimensionar el plan correcto para tu operación."
           ctaLabel="Agendar diagnóstico"
-          ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+          ctaHref="/diagnostico"
           trustSignals={[
             "45 minutos, sin costo",
             "Sin permanencia",

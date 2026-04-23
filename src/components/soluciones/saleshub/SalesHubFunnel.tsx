@@ -6,55 +6,59 @@ import {
   Megaphone,
   Filter,
   Mail,
-  FileText,
+  BellRing,
   Trophy,
+  type LucideIcon,
 } from "lucide-react";
 
-const STEPS = [
+type Step = {
+  n: string;
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  leads: string;
+};
+
+const STEPS: Step[] = [
   {
+    n: "01",
     icon: Megaphone,
-    title: "Captación",
+    title: "Entra el lead",
     description:
-      "El prospecto llega desde ads, redes sociales, landing page o formulario. Se registra automáticamente como lead.",
-    count: "1,200",
-    barWidth: "100%",
-    barBg: "bg-success-600/20",
+      "Tu campaña en Meta Ads genera leads que llegan directo al CRM. Sin formularios de Google. Sin copiar y pegar. Sin bandejas de entrada olvidadas.",
+    leads: "1,200",
   },
   {
+    n: "02",
     icon: Filter,
-    title: "Calificación",
+    title: "Se califica solo",
     description:
-      "Scoring automático basado en comportamiento: aperturas de email, visitas, interacciones. Los leads calientes suben al pipeline.",
-    count: "840",
-    barWidth: "80%",
-    barBg: "bg-success-600/30",
+      "El sistema analiza comportamiento — qué páginas visitó, qué emails abrió, cuántas veces regresó — y filtra automáticamente a los que muestran interés real.",
+    leads: "840",
   },
   {
+    n: "03",
     icon: Mail,
-    title: "Nurturing",
+    title: "Se nutre automáticamente",
     description:
-      "Secuencias automatizadas: emails, WhatsApp, recordatorios. El prospecto avanza sin que tu equipo pierda tiempo.",
-    count: "380",
-    barWidth: "60%",
-    barBg: "bg-success-600/50",
+      "Secuencias de email y WhatsApp que educan, muestran casos y acercan a la decisión. Todo automatizado. El prospecto avanza sin que nadie mueva un dedo.",
+    leads: "380",
   },
   {
-    icon: FileText,
-    title: "Propuesta",
+    n: "04",
+    icon: BellRing,
+    title: "Alerta al vendedor",
     description:
-      "Tu vendedor recibe la alerta: este lead está listo. Agenda automática, propuesta personalizada, seguimiento estructurado.",
-    count: "95",
-    barWidth: "40%",
-    barBg: "bg-success-600/70",
+      "Cuando un lead está listo — abrió el último email, visitó precios, respondió un mensaje — el sistema notifica al vendedor con nombre, empresa, historial y score.",
+    leads: "95",
   },
   {
+    n: "05",
     icon: Trophy,
-    title: "Cierre",
+    title: "Cierre y revenue",
     description:
-      "Deal cerrado. El sistema registra el revenue, actualiza métricas y mide ROI por canal de origen.",
-    count: "28",
-    barWidth: "25%",
-    barBg: "bg-success-600",
+      "El deal se cierra, el revenue se registra y el ROI por canal se calcula automáticamente. Sabes exactamente cuánto te costó cada cliente — por fuente.",
+    leads: "28",
   },
 ];
 
@@ -63,121 +67,89 @@ export function SalesHubFunnel() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const shouldReduce = useReducedMotion();
 
-  const anim = (delay: number) =>
-    shouldReduce
-      ? {}
-      : {
-          initial: { opacity: 0, y: 20 },
-          animate: isInView ? { opacity: 1, y: 0 } : {},
-          transition: { duration: 0.5, delay },
-        };
-
   return (
     <LazyMotion features={domAnimation}>
-    <section
-      className="bg-brand-surface dark:bg-brand-deep py-24 px-6"
-      aria-label="Flujo comercial SalesHub"
-    >
-      <div ref={ref} className="mx-auto max-w-7xl">
-        {/* Header */}
-        <m.div {...anim(0)} className="text-center">
-          <span className="inline-block rounded-full border border-success-600/20 bg-success-600/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-success-600">
-            Cómo funciona
-          </span>
-          <h2 className="mx-auto mt-5 max-w-2xl font-proxima text-3xl font-bold leading-tight text-brand-midnight dark:text-brand-white md:text-4xl">
-            Del primer clic al cierre. Sin puntos ciegos.
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base text-brand-midnight/60 dark:text-brand-white/60">
-            SalesHub controla cada etapa del journey de tu cliente con
-            automatización inteligente.
-          </p>
-        </m.div>
+      <section
+        ref={ref}
+        className="relative overflow-hidden bg-[#020c1b] py-24 lg:py-32"
+        aria-label="El journey del cliente en SalesHub"
+      >
+        <div className="pointer-events-none absolute left-1/2 top-0 h-[480px] w-[780px] -translate-x-1/2 rounded-full bg-[#10B981]/[0.08] blur-[120px]" />
 
-        {/* Funnel steps — horizontal on desktop, vertical on mobile */}
-        <div className="relative mt-16">
-          {/* Desktop connector line */}
-          <div
-            className="pointer-events-none absolute left-0 right-0 top-1/2 hidden -translate-y-1/2 lg:block"
-            aria-hidden="true"
+        <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+          <m.div
+            initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="mx-auto max-w-[760px] text-center"
           >
-            <m.div
-              className="mx-auto h-0.5 bg-success-600/20"
-              style={{ maxWidth: "calc(100% - 100px)" }}
-              {...(shouldReduce
-                ? {}
-                : {
-                    initial: { scaleX: 0 },
-                    animate: isInView ? { scaleX: 1 } : {},
-                    transition: { duration: 1, delay: 0.3, ease: "easeOut" },
-                  })}
-            />
-          </div>
+            <span className="inline-block rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-white/80">
+              El journey del cliente
+            </span>
+            <h2 className="mt-5 font-proxima text-3xl font-bold text-white md:text-4xl lg:text-5xl">
+              De 1,200 leads a 28 clientes — sin que tu equipo pierda uno solo
+            </h2>
+            <p className="mt-5 text-lg text-white/70">
+              Así funciona el motor comercial de SalesHub en una operación real. Cinco
+              etapas, un solo sistema, cero leads perdidos entre plataformas.
+            </p>
+          </m.div>
 
-          {/* Mobile connector line */}
-          <div
-            className="pointer-events-none absolute bottom-0 left-1/2 top-0 -translate-x-1/2 lg:hidden"
-            aria-hidden="true"
+          {/* Funnel numbers bar */}
+          <m.div
+            initial={shouldReduce ? false : { opacity: 0, y: 16 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.55, delay: 0.2 }}
+            className="mx-auto mt-12 flex max-w-[1000px] flex-wrap items-center justify-center gap-3 text-[13px] font-semibold text-white/80"
           >
-            <m.div
-              className="h-full w-0.5 bg-success-600/20"
-              {...(shouldReduce
-                ? {}
-                : {
-                    initial: { scaleY: 0 },
-                    animate: isInView ? { scaleY: 1 } : {},
-                    transition: { duration: 1, delay: 0.3, ease: "easeOut" },
-                  })}
-            />
-          </div>
+            {["1,200", "840", "380", "95", "28"].map((n, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <span className="rounded-full border border-[#10B981]/30 bg-[#10B981]/10 px-4 py-1.5 font-proxima text-[#34D399]">
+                  {n} leads
+                </span>
+                {i < 4 && <span className="text-white/30">→</span>}
+              </div>
+            ))}
+          </m.div>
 
-          {/* Steps */}
-          <div className="relative flex flex-col items-center gap-6 lg:flex-row lg:justify-between">
-            {STEPS.map((step, i) => {
-              const Icon = step.icon;
-              return (
+          {/* Steps grid */}
+          <div className="mx-auto mt-14 max-w-[1200px] relative">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute left-8 top-12 bottom-12 w-px bg-gradient-to-b from-[#10B981]/50 via-white/10 to-transparent lg:hidden"
+            />
+            <div className="grid grid-cols-1 gap-5 lg:grid-cols-5 lg:gap-4">
+              {STEPS.map(({ n, icon: Icon, title, description, leads }, i) => (
                 <m.div
-                  key={step.title}
-                  {...anim(0.15 + i * 0.15)}
-                  className="relative z-10 w-full lg:w-auto lg:flex-1"
+                  key={n}
+                  initial={shouldReduce ? false : { opacity: 0, y: 16 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.25 + i * 0.1 }}
+                  className="relative rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm"
                 >
-                  <div className="flex flex-col items-center">
-                    <div className="flex w-full flex-col items-center rounded-xl border border-brand-midnight/5 dark:border-brand-white/10 bg-brand-surface/30 dark:bg-brand-navy/30 p-6 text-center">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-success-600/10 text-success-600">
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <h3 className="mt-4 text-sm font-proxima font-semibold text-brand-midnight dark:text-brand-white">
-                        {step.title}
-                      </h3>
-                      <p className="mt-2 text-xs text-brand-midnight/50 dark:text-brand-white/50">
-                        {step.description}
-                      </p>
-                      <span className="mt-3 text-lg font-bold text-success-600">
-                        {step.count}
-                      </span>
+                  <div className="flex items-center justify-between">
+                    <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#10B981]/15 text-[#34D399] ring-1 ring-[#10B981]/30">
+                      <Icon className="h-5 w-5" />
                     </div>
-                    {/* Volume bar — decorative width animation */}
-                    <m.div
-                      className={`mt-2 h-2 rounded-full ${step.barBg}`}
-                      {...(shouldReduce
-                        ? { style: { width: step.barWidth } }
-                        : {
-                            initial: { width: 0 },
-                            animate: isInView ? { width: step.barWidth } : {},
-                            transition: {
-                              duration: 0.8,
-                              delay: 0.6 + i * 0.15,
-                              ease: "easeOut",
-                            },
-                          })}
-                    />
+                    <span className="font-proxima text-[28px] font-bold leading-none text-white/15">
+                      {n}
+                    </span>
+                  </div>
+                  <h3 className="mt-5 font-proxima text-base font-semibold text-white">
+                    {title}
+                  </h3>
+                  <p className="mt-2 text-[13px] leading-relaxed text-white/65">
+                    {description}
+                  </p>
+                  <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-[#10B981]/10 px-2.5 py-1 text-[11px] font-bold text-[#34D399] ring-1 ring-[#10B981]/20">
+                    {leads} leads
                   </div>
                 </m.div>
-              );
-            })}
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
     </LazyMotion>
   );
 }

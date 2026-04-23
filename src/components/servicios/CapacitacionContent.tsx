@@ -155,7 +155,7 @@ export function CapacitacionContent() {
           bgImage="/images/Industrial-Logistica/factory-workshop-interior-machines-glass-production-background.jpg"
           bgImageAlt={t.hero.bgImageAlt}
           ctaLabel={t.hero.ctaLabel}
-          ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+          ctaHref="/diagnostico"
           trustSignals={[...t.hero.trustSignals]}
         />
 
@@ -228,7 +228,7 @@ export function CapacitacionContent() {
                     initial={shouldReduce ? false : { opacity: 0, y: 20 }}
                     animate={fmtInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: shouldReduce ? 0 : 0.5, delay: shouldReduce ? 0 : i * 0.08 }}
-                    className="group flex flex-col items-center gap-4 rounded-2xl border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-deep p-8 text-center transition-all hover:border-brand-accent/50 hover:shadow-lg hover:shadow-brand-accent/5"
+                    className="group flex flex-col items-center gap-4 rounded-2xl border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-surface dark:bg-brand-deep p-8 text-center transition-all hover:border-brand-accent/50 hover:shadow-lg hover:shadow-brand-accent/5 hover:bg-brand-white dark:hover:bg-brand-midnight"
                   >
                     <m.div
                       whileHover={shouldReduce ? {} : { scale: 1.15, rotate: 8 }}
@@ -250,7 +250,7 @@ export function CapacitacionContent() {
           title={t.cta.title}
           subtitle={t.cta.subtitle}
           ctaLabel={t.cta.ctaLabel}
-          ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+          ctaHref="/diagnostico"
           trustSignals={[...t.cta.trustSignals]}
         />
       </>

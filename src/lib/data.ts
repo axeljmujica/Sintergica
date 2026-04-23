@@ -187,7 +187,7 @@ export const HERO = {
   subtitle:
     "Construimos, implementamos y operamos Inteligencia Artificial para empresas, gobierno y sectores regulados en México y LATAM.",
   ctaPrimary: "Agenda tu diagnóstico →",
-  ctaPrimaryHref: "https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4",
+  ctaPrimaryHref: "/diagnostico",
   ctaSecondary: "Ver Casos de Uso",
   ctaSecondaryHref: "/casos-de-uso",
   metrics: [
@@ -444,7 +444,7 @@ export const PRE_FOOTER_CTA = {
   title: "¿Listo para implementar IA en tu organización?",
   subtitle: "Agenda tu sesión de Diagnóstico Inteligente (45 min). Identificamos procesos automatizables, definimos la arquitectura y trazamos tu hoja de ruta.",
   cta: "Agendar sesión de diagnóstico",
-  ctaHref: "https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4",
+  ctaHref: "/diagnostico",
 } as const;
 
 // ── 7. Footer ───────────────────────────────────────────────

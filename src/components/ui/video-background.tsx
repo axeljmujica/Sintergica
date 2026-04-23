@@ -40,8 +40,8 @@ export function VideoBackground({
         aria-hidden="true"
       />
       {overlay !== 'none' && (
-    import React from 'react';
-import { cn } from '@/libasimport { cn } from '@/lib}
+        <div className={cn('absolute inset-0', overlayClasses[overlay])} />
+      )}
     </div>
   );
 }

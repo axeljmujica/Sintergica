@@ -269,7 +269,7 @@ export function AcercaDeContent() {
         title={t.cta.title}
         subtitle={t.cta.subtitle}
         ctaLabel={t.cta.ctaLabel}
-        ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+        ctaHref="/diagnostico"
       />
       </>
     </LazyMotion>

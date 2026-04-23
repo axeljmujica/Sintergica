@@ -212,7 +212,7 @@ export function DesarrolloMedidaContent() {
           bgImage="/images/121725.jpg"
           bgImageAlt="Desarrollo de software de IA a medida"
           ctaLabel={HERO.ctaLabel}
-          ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+          ctaHref="/diagnostico"
           ctaSecondaryLabel="Ver nuestro proceso"
           ctaSecondaryHref="#proceso"
           trustSignals={HERO.trustSignals}
@@ -442,7 +442,7 @@ export function DesarrolloMedidaContent() {
           title="Construyamos el software que impulsará tu IA"
           subtitle="Hablemos sobre tu proyecto y descubramos cómo crear una arquitectura resiliente, escalable y lista para la era de los agentes autónomos."
           ctaLabel="Iniciar Proyecto"
-          ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+          ctaHref="/diagnostico"
           trustSignals={[
             "Discovery sin compromiso",
             "Código y modelos son tuyos",

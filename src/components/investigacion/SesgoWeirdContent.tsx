@@ -1,1359 +1,1033 @@
 "use client";
 
 import { useRef } from "react";
+import Link from "next/link";
 import { LazyMotion, domAnimation, m, useInView, useReducedMotion } from "motion/react";
-import Image from "next/image";
-import { FileText, Scale, Banknote, Globe, MapPin, AlertTriangle, Sparkles, ArrowRight, BookOpen, CheckCircle2, XCircle, Film, Shield, GraduationCap, Briefcase, TrendingUp } from "lucide-react";
+import {
+  ArrowRight, ArrowUpRight, BookOpen, Scale, Banknote, Landmark, HeartPulse,
+  FileText, Database, ShieldCheck, Languages, Sparkles, Quote,
+  type LucideIcon,
+} from "lucide-react";
 import { CTASection } from "@/components/shared/CTASection";
 import { WeirdBiasChart } from "@/components/sections/WeirdBiasChart";
 import { useLocale } from "@/i18n/DictionaryProvider";
 
-/* ─────────────────── i18n ─────────────────── */
+/* ══════════════════ i18n ══════════════════ */
 
-const T = {
-  es: {
-    hero: {
-      badge: "Investigación · Universidad de Harvard 2024",
-      title1: "El Sesgo WEIRD:",
-      title2: "Por qué la IA global falla",
-      title3: "en tu contexto",
-      subtitle:
-        "Los modelos de IA más avanzados fueron entrenados con datos de menos del 12% de la población mundial. Descubre cómo esto afecta tus operaciones en México y LATAM.",
-      paperBtn: "Leer el paper",
-      compareBtn: "Ver comparación en vivo",
-    },
-    weird: {
-      heading: "¿Qué significa",
-      headingSuffix: "?",
-      description:
-        "Un acrónimo acuñado por investigadores de psicología evolutiva para describir las sociedades que representan menos del 12% de la humanidad pero generan el 96% de los datos de entrenamiento de IA.",
-      letters: [
-        { desc: "Occidental", context: "de la población mundial" },
-        { desc: "Educado formalmente", context: "con acceso a universidad" },
-        { desc: "Industrializado", context: "del PIB global" },
-        { desc: "Alto ingreso", context: "del ingreso mundial" },
-        { desc: "Democrático liberal", context: "de países del mundo" },
-      ],
-    },
-    movie: {
-      badge: "Analogía",
-      heading: "La diferencia: película doblada vs. original",
-      dubbed: {
-        title: "La versión doblada",
-        subtitle: "Las IAs actuales (ChatGPT, Claude)",
-        p1: "Cuando ves una película doblada, entiendes la trama general. Sin embargo, sabes que no es la experiencia completa. Los chistes pierden su gracia, los modismos se diluyen y las referencias culturales se adaptan o desaparecen.",
-        p2pre: "Así funcionan las IAs extranjeras: nos ofrecen una versión \u201Cdoblada\u201D, funcional, pero que ",
-        p2highlight: "no comprende la profundidad de nuestra cultura",
-        p2post:
-          ". Además, al ser modelos privados, operan como una \u201Ccaja negra\u201D: no sabemos con certeza cómo funcionan por dentro.",
+type Locale = "es" | "en" | "pt-br";
+
+interface Content {
+  hero: { eyebrow: string; h1: string; lead: string; scrollHint: string };
+  origin: {
+    chapter: string; eyebrow: string; h2: string;
+    p1: string; p2: string; p3: string;
+    acronym: { letter: string; label: string; description: string }[];
+    consequence: string;
+    citation: string;
+  };
+  evidence: {
+    chapter: string; eyebrow: string; h2: string;
+    lede: string;
+    findingLabel: string;
+    finding: string;
+    pullquote: string;
+    context: string;
+    chartCaption: string;
+  };
+  impact: {
+    chapter: string; eyebrow: string; h2: string; lede: string;
+    verticals: { icon: LucideIcon; title: string; body: string }[];
+    stat: { value: string; label: string; source: string };
+  };
+  analogy: {
+    chapter: string; eyebrow: string; h2: string;
+    dubbed: string;
+    original: string;
+  };
+  response: {
+    chapter: string; eyebrow: string; h2: string; lede: string;
+    pillars: { icon: LucideIcon; title: string; body: string }[];
+  };
+  outcome: {
+    chapter: string; eyebrow: string; h2: string;
+    items: { title: string; body: string }[];
+  };
+  research: {
+    chapter: string; eyebrow: string; h2: string; lede: string;
+    lines: { num: string; title: string; body: string }[];
+    cta: string;
+  };
+  cta: {
+    badge: string; title: string; subtitle: string; ctaLabel: string; trust: string[];
+  };
+}
+
+const es: Content = {
+  hero: {
+    eyebrow: "Investigación · Sesgo cultural en IA",
+    h1: "El sesgo que nadie te dice que tiene tu IA.",
+    lead:
+      "Hay un sesgo estructural en los modelos de lenguaje que los grandes laboratorios no publican en su página de inicio. Se llama WEIRD. Tiene nombre, evidencia científica y consecuencias medibles en cada decisión que tu empresa toma con inteligencia artificial.",
+    scrollHint: "Seguir leyendo",
+  },
+  origin: {
+    chapter: "Capítulo 01",
+    eyebrow: "¿Qué es el sesgo WEIRD?",
+    h2: "En 2010, tres investigadores encontraron algo incómodo.",
+    p1: "Joseph Henrich, Steven Heine y Ara Norenzayan publicaron un estudio en Behavioral and Brain Sciences que cambió la forma en que las ciencias del comportamiento se entienden a sí mismas. Su hallazgo fue incómodo: la inmensa mayoría de lo que la psicología presentaba como “verdades universales” sobre el comportamiento humano provenía de un tipo muy específico de sociedad.",
+    p2: "Occidentales. Educadas. Industrializadas. Ricas. Democráticas. En inglés: Western, Educated, Industrialized, Rich, Democratic. El acrónimo quedó como WEIRD — que en inglés también significa “raro”. Y ese era precisamente el punto.",
+    p3: "Las poblaciones WEIRD representan alrededor del 15% de la humanidad. Son la excepción, no la norma. Pero la ciencia las trataba como si fueran la regla.",
+    acronym: [
+      { letter: "W", label: "Western", description: "Occidental" },
+      { letter: "E", label: "Educated", description: "Educado formalmente" },
+      { letter: "I", label: "Industrialized", description: "Industrializado" },
+      { letter: "R", label: "Rich", description: "Alto ingreso" },
+      { letter: "D", label: "Democratic", description: "Democrático liberal" },
+    ],
+    consequence:
+      "Más de una década después, el mismo patrón apareció en la inteligencia artificial. Y esta vez, las consecuencias no son académicas. Son operativas.",
+    citation:
+      "Henrich, J., Heine, S. J., & Norenzayan, A. (2010). The weirdest people in the world? Behavioral and Brain Sciences, 33(2–3), 61–83.",
+  },
+  evidence: {
+    chapter: "Capítulo 02",
+    eyebrow: "La ciencia lo confirma",
+    h2: "Harvard, 2023. 65 países. 94,278 personas.",
+    lede: "Investigadores de Harvard (Atari et al., 2023) compararon las respuestas de GPT con datos de personas reales en 65 países. El hallazgo central fue una correlación que no se puede ignorar.",
+    findingLabel: "Hallazgo central",
+    finding:
+      "Correlación de r = −0.70 entre la distancia cultural de un país respecto a EE.UU. y la similitud de GPT con sus habitantes.",
+    pullquote:
+      "Cuanto más diferente es tu cultura de la estadounidense, menos te representa la IA que estás usando.",
+    context:
+      "Estados Unidos, Canadá, Australia y el Reino Unido son los más cercanos al perfil que los modelos replican de forma natural. México, como la mayoría de América Latina, cae en una zona de representación significativamente menor. El sesgo está en los datos de entrenamiento y afecta cada respuesta.",
+    chartCaption:
+      "Distancia cultural vs. similitud con respuestas de GPT. Mayor distancia, menor representación.",
+  },
+  impact: {
+    chapter: "Capítulo 03",
+    eyebrow: "Qué significa para tu empresa",
+    h2: "Cuatro áreas donde el sesgo deja de ser teoría y se vuelve costo.",
+    lede:
+      "El razonamiento jurídico, fiscal y regulatorio de un modelo global es anglosajón por diseño. Cuando lo aplicas a México, el resultado suena técnico — pero parte del sistema equivocado.",
+    verticals: [
+      {
+        icon: Scale,
+        title: "Legal",
+        body: "Un modelo entrenado con datos predominantemente anglosajones razona desde el Common Law — un sistema donde la jurisprudencia crea precedente vinculante. México opera bajo derecho civil codificado, donde el Código de Comercio, el Código Civil Federal y la legislación estatal establecen las reglas. Cuando el modelo sugiere cláusulas o interpreta contratos, puede aplicar lógica jurídica que no corresponde al sistema mexicano.",
       },
-      original: {
-        title: "La versión original",
-        subtitle: "Lattice — Diseñada para México",
-        p1pre:
-          "Ver una película en su idioma original te permite captar la historia completa, con toda su riqueza y significado. ",
-        p1highlight: "Lattice es esa versión original para México",
-        p1post: ".",
-        p2pre:
-          "Esta IA piensa directamente en español mexicano porque fue ajustada con nuestro propio conocimiento: ",
-        p2highlight: "leyes, libros de texto, historia y cultura",
-        p2post:
-          ". Al ser un modelo abierto, no es una \u201Ccaja negra\u201D; cualquiera puede revisar su funcionamiento, lo que genera transparencia y confianza.",
+      {
+        icon: Banknote,
+        title: "Fiscal",
+        body: "La lógica tributaria del SAT — con regímenes fiscales, complementos de pago, CFDI y reglas de deducibilidad — tiene poco que ver con la del IRS o el HMRC. Un asistente entrenado globalmente puede confundir conceptos, aplicar criterios de otra jurisdicción o recomendar estrategias sin validez en México. El resultado puede ser una declaración incorrecta o una multa.",
       },
-    },
-    benefits: {
-      heading: "¿Y a mí en qué me beneficia?",
-      subtitle:
-        "Tener nuestra propia IA es clave para construir un futuro digital hecho en México.",
-      cards: [
-        {
-          title: "Trámites de gobierno más fáciles",
-          text: "Imagina poder consultar tus dudas en los portales del SAT o del IMSS con un asistente virtual que te entienda como si hablaras con una persona. Podrías resolver trámites complejos sin necesidad de usar lenguaje técnico. Lattice comprende el contexto de cada procedimiento como parte de su entrenamiento base, no como una capa superficial.",
-        },
-        {
-          title: "Entender las \u201Cletras chiquitas\u201D",
-          text: "Leyes, contratos y documentos oficiales suelen ser muy difíciles de leer. Con una IA como Lattice, podrías pedirle que te \u201Ctraduzca\u201D esos textos a un lenguaje simple y claro. Así, sabrías con exactitud qué dicen y cómo te afectan, usando el marco legal mexicano correcto.",
-        },
-        {
-          title: "Soberanía y seguridad de datos",
-          text: "A diferencia de los modelos extranjeros que procesan tu información en servidores fuera del país, Lattice corre en centros de datos nacionales. Esto garantiza la",
-          highlight: " soberanía de datos",
-          textPost:
-            ", asegurando que tu información personal y la de las empresas mexicanas se mantenga protegida bajo las leyes de México.",
-        },
-      ],
-    },
-    economic: {
-      heading: "El motor para el futuro de",
-      headingHighlight: "México",
-      subtitle: "Más empleos y una mejor economía",
-      jobs: {
-        title: "Nuevas empresas y empleos",
-        p1pre:
-          "Lattice es el cimiento para crear nuevas empresas y aplicaciones de IA de clase mundial, ",
-        p1highlight: "sin depender de costosas tecnologías extranjeras",
-        p1post:
-          ". Esto fomenta la creación de empleos de alta especialización, como ingenieros de IA y científicos de datos, aquí en México.",
+      {
+        icon: Landmark,
+        title: "Gobierno",
+        body: "Un agente que procesa solicitudes bajo la LGTAIP necesita conocer plazos, procedimientos y normativas exactas del marco jurídico mexicano. Los principios generales de transparencia que un modelo global conoce son un punto de partida; los detalles operativos que determinan si una solicitud se procesa correctamente son locales.",
       },
-      compete: {
-        title: "Competitividad global",
-        p1pre:
-          "Las empresas mexicanas, desde pymes hasta grandes corporativos, podrán integrar una IA que ",
-        p1highlight:
-          "entiende perfectamente su mercado y a sus clientes",
-        p1post:
-          ". Esto las hará más eficientes y competitivas a nivel global, reduciendo costos y mejorando la experiencia del cliente.",
+      {
+        icon: HeartPulse,
+        title: "Salud",
+        body: "Los protocolos clínicos, las Normas Oficiales Mexicanas y la normativa COFEPRIS son específicos de México. Un modelo que aprendió con datos predominantemente estadounidenses o europeos puede recomendar procedimientos, dosificaciones o clasificaciones que no corresponden al marco regulatorio nacional.",
       },
-    },
-    education: {
-      heading: "Impacto en la educación, la cultura y la",
-      headingHighlight: "inclusión social",
-      edu: {
-        title: "Educación a la medida",
-        p1: "Se pueden crear tutores virtuales que expliquen temas complejos (matemáticas, historia, civismo) usando el contexto y el currículo educativo mexicano. Un estudiante podría pedir que le \u201Cexplique la Reforma Agraria como si fuera un corrido\u201D, y la IA tendría la capacidad de hacerlo.",
-        p2: "Se pueden desarrollar variantes de Lattice dedicadas exclusivamente a la educación en México, haciendo más eficientes las tareas de enseñanza.",
-      },
-      culture: {
-        title: "Inclusión y preservación cultural",
-        p1: "Lattice ya está siendo entrenado en lenguas originarias como el náhuatl y el maya, y se busca ampliar su alcance a muchas más.",
-        p2pre:
-          "La importancia de esto va más allá de la simple preservación cultural; el objetivo es crear una poderosa ",
-        p2highlight: "herramienta de inclusión",
-        p2post:
-          ". La meta es que los ciudadanos que no hablan español puedan recibir servicios de calidad en su lengua materna, ya sea para realizar trámites de gobierno o para recibir atención médica.",
-      },
-      conclusion: {
-        pre: "Lattice no es solo un producto tecnológico;",
-        mid: " es infraestructura nacional crítica",
-        post: ", tan importante como las carreteras o las redes eléctricas. Es el cerebro digital que permitirá a México construir la IA del futuro en sus propios términos.",
-      },
-    },
-    chat: {
-      badge: "Comparación Real",
-      heading: "Mismo problema. Dos realidades.",
-      subtitle:
-        "Un caso real de un contrato mexicano. Mira cómo responde un modelo global entrenado con datos WEIRD vs. Lattice Na\u2019at, diseñado para LATAM.",
-      userQuery: "Consulta del usuario",
-      query:
-        "¿Qué debo hacer si mi proveedor no entrega a tiempo y ya pagué el 50% por adelantado según el contrato mexicano?",
-      global: {
-        model: "Modelo Global (GPT-4/Claude)",
-        trainedWith: "Entrenado con datos WEIRD",
-        response: [
-          "Basándome en principios generales de contratos internacionales, te recomendaría:",
-          "1. Envía una carta formal de reclamo (demand letter)",
-          "2. Considera mediación antes de litigio",
-          "3. Revisa cláusulas de force majeure",
-          "4. En caso de litigio, los tribunales de common law generalmente...",
-        ],
-        issues: [
-          "Menciona 'demand letter' — concepto de common law, no existe en derecho civil mexicano",
-          "Ignora el CPP (Código de Procedimientos Civiles) aplicable",
-          "No menciona la resolución por incumplimiento ni la restitución de pagos",
-          "El término 'force majeure' no se usa en México; es caso fortuito o fuerza mayor",
-        ],
-      },
-      lattice: {
-        model: "Lattice Na'at / Lattice Séeb",
-        trainedWith: "Entrenado con datos de LATAM",
-        response: [
-          "Según el Código Civil Federal (Arts. 1796-1800) y práctica mexicana:",
-          "1. Reclamo formal vía buro de conciliación o mediación (CPC Art. 694)",
-          "2. Requerimiento notarial de cumplimiento o resolución",
-          "3. Si persiste: juicio civil ordinario o ejecutivo mercantil",
-          "4. Puedes exigir la restitución del 50% pagado + daños y perjuicios",
-          "⚠️ Alerta: Verifica si hay cláusula de penas convencionales que limite tu reclamo",
-        ],
-        strengths: [
-          "Cita correctamente Código Civil Federal y Código de Procedimientos Civiles",
-          "Menciona requerimiento notarial — institución típica de derecho civil",
-          "Incluye alerta específica sobre penas convencionales (muy común en contratos MX)",
-          "Diferencia entre juicio civil y ejecutivo mercantil según naturaleza del contrato",
-        ],
-      },
-    },
-    examples: {
-      heading: "Donde la IA global falla en México",
-      subtitle:
-        "Casos reales donde los modelos WEIRD cometen errores críticos al aplicar lógica anglosajona a contextos mexicanos.",
-      errorLabel: "El error: ",
-      impactLabel: "Impacto real: ",
-      cards: [
-        {
-          title: "Contratos mexicanos",
-          context: "Civil law vs Common law",
-          error:
-            "Los modelos globales usan lógica de 'common law' (USA/UK). En México operamos bajo 'derecho civil' donde los códigos son la fuente primaria, no la jurisprudencia.",
-          impact:
-            "Riesgo de interpretar mal cláusulas de resolución, plazos y obligaciones contractuales.",
-        },
-        {
-          title: "Licitaciones públicas",
-          context: "LAASSP · CompraNet · SHCP",
-          error:
-            "No conocen la Ley de Adquisiciones ni el portal CompraNet. Hablan de 'RFPs' y 'bidding processes' genéricos.",
-          impact:
-            "Elaboración de documentos que no cumplen requisitos formales. Descalificación automática en procesos.",
-        },
-        {
-          title: "Regulación fiscal mexicana",
-          context: "SAT · CFDI · Complementos",
-          error:
-            "Confunden el CFDI mexicano con 'invoices' anglosajones. No entienden complementos de pago, carta porte, retenciones.",
-          impact:
-            "Documentación fiscal inválida. Problemas de deducibilidad ante auditorías del SAT.",
-        },
-      ],
-    },
-    solution: {
-      badge: "La Solución",
-      heading: "Lattice Na\u2019at: IA diseñada para LATAM",
-      description:
-        "Un modelo de 120 mil millones de parámetros construido desde cero con corpus propietario de México y América Latina. No es una traducción: es inteligencia artificial que entiende el contexto legal, fiscal y operativo de nuestra región.",
-      features: [
-        "Corpus legal mexicano (CCF, CPC, CFF)",
-        "Normativa sectorial especializada",
-        "Contexto cultural y lingüístico local",
-        "Entrenado con documentos reales de LATAM",
-        "Sin sesgo anglosajón pre-entrenado",
-        "Compatible con Lattice Agents",
-      ],
-      knowBtn: "Conocer Lattice Na\u2019at",
-      exploreBtn: "Explorar Lattice Séeb",
-    },
-    cta: {
-      title: "Elimina el sesgo WEIRD de tu operación",
-      subtitle:
-        "Solicita un Diagnóstico Inteligente y descubre cómo Lattice Na\u2019at o Lattice Séeb pueden resolver los casos de uso específicos de tu industria.",
-      ctaLabel: "Solicitar Diagnóstico Inteligente",
-      trust: [
-        "Demo con tus datos reales",
-        "Comparación directa incluida",
-        "Sin permanencia",
-      ],
+    ],
+    stat: {
+      value: "36%",
+      label: "de las empresas globales reportaron impactos negativos directos del sesgo de IA en 2024 — incluyendo pérdida de ingresos, clientes y empleados.",
+      source: "AI Bias Report, AllAboutAI, 2025",
     },
   },
-  en: {
-    hero: {
-      badge: "Research · Harvard University 2024",
-      title1: "The WEIRD Bias:",
-      title2: "Why global AI fails",
-      title3: "in your context",
-      subtitle:
-        "The most advanced AI models were trained on data from less than 12% of the world\u2019s population. Discover how this affects your operations in Mexico and LATAM.",
-      paperBtn: "Read the paper",
-      compareBtn: "See live comparison",
-    },
-    weird: {
-      heading: "What does",
-      headingSuffix: "mean?",
-      description:
-        "An acronym coined by evolutionary psychology researchers to describe societies that represent less than 12% of humanity yet generate 96% of AI training data.",
-      letters: [
-        { desc: "Western", context: "of the world\u2019s population" },
-        { desc: "Formally educated", context: "with university access" },
-        { desc: "Industrialized", context: "of global GDP" },
-        { desc: "High income", context: "of global income" },
-        { desc: "Liberal democratic", context: "of countries worldwide" },
-      ],
-    },
-    movie: {
-      badge: "Analogy",
-      heading: "The difference: dubbed movie vs. original",
-      dubbed: {
-        title: "The dubbed version",
-        subtitle: "Current AIs (ChatGPT, Claude)",
-        p1: "When you watch a dubbed movie, you understand the general plot. However, you know it\u2019s not the complete experience. Jokes lose their punch, idioms are diluted, and cultural references are adapted or disappear.",
-        p2pre:
-          "This is how foreign AIs work: they offer us a \u201Cdubbed\u201D version, functional, but one that ",
-        p2highlight:
-          "does not grasp the depth of our culture",
-        p2post:
-          ". Moreover, being proprietary models, they operate as a \u201Cblack box\u201D: we don\u2019t know for certain how they work inside.",
-      },
-      original: {
-        title: "The original version",
-        subtitle: "Lattice \u2014 Designed for Mexico",
-        p1pre:
-          "Watching a movie in its original language lets you grasp the complete story, with all its richness and meaning. ",
-        p1highlight:
-          "Lattice is that original version for Mexico",
-        p1post: ".",
-        p2pre:
-          "This AI thinks directly in Mexican Spanish because it was fine-tuned with our own knowledge: ",
-        p2highlight:
-          "laws, textbooks, history, and culture",
-        p2post:
-          ". Being an open model, it is not a \u201Cblack box\u201D; anyone can review how it works, fostering transparency and trust.",
-      },
-    },
-    benefits: {
-      heading: "How does this benefit me?",
-      subtitle:
-        "Having our own AI is key to building a digital future made in Mexico.",
-      cards: [
-        {
-          title: "Easier government procedures",
-          text: "Imagine being able to ask questions on SAT or IMSS portals with a virtual assistant that understands you as if you were talking to a person. You could resolve complex procedures without technical jargon. Lattice understands the context of each Mexican procedure as part of its core training, not as a superficial layer.",
-        },
-        {
-          title: "Understanding the \u201Cfine print\u201D",
-          text: "Laws, contracts, and official documents are often very hard to read. With an AI like Lattice, you could ask it to \u201Ctranslate\u201D those texts into simple, clear language. You\u2019d know exactly what they say and how they affect you, using the correct Mexican legal framework.",
-        },
-        {
-          title: "Data sovereignty and security",
-          text: "Unlike foreign models that process your information on servers outside the country, Lattice runs in national data centers. This guarantees",
-          highlight: " data sovereignty",
-          textPost:
-            ", ensuring that your personal information and that of Mexican companies remains protected under Mexico\u2019s laws.",
-        },
-      ],
-    },
-    economic: {
-      heading: "The engine for the future of",
-      headingHighlight: "Mexico",
-      subtitle: "More jobs and a stronger economy",
-      jobs: {
-        title: "New businesses and jobs",
-        p1pre:
-          "Lattice is the foundation for building world-class AI companies and applications, ",
-        p1highlight:
-          "without relying on expensive foreign technologies",
-        p1post:
-          ". This fosters the creation of highly specialized jobs, such as AI engineers and data scientists, right here in Mexico.",
-      },
-      compete: {
-        title: "Global competitiveness",
-        p1pre:
-          "Mexican businesses, from SMEs to large corporations, will be able to integrate an AI that ",
-        p1highlight:
-          "perfectly understands their market and customers",
-        p1post:
-          ". This will make them more efficient and competitive globally, reducing costs and improving the customer experience.",
-      },
-    },
-    education: {
-      heading: "Impact on education, culture, and",
-      headingHighlight: "social inclusion",
-      edu: {
-        title: "Tailored education",
-        p1: "Virtual tutors can be created to explain complex topics (math, history, civics) using the context and curriculum of the Mexican education system. A student could ask to \u201Cexplain the Agrarian Reform as if it were a corrido,\u201D and the AI would be capable of doing so.",
-        p2: "Variants of Lattice dedicated exclusively to education in Mexico can be developed, making teaching tasks more efficient.",
-      },
-      culture: {
-        title: "Inclusion and cultural preservation",
-        p1: "Lattice is already being trained in indigenous languages such as Nahuatl and Maya, and the goal is to expand to many more.",
-        p2pre:
-          "The importance of this goes beyond simple cultural preservation; the goal is to create a powerful ",
-        p2highlight: "tool for inclusion",
-        p2post:
-          ". The aim is for citizens who do not speak Spanish to receive quality services in their mother tongue, whether for government procedures or medical care.",
-      },
-      conclusion: {
-        pre: "Lattice is not just a technology product;",
-        mid: " it is critical national infrastructure",
-        post: ", as important as highways or power grids. It is the digital brain that will enable Mexico to build the AI of the future on its own terms.",
-      },
-    },
-    chat: {
-      badge: "Real Comparison",
-      heading: "Same problem. Two realities.",
-      subtitle:
-        "A real case involving a Mexican contract. See how a global model trained on WEIRD data responds vs. Lattice Na\u2019at, designed for LATAM.",
-      userQuery: "User query",
-      query:
-        "What should I do if my supplier doesn\u2019t deliver on time and I already paid 50% upfront under a Mexican contract?",
-      global: {
-        model: "Global Model (GPT-4/Claude)",
-        trainedWith: "Trained on WEIRD data",
-        response: [
-          "Based on general principles of international contracts, I would recommend:",
-          "1. Send a formal demand letter",
-          "2. Consider mediation before litigation",
-          "3. Review force majeure clauses",
-          "4. In case of litigation, common law courts generally...",
-        ],
-        issues: [
-          "Mentions \u2018demand letter\u2019 \u2014 a common law concept that does not exist in Mexican civil law (derecho civil)",
-          "Ignores the applicable CPP (C\u00F3digo de Procedimientos Civiles)",
-          "Does not mention contract termination for breach (resoluci\u00F3n por incumplimiento) or payment restitution",
-          "Uses the term \u2018force majeure\u2019 instead of the Mexican legal terms caso fortuito or fuerza mayor",
-        ],
-      },
-      lattice: {
-        model: "Lattice Na'at / Lattice S\u00E9eb",
-        trainedWith: "Trained on LATAM data",
-        response: [
-          "Seg\u00FAn el C\u00F3digo Civil Federal (Arts. 1796-1800) y pr\u00E1ctica mexicana:",
-          "1. Reclamo formal v\u00EDa buro de conciliaci\u00F3n o mediaci\u00F3n (CPC Art. 694)",
-          "2. Requerimiento notarial de cumplimiento o resoluci\u00F3n",
-          "3. Si persiste: juicio civil ordinario o ejecutivo mercantil",
-          "4. Puedes exigir la restituci\u00F3n del 50% pagado + da\u00F1os y perjuicios",
-          "\u26A0\uFE0F Alerta: Verifica si hay cl\u00E1usula de penas convencionales que limite tu reclamo",
-        ],
-        strengths: [
-          "Correctly cites C\u00F3digo Civil Federal and C\u00F3digo de Procedimientos Civiles",
-          "Mentions requerimiento notarial \u2014 a typical civil law institution",
-          "Includes specific alert about penas convencionales (very common in Mexican contracts)",
-          "Distinguishes between juicio civil and ejecutivo mercantil based on contract type",
-        ],
-      },
-    },
-    examples: {
-      heading: "Where global AI fails in Mexico",
-      subtitle:
-        "Real cases where WEIRD models make critical errors by applying Anglo-Saxon logic to Mexican contexts.",
-      errorLabel: "The error: ",
-      impactLabel: "Real impact: ",
-      cards: [
-        {
-          title: "Mexican contracts",
-          context: "Civil law vs Common law",
-          error:
-            "Global models use common law logic (USA/UK). In Mexico, the legal system operates under civil law (derecho civil), where statutes are the primary source, not case law (jurisprudencia).",
-          impact:
-            "Risk of misinterpreting termination clauses, deadlines, and contractual obligations.",
-        },
-        {
-          title: "Public procurement",
-          context: "LAASSP \u00B7 CompraNet \u00B7 SHCP",
-          error:
-            "They are unaware of Mexico\u2019s Ley de Adquisiciones or the CompraNet portal. They refer to generic \u2018RFPs\u2019 and \u2018bidding processes.\u2019",
-          impact:
-            "Documents that fail to meet formal requirements. Automatic disqualification from procurement processes.",
-        },
-        {
-          title: "Mexican tax regulation",
-          context: "SAT \u00B7 CFDI \u00B7 Complementos",
-          error:
-            "They confuse Mexico\u2019s CFDI with Anglo-Saxon \u2018invoices.\u2019 They don\u2019t understand complementos de pago, carta porte, or withholdings (retenciones).",
-          impact:
-            "Invalid tax documentation. Deductibility issues during SAT audits.",
-        },
-      ],
-    },
-    solution: {
-      badge: "The Solution",
-      heading: "Lattice Na\u2019at: AI designed for LATAM",
-      description:
-        "A 120-billion-parameter model built from scratch with a proprietary corpus from Mexico and Latin America. It is not a translation: it is artificial intelligence that understands the legal, fiscal, and operational context of our region.",
-      features: [
-        "Mexican legal corpus (CCF, CPC, CFF)",
-        "Specialized sector regulations",
-        "Local cultural and linguistic context",
-        "Trained on real LATAM documents",
-        "No pre-trained Anglo-Saxon bias",
-        "Compatible with Lattice Agents",
-      ],
-      knowBtn: "Discover Lattice Na\u2019at",
-      exploreBtn: "Explore Lattice S\u00E9eb",
-    },
-    cta: {
-      title: "Eliminate WEIRD bias from your operations",
-      subtitle:
-        "Request a Smart Diagnosis and discover how Lattice Na\u2019at or Lattice S\u00E9eb can solve the specific use cases for your industry.",
-      ctaLabel: "Request Smart Diagnosis",
-      trust: [
-        "Demo with your real data",
-        "Direct comparison included",
-        "No lock-in",
-      ],
-    },
+  analogy: {
+    chapter: "Capítulo 04",
+    eyebrow: "La analogía",
+    h2: "Es la diferencia entre una película doblada y la versión original.",
+    dubbed:
+      "Entiendes la trama. Sigues la historia. Pero los chistes pierden el ritmo, los modismos suenan forzados y las referencias culturales desaparecen o se adaptan torpemente. La experiencia es funcional, pero distante. Nunca fue diseñada para ti.",
+    original:
+      "Lattice Na'at es la versión original. Construida específicamente para cerrar la brecha WEIRD en México y América Latina: con corpus normativos de legislación y jurisprudencia mexicana, benchmarks culturalmente apropiados, procesamiento en infraestructura nacional bajo las leyes de México, y trabajo pionero en NLP para lenguas originarias.",
   },
-  "pt-br": {
-    hero: {
-      badge: "Pesquisa · Universidade de Harvard 2024",
-      title1: "O Vi\u00E9s WEIRD:",
-      title2: "Por que a IA global falha",
-      title3: "no seu contexto",
-      subtitle:
-        "Os modelos de IA mais avan\u00E7ados foram treinados com dados de menos de 12% da popula\u00E7\u00E3o mundial. Descubra como isso afeta suas opera\u00E7\u00F5es no M\u00E9xico e na Am\u00E9rica Latina.",
-      paperBtn: "Ler o paper",
-      compareBtn: "Ver compara\u00E7\u00E3o ao vivo",
-    },
-    weird: {
-      heading: "O que significa",
-      headingSuffix: "?",
-      description:
-        "Um acr\u00F4nimo cunhado por pesquisadores de psicologia evolutiva para descrever sociedades que representam menos de 12% da humanidade, mas geram 96% dos dados de treinamento de IA.",
-      letters: [
-        { desc: "Ocidental", context: "da popula\u00E7\u00E3o mundial" },
-        { desc: "Formalmente educado", context: "com acesso \u00E0 universidade" },
-        { desc: "Industrializado", context: "do PIB global" },
-        { desc: "Alta renda", context: "da renda mundial" },
-        { desc: "Democr\u00E1tico liberal", context: "dos pa\u00EDses do mundo" },
-      ],
-    },
-    movie: {
-      badge: "Analogia",
-      heading: "A diferen\u00E7a: filme dublado vs. original",
-      dubbed: {
-        title: "A vers\u00E3o dublada",
-        subtitle: "As IAs atuais (ChatGPT, Claude)",
-        p1: "Quando voc\u00EA assiste a um filme dublado, entende a trama geral. Por\u00E9m, sabe que n\u00E3o \u00E9 a experi\u00EAncia completa. As piadas perdem a gra\u00E7a, as express\u00F5es se diluem e as refer\u00EAncias culturais s\u00E3o adaptadas ou desaparecem.",
-        p2pre:
-          "\u00C9 assim que as IAs estrangeiras funcionam: nos oferecem uma vers\u00E3o \u201Cdublada\u201D, funcional, mas que ",
-        p2highlight:
-          "n\u00E3o compreende a profundidade da nossa cultura",
-        p2post:
-          ". Al\u00E9m disso, por serem modelos privados, operam como uma \u201Ccaixa preta\u201D: n\u00E3o sabemos com certeza como funcionam por dentro.",
+  response: {
+    chapter: "Capítulo 05",
+    eyebrow: "La respuesta",
+    h2: "Lattice Na'at no es un parche de traducción. Es un diseño distinto.",
+    lede:
+      "Na'at es una familia de modelos especializados, entrenados con corpus normativos de legislación y jurisprudencia mexicana, evaluados con benchmarks que no asumen contexto occidental y desplegados en infraestructura nacional bajo las leyes de México.",
+    pillars: [
+      {
+        icon: BookOpen,
+        title: "Corpus Normativo Mexicano",
+        body: "Legislación federal y estatal, jurisprudencia, normativa administrativa y regulación sectorial — integrados como conocimiento base del modelo, no como búsqueda en internet. Cuando Na'at responde sobre derecho mexicano, razona desde el derecho mexicano.",
       },
-      original: {
-        title: "A vers\u00E3o original",
-        subtitle: "Lattice \u2014 Projetada para o M\u00E9xico",
-        p1pre:
-          "Assistir a um filme no idioma original permite captar a hist\u00F3ria completa, com toda sua riqueza e significado. ",
-        p1highlight:
-          "Lattice \u00E9 essa vers\u00E3o original para o M\u00E9xico",
-        p1post: ".",
-        p2pre:
-          "Esta IA pensa diretamente em espanhol mexicano porque foi ajustada com nosso pr\u00F3prio conhecimento: ",
-        p2highlight:
-          "leis, livros did\u00E1ticos, hist\u00F3ria e cultura",
-        p2post:
-          ". Por ser um modelo aberto, n\u00E3o \u00E9 uma \u201Ccaixa preta\u201D; qualquer pessoa pode revisar seu funcionamento, o que gera transpar\u00EAncia e confian\u00E7a.",
+      {
+        icon: Database,
+        title: "Benchmarks sin sesgo occidental",
+        body: "Spanish HELM y MMLU-LatAm son métricas desarrolladas para medir el rendimiento en español sin asumir contexto anglosajón. Si un modelo obtiene buena puntuación en MMLU pero falla en MMLU-LatAm, el sesgo WEIRD está actuando.",
       },
-    },
-    benefits: {
-      heading: "E como isso me beneficia?",
-      subtitle:
-        "Ter nossa pr\u00F3pria IA \u00E9 fundamental para construir um futuro digital feito no M\u00E9xico.",
-      cards: [
-        {
-          title: "Tr\u00E2mites governamentais mais f\u00E1ceis",
-          text: "Imagine poder consultar suas d\u00FAvidas nos portais do SAT ou do IMSS com um assistente virtual que te entende como se voc\u00EA estivesse falando com uma pessoa. Voc\u00EA poderia resolver tr\u00E2mites complexos sem necessidade de usar linguagem t\u00E9cnica. O Lattice compreende o contexto de cada procedimento como parte de seu treinamento base, n\u00E3o como uma camada superficial.",
-        },
-        {
-          title: "Entender as \u201Cletras miúdas\u201D",
-          text: "Leis, contratos e documentos oficiais costumam ser muito dif\u00EDceis de ler. Com uma IA como o Lattice, voc\u00EA poderia pedir que \u201Ctraduzisse\u201D esses textos para uma linguagem simples e clara. Assim, saberia exatamente o que dizem e como te afetam, usando o marco legal mexicano correto.",
-        },
-        {
-          title: "Soberania e seguran\u00E7a de dados",
-          text: "Diferentemente dos modelos estrangeiros que processam suas informa\u00E7\u00F5es em servidores fora do pa\u00EDs, o Lattice roda em centros de dados nacionais. Isso garante a",
-          highlight: " soberania de dados",
-          textPost:
-            ", assegurando que suas informa\u00E7\u00F5es pessoais e as das empresas mexicanas permane\u00E7am protegidas sob as leis do M\u00E9xico.",
-        },
-      ],
-    },
-    economic: {
-      heading: "O motor para o futuro do",
-      headingHighlight: "M\u00E9xico",
-      subtitle: "Mais empregos e uma economia mais forte",
-      jobs: {
-        title: "Novas empresas e empregos",
-        p1pre:
-          "O Lattice \u00E9 a base para criar novas empresas e aplica\u00E7\u00F5es de IA de classe mundial, ",
-        p1highlight:
-          "sem depender de tecnologias estrangeiras caras",
-        p1post:
-          ". Isso fomenta a cria\u00E7\u00E3o de empregos de alta especializa\u00E7\u00E3o, como engenheiros de IA e cientistas de dados, aqui no M\u00E9xico.",
+      {
+        icon: ShieldCheck,
+        title: "Procesamiento soberano",
+        body: "Los datos se procesan en infraestructura ubicada en México — AWS Querétaro o servidores físicos del cliente. No cruzan fronteras. No están sujetos al CLOUD Act ni a la jurisdicción de otro país.",
       },
-      compete: {
-        title: "Competitividade global",
-        p1pre:
-          "As empresas mexicanas, de PMEs a grandes corporações, poderão integrar uma IA que ",
-        p1highlight:
-          "entende perfeitamente seu mercado e seus clientes",
-        p1post:
-          ". Isso as tornar\u00E1 mais eficientes e competitivas globalmente, reduzindo custos e melhorando a experi\u00EAncia do cliente.",
+      {
+        icon: Languages,
+        title: "Lenguas originarias",
+        body: "Trabajo pionero en NLP para náhuatl, maya y otras lenguas indígenas de México. Más de 7.3 millones de hablantes según el Censo 2020 del INEGI. Un primer paso hacia una IA que representa al país completo.",
       },
-    },
-    education: {
-      heading: "Impacto na educa\u00E7\u00E3o, na cultura e na",
-      headingHighlight: "inclus\u00E3o social",
-      edu: {
-        title: "Educa\u00E7\u00E3o sob medida",
-        p1: "Tutores virtuais podem ser criados para explicar temas complexos (matem\u00E1tica, hist\u00F3ria, civismo) usando o contexto e o curr\u00EDculo educacional mexicano. Um estudante poderia pedir que \u201Cexplicasse a Reforma Agr\u00E1ria como se fosse um corrido\u201D, e a IA teria capacidade de faz\u00EA-lo.",
-        p2: "Variantes do Lattice dedicadas exclusivamente \u00E0 educa\u00E7\u00E3o no M\u00E9xico podem ser desenvolvidas, tornando as tarefas de ensino mais eficientes.",
-      },
-      culture: {
-        title: "Inclus\u00E3o e preserva\u00E7\u00E3o cultural",
-        p1: "O Lattice j\u00E1 est\u00E1 sendo treinado em l\u00EDnguas origin\u00E1rias como o n\u00E1huatl e o maia, e o objetivo \u00E9 ampliar seu alcance para muitas mais.",
-        p2pre:
-          "A import\u00E2ncia disso vai al\u00E9m da simples preserva\u00E7\u00E3o cultural; o objetivo \u00E9 criar uma poderosa ",
-        p2highlight: "ferramenta de inclus\u00E3o",
-        p2post:
-          ". A meta \u00E9 que os cidad\u00E3os que n\u00E3o falam espanhol possam receber servi\u00E7os de qualidade em sua l\u00EDngua materna, seja para realizar tr\u00E2mites governamentais ou para receber atendimento m\u00E9dico.",
-      },
-      conclusion: {
-        pre: "O Lattice n\u00E3o \u00E9 apenas um produto tecnol\u00F3gico;",
-        mid: " \u00E9 infraestrutura nacional cr\u00EDtica",
-        post: ", t\u00E3o importante quanto rodovias ou redes el\u00E9tricas. \u00C9 o c\u00E9rebro digital que permitir\u00E1 ao M\u00E9xico construir a IA do futuro em seus pr\u00F3prios termos.",
-      },
-    },
-    chat: {
-      badge: "Compara\u00E7\u00E3o Real",
-      heading: "Mesmo problema. Duas realidades.",
-      subtitle:
-        "Um caso real de um contrato mexicano. Veja como um modelo global treinado com dados WEIRD responde vs. Lattice Na\u2019at, projetado para a Am\u00E9rica Latina.",
-      userQuery: "Consulta do usu\u00E1rio",
-      query:
-        "O que devo fazer se meu fornecedor n\u00E3o entrega no prazo e eu j\u00E1 paguei 50% antecipadamente conforme o contrato mexicano?",
-      global: {
-        model: "Modelo Global (GPT-4/Claude)",
-        trainedWith: "Treinado com dados WEIRD",
-        response: [
-          "Com base em princ\u00EDpios gerais de contratos internacionais, eu recomendaria:",
-          "1. Envie uma carta formal de reclama\u00E7\u00E3o (demand letter)",
-          "2. Considere media\u00E7\u00E3o antes de lit\u00EDgio",
-          "3. Revise cl\u00E1usulas de force majeure",
-          "4. Em caso de lit\u00EDgio, os tribunais de common law geralmente...",
-        ],
-        issues: [
-          "Menciona \u2018demand letter\u2019 \u2014 conceito de common law que n\u00E3o existe no direito civil mexicano (derecho civil)",
-          "Ignora o CPP (C\u00F3digo de Procedimientos Civiles) aplic\u00E1vel",
-          "N\u00E3o menciona a resolu\u00E7\u00E3o por inadimpl\u00EAncia (resoluci\u00F3n por incumplimiento) nem a restitui\u00E7\u00E3o de pagamentos",
-          "Usa o termo \u2018force majeure\u2019 em vez dos termos jur\u00EDdicos mexicanos caso fortuito ou fuerza mayor",
-        ],
-      },
-      lattice: {
-        model: "Lattice Na'at / Lattice S\u00E9eb",
-        trainedWith: "Treinado com dados da Am\u00E9rica Latina",
-        response: [
-          "Seg\u00FAn el C\u00F3digo Civil Federal (Arts. 1796-1800) y pr\u00E1ctica mexicana:",
-          "1. Reclamo formal v\u00EDa buro de conciliaci\u00F3n o mediaci\u00F3n (CPC Art. 694)",
-          "2. Requerimiento notarial de cumplimiento o resoluci\u00F3n",
-          "3. Si persiste: juicio civil ordinario o ejecutivo mercantil",
-          "4. Puedes exigir la restituci\u00F3n del 50% pagado + da\u00F1os y perjuicios",
-          "\u26A0\uFE0F Alerta: Verifica si hay cl\u00E1usula de penas convencionales que limite tu reclamo",
-        ],
-        strengths: [
-          "Cita corretamente o C\u00F3digo Civil Federal e o C\u00F3digo de Procedimientos Civiles",
-          "Menciona requerimiento notarial \u2014 institui\u00E7\u00E3o t\u00EDpica do direito civil",
-          "Inclui alerta espec\u00EDfico sobre penas convencionales (muito comum em contratos mexicanos)",
-          "Diferencia entre juicio civil e ejecutivo mercantil conforme a natureza do contrato",
-        ],
-      },
-    },
-    examples: {
-      heading: "Onde a IA global falha no M\u00E9xico",
-      subtitle:
-        "Casos reais em que modelos WEIRD cometem erros cr\u00EDticos ao aplicar l\u00F3gica anglo-sax\u00E3 a contextos mexicanos.",
-      errorLabel: "O erro: ",
-      impactLabel: "Impacto real: ",
-      cards: [
-        {
-          title: "Contratos mexicanos",
-          context: "Civil law vs Common law",
-          error:
-            "Os modelos globais usam l\u00F3gica de common law (EUA/Reino Unido). No M\u00E9xico, o sistema jur\u00EDdico opera sob o derecho civil, onde os c\u00F3digos s\u00E3o a fonte prim\u00E1ria, n\u00E3o a jurisprud\u00EAncia.",
-          impact:
-            "Risco de interpretar mal cl\u00E1usulas de resolu\u00E7\u00E3o, prazos e obriga\u00E7\u00F5es contratuais.",
-        },
-        {
-          title: "Licita\u00E7\u00F5es p\u00FAblicas",
-          context: "LAASSP \u00B7 CompraNet \u00B7 SHCP",
-          error:
-            "N\u00E3o conhecem a Ley de Adquisiciones nem o portal CompraNet. Falam de \u2018RFPs\u2019 e \u2018bidding processes\u2019 gen\u00E9ricos.",
-          impact:
-            "Elabora\u00E7\u00E3o de documentos que n\u00E3o cumprem requisitos formais. Desclassifica\u00E7\u00E3o autom\u00E1tica em processos.",
-        },
-        {
-          title: "Regula\u00E7\u00E3o fiscal mexicana",
-          context: "SAT \u00B7 CFDI \u00B7 Complementos",
-          error:
-            "Confundem o CFDI mexicano com \u2018invoices\u2019 anglo-sax\u00F5es. N\u00E3o entendem complementos de pago, carta porte nem reten\u00E7\u00F5es (retenciones).",
-          impact:
-            "Documenta\u00E7\u00E3o fiscal inv\u00E1lida. Problemas de dedutibilidade em auditorias do SAT.",
-        },
-      ],
-    },
-    solution: {
-      badge: "A Solu\u00E7\u00E3o",
-      heading: "Lattice Na\u2019at: IA projetada para a Am\u00E9rica Latina",
-      description:
-        "Um modelo de 120 bilh\u00F5es de par\u00E2metros constru\u00EDdo do zero com corpus propriet\u00E1rio do M\u00E9xico e da Am\u00E9rica Latina. N\u00E3o \u00E9 uma tradu\u00E7\u00E3o: \u00E9 intelig\u00EAncia artificial que entende o contexto legal, fiscal e operacional da nossa regi\u00E3o.",
-      features: [
-        "Corpus jur\u00EDdico mexicano (CCF, CPC, CFF)",
-        "Normativa setorial especializada",
-        "Contexto cultural e lingu\u00EDstico local",
-        "Treinado com documentos reais da Am\u00E9rica Latina",
-        "Sem vi\u00E9s anglo-sax\u00E3o pr\u00E9-treinado",
-        "Compat\u00EDvel com Lattice Agents",
-      ],
-      knowBtn: "Conhecer Lattice Na\u2019at",
-      exploreBtn: "Explorar Lattice S\u00E9eb",
-    },
-    cta: {
-      title: "Elimine o vi\u00E9s WEIRD da sua opera\u00E7\u00E3o",
-      subtitle:
-        "Solicite um Diagn\u00F3stico Inteligente e descubra como o Lattice Na\u2019at ou o Lattice S\u00E9eb podem resolver os casos de uso espec\u00EDficos do seu setor.",
-      ctaLabel: "Solicitar Diagn\u00F3stico Inteligente",
-      trust: [
-        "Demo com seus dados reais",
-        "Compara\u00E7\u00E3o direta inclu\u00EDda",
-        "Sem fideliza\u00E7\u00E3o",
-      ],
-    },
+    ],
   },
-} as const;
+  outcome: {
+    chapter: "Capítulo 06",
+    eyebrow: "El impacto en México",
+    h2: "Qué cambia cuando la IA se diseña desde el contexto correcto.",
+    items: [
+      {
+        title: "Trámites de gobierno accesibles",
+        body: "Un asistente que entiende al SAT, al IMSS y al INFONAVIT como parte de su entrenamiento — no como consulta web. Guía a cualquier ciudadano por un proceso burocrático en lenguaje claro, sin importar su nivel educativo.",
+      },
+      {
+        title: "Contratos en tu marco legal",
+        body: "Na'at explica qué dice un contrato usando el derecho mexicano correcto. No traducciones de cláusulas anglosajonas que suenan bien pero pueden ser inaplicables bajo el Código de Comercio local.",
+      },
+      {
+        title: "Soberanía tecnológica",
+        body: "Tus datos se procesan en México, bajo leyes mexicanas, en infraestructura que tu organización controla. Sin dependencia de jurisdicciones extranjeras.",
+      },
+      {
+        title: "Inclusión que no existía",
+        body: "Por primera vez, un esfuerzo sistemático para que la IA funcione en las lenguas que hablan millones de mexicanos — no solo en el idioma que domina internet.",
+      },
+      {
+        title: "Inclusión digital",
+        body: "Entrenamiento en lenguas originarias (náhuatl, maya) como primer paso hacia una IA que represente a los más de 7.3 millones de hablantes de lenguas indígenas en México.",
+      },
+    ],
+  },
+  research: {
+    chapter: "Capítulo 07",
+    eyebrow: "La investigación detrás",
+    h2: "Sintérgica Labs: el trabajo sistemático contra el sesgo WEIRD.",
+    lede: "Cuatro líneas de investigación activas que componen el programa de mitigación.",
+    lines: [
+      { num: "01", title: "Benchmarks no-WEIRD", body: "Spanish HELM y MMLU-LatAm: métricas que no asumen contexto occidental." },
+      { num: "02", title: "Mitigación de sesgo cultural", body: "Identificación y reducción sistemática de sesgos WEIRD en modelos de producción." },
+      { num: "03", title: "Corpus Normativo Mexicano V1", body: "Dataset curado de legislación, jurisprudencia y normativa mexicana." },
+      { num: "04", title: "NLP para lenguas originarias", body: "Modelos y herramientas para náhuatl, maya y otras lenguas indígenas." },
+    ],
+    cta: "Conocer Sintérgica Labs",
+  },
+  cta: {
+    badge: "Siguiente paso",
+    title: "Cierra la brecha WEIRD en tu operación.",
+    subtitle:
+      "Agenda un Diagnóstico Inteligente. En 45 minutos identificamos dónde el sesgo de tu IA actual te cuesta — y cómo Lattice Na'at lo resuelve con tus datos reales.",
+    ctaLabel: "Agendar Diagnóstico Inteligente",
+    trust: ["45 minutos, sin costo", "Sin permanencia", "Demo con tus datos reales"],
+  },
+};
 
-/* ─────────────── Base data (non-translatable) ─────────────── */
+/* Minimal EN/PT mirrors — same structure, translated copy */
+const en: Content = {
+  hero: {
+    eyebrow: "Research · Cultural bias in AI",
+    h1: "The bias nobody tells you your AI has.",
+    lead:
+      "There is a structural bias in language models that frontier AI labs don't put on their landing pages. It's called WEIRD. It has a name, scientific evidence, and measurable consequences in every decision your company makes with AI.",
+    scrollHint: "Keep reading",
+  },
+  origin: {
+    chapter: "Chapter 01",
+    eyebrow: "What is WEIRD bias?",
+    h2: "In 2010, three researchers found something uncomfortable.",
+    p1: "Joseph Henrich, Steven Heine and Ara Norenzayan published a study in Behavioral and Brain Sciences that changed how behavioral science understands itself. Their finding was uncomfortable: the vast majority of what psychology presented as “universal truths” about human behavior came from a very specific type of society.",
+    p2: "Western. Educated. Industrialized. Rich. Democratic. The acronym — WEIRD — also means “strange” in English. And that was precisely the point.",
+    p3: "WEIRD populations represent about 15% of humanity. They are the exception, not the norm. Yet science treated them as the rule.",
+    acronym: [
+      { letter: "W", label: "Western", description: "Western" },
+      { letter: "E", label: "Educated", description: "Formally educated" },
+      { letter: "I", label: "Industrialized", description: "Industrialized" },
+      { letter: "R", label: "Rich", description: "High income" },
+      { letter: "D", label: "Democratic", description: "Liberal democratic" },
+    ],
+    consequence:
+      "Over a decade later, the same pattern appeared in artificial intelligence. This time, the consequences aren't academic. They're operational.",
+    citation:
+      "Henrich, J., Heine, S. J., & Norenzayan, A. (2010). The weirdest people in the world? Behavioral and Brain Sciences, 33(2–3), 61–83.",
+  },
+  evidence: {
+    chapter: "Chapter 02",
+    eyebrow: "The science confirms it",
+    h2: "Harvard, 2023. 65 countries. 94,278 people.",
+    lede: "Harvard researchers (Atari et al., 2023) compared GPT responses with data from real people in 65 countries. The central finding is a correlation that can't be ignored.",
+    findingLabel: "Central finding",
+    finding:
+      "Correlation of r = −0.70 between a country's cultural distance from the U.S. and GPT's similarity to its inhabitants.",
+    pullquote:
+      "The more different your culture is from the American one, the less the AI you're using represents you.",
+    context:
+      "The U.S., Canada, Australia and the U.K. are closest to the profile models naturally replicate. Mexico, like most of Latin America, falls in a zone of significantly lower representation. The bias is in the training data and shapes every response.",
+    chartCaption:
+      "Cultural distance vs. similarity with GPT responses. Greater distance, lower representation.",
+  },
+  impact: {
+    chapter: "Chapter 03",
+    eyebrow: "What this means for your company",
+    h2: "Four areas where bias stops being theory and becomes cost.",
+    lede:
+      "The legal, fiscal and regulatory reasoning of a global model is Anglo-Saxon by design. Applied to Mexico, the output sounds technical — but starts from the wrong system.",
+    verticals: [
+      { icon: Scale, title: "Legal", body: "A model trained predominantly on Anglo-Saxon data reasons from Common Law — where precedent binds. Mexico operates under codified civil law: the Commercial Code, Federal Civil Code and state legislation set the rules. When the model suggests clauses or interprets contracts, it can apply legal logic from the wrong system." },
+      { icon: Banknote, title: "Tax", body: "SAT tax logic — fiscal regimes, payment complements, CFDI and deductibility rules — has little to do with the IRS or HMRC. A globally trained assistant can confuse concepts, apply criteria from another jurisdiction or recommend strategies that aren't valid in Mexico. The outcome may be an incorrect filing or a fine." },
+      { icon: Landmark, title: "Government", body: "An agent handling LGTAIP requests needs exact deadlines, procedures and regulations from the Mexican legal framework. The general transparency principles a global model knows are a starting point; the operational details that determine whether a request is processed correctly are local." },
+      { icon: HeartPulse, title: "Health", body: "Clinical protocols, Normas Oficiales Mexicanas and COFEPRIS regulations are Mexico-specific. A model trained predominantly on U.S. or European data may recommend procedures, dosages or classifications that don't match the national regulatory framework." },
+    ],
+    stat: { value: "36%", label: "of global companies reported direct negative impacts from AI bias in 2024 — including loss of revenue, customers and employees.", source: "AI Bias Report, AllAboutAI, 2025" },
+  },
+  analogy: {
+    chapter: "Chapter 04",
+    eyebrow: "The analogy",
+    h2: "It's the difference between a dubbed film and the original.",
+    dubbed: "You follow the plot. But the jokes lose their timing, idioms feel forced and cultural references disappear or get awkwardly adapted. The experience is functional but distant. It was never designed for you.",
+    original: "Lattice Na'at is the original version. Built specifically to close the WEIRD gap in Mexico and Latin America: with Mexican legislation and jurisprudence corpora, culturally appropriate benchmarks, processing on national infrastructure under Mexican law, and pioneering NLP work for indigenous languages.",
+  },
+  response: {
+    chapter: "Chapter 05",
+    eyebrow: "The response",
+    h2: "Lattice Na'at isn't a translation patch. It's a different design.",
+    lede: "Na'at is a family of specialized models, trained on Mexican legislation and jurisprudence corpora, evaluated with benchmarks that don't assume Western context, and deployed on national infrastructure under Mexican law.",
+    pillars: [
+      { icon: BookOpen, title: "Mexican Regulatory Corpus", body: "Federal and state legislation, jurisprudence, administrative regulation and sector-specific rules — integrated as base knowledge, not as web search. When Na'at answers about Mexican law, it reasons from Mexican law." },
+      { icon: Database, title: "Non-WEIRD benchmarks", body: "Spanish HELM and MMLU-LatAm evaluate performance in Spanish without assuming Anglo-Saxon context. If a model scores well on MMLU but fails on MMLU-LatAm, WEIRD bias is active." },
+      { icon: ShieldCheck, title: "Sovereign processing", body: "Data is processed on infrastructure located in Mexico — AWS Querétaro or the client's own servers. It doesn't cross borders. It isn't subject to the CLOUD Act or foreign jurisdiction." },
+      { icon: Languages, title: "Indigenous languages", body: "Pioneering NLP work for Nahuatl, Maya and other indigenous languages. More than 7.3 million speakers per INEGI 2020 Census. A first step toward AI that represents the whole country." },
+    ],
+  },
+  outcome: {
+    chapter: "Chapter 06",
+    eyebrow: "The impact in Mexico",
+    h2: "What changes when AI is designed from the right context.",
+    items: [
+      { title: "Accessible government procedures", body: "An assistant that understands SAT, IMSS and INFONAVIT as part of its training — not as a web search. Guides any citizen through a bureaucratic process in plain language, regardless of education level." },
+      { title: "Contracts in your legal framework", body: "Na'at explains a contract using the correct Mexican law — not translations of Anglo-Saxon clauses that may be inapplicable under the local Commercial Code." },
+      { title: "Technological sovereignty", body: "Your data is processed in Mexico, under Mexican law, on infrastructure your organization controls. No dependence on foreign jurisdictions." },
+      { title: "Inclusion that didn't exist", body: "For the first time, a systematic effort to make AI work in the languages millions of Mexicans speak — not just the language that dominates the internet." },
+      { title: "Digital inclusion", body: "Training in indigenous languages (Nahuatl, Maya) as a first step toward AI that represents the 7.3M+ speakers of indigenous languages in Mexico." },
+    ],
+  },
+  research: {
+    chapter: "Chapter 07",
+    eyebrow: "The research behind",
+    h2: "Sintérgica Labs: the systematic work against WEIRD bias.",
+    lede: "Four active research lines make up the mitigation program.",
+    lines: [
+      { num: "01", title: "Non-WEIRD benchmarks", body: "Spanish HELM and MMLU-LatAm: metrics that don't assume Western context." },
+      { num: "02", title: "Cultural bias mitigation", body: "Systematic identification and reduction of WEIRD bias in production models." },
+      { num: "03", title: "Mexican Regulatory Corpus V1", body: "Curated dataset of Mexican legislation, jurisprudence and regulation." },
+      { num: "04", title: "NLP for indigenous languages", body: "Models and tools for Nahuatl, Maya and other indigenous languages." },
+    ],
+    cta: "Explore Sintérgica Labs",
+  },
+  cta: {
+    badge: "Next step",
+    title: "Close the WEIRD gap in your operations.",
+    subtitle: "Book a Smart Diagnosis. In 45 minutes we identify where your current AI's bias is costing you — and how Lattice Na'at solves it with your real data.",
+    ctaLabel: "Book Smart Diagnosis",
+    trust: ["45 minutes, no cost", "No lock-in", "Demo with your real data"],
+  },
+};
 
-const WEIRD_LETTERS_BASE = [
-  { letter: "W", word: "Western", stat: "12%" },
-  { letter: "E", word: "Educated", stat: "15%" },
-  { letter: "I", word: "Industrialized", stat: "19%" },
-  { letter: "R", word: "Rich", stat: "16%" },
-  { letter: "D", word: "Democratic", stat: "8%" },
-];
+const pt: Content = {
+  hero: {
+    eyebrow: "Pesquisa · Viés cultural em IA",
+    h1: "O viés que ninguém te conta que sua IA tem.",
+    lead: "Há um viés estrutural nos modelos de linguagem que os grandes laboratórios não publicam na home. Chama-se WEIRD. Tem nome, evidência científica e consequências mensuráveis em cada decisão que sua empresa toma com IA.",
+    scrollHint: "Continuar lendo",
+  },
+  origin: {
+    chapter: "Capítulo 01",
+    eyebrow: "O que é o viés WEIRD?",
+    h2: "Em 2010, três pesquisadores encontraram algo incômodo.",
+    p1: "Joseph Henrich, Steven Heine e Ara Norenzayan publicaram um estudo em Behavioral and Brain Sciences que mudou como as ciências do comportamento se entendem. O achado foi incômodo: a imensa maioria do que a psicologia apresentava como “verdades universais” vinha de um tipo muito específico de sociedade.",
+    p2: "Ocidentais. Educadas. Industrializadas. Ricas. Democráticas. O acrônimo WEIRD também significa “estranho” em inglês. E esse era justamente o ponto.",
+    p3: "Populações WEIRD representam cerca de 15% da humanidade. São a exceção, não a norma. Mas a ciência as tratava como regra.",
+    acronym: [
+      { letter: "W", label: "Western", description: "Ocidental" },
+      { letter: "E", label: "Educated", description: "Formalmente educado" },
+      { letter: "I", label: "Industrialized", description: "Industrializado" },
+      { letter: "R", label: "Rich", description: "Alta renda" },
+      { letter: "D", label: "Democratic", description: "Democrático liberal" },
+    ],
+    consequence: "Mais de uma década depois, o mesmo padrão apareceu na IA. Desta vez, as consequências não são acadêmicas. São operacionais.",
+    citation: "Henrich, J., Heine, S. J., & Norenzayan, A. (2010). The weirdest people in the world? Behavioral and Brain Sciences, 33(2–3), 61–83.",
+  },
+  evidence: {
+    chapter: "Capítulo 02",
+    eyebrow: "A ciência confirma",
+    h2: "Harvard, 2023. 65 países. 94.278 pessoas.",
+    lede: "Pesquisadores de Harvard (Atari et al., 2023) compararam respostas do GPT com dados de pessoas reais em 65 países. O achado central é uma correlação que não pode ser ignorada.",
+    findingLabel: "Achado central",
+    finding: "Correlação de r = −0,70 entre a distância cultural de um país em relação aos EUA e a similaridade do GPT com seus habitantes.",
+    pullquote: "Quanto mais diferente é sua cultura da estadunidense, menos a IA que você usa representa você.",
+    context: "EUA, Canadá, Austrália e Reino Unido são os mais próximos do perfil que os modelos replicam naturalmente. México, como a maior parte da América Latina, cai em uma zona de representação muito menor. O viés está nos dados de treinamento.",
+    chartCaption: "Distância cultural vs. similaridade com respostas do GPT. Maior distância, menor representação.",
+  },
+  impact: {
+    chapter: "Capítulo 03",
+    eyebrow: "O que significa para sua empresa",
+    h2: "Quatro áreas onde o viés deixa de ser teoria e vira custo.",
+    lede: "O raciocínio jurídico, fiscal e regulatório de um modelo global é anglo-saxão por design. Aplicado ao México, o resultado soa técnico — mas parte do sistema errado.",
+    verticals: [
+      { icon: Scale, title: "Jurídico", body: "Um modelo treinado predominantemente com dados anglo-saxões raciocina a partir do Common Law. O México opera sob direito civil codificado: Código de Comércio, Código Civil Federal e legislação estadual estabelecem as regras." },
+      { icon: Banknote, title: "Fiscal", body: "A lógica tributária do SAT — regimes fiscais, complementos de pagamento, CFDI e regras de dedutibilidade — tem pouco a ver com IRS ou HMRC. Um assistente treinado globalmente pode confundir conceitos e recomendar estratégias sem validade no México." },
+      { icon: Landmark, title: "Governo", body: "Um agente que processa solicitações sob a LGTAIP precisa conhecer prazos, procedimentos e normas exatas do marco jurídico mexicano." },
+      { icon: HeartPulse, title: "Saúde", body: "Protocolos clínicos, Normas Oficiais Mexicanas e regulação da COFEPRIS são específicos do México. Um modelo treinado com dados dos EUA ou Europa pode recomendar procedimentos fora do marco regulatório nacional." },
+    ],
+    stat: { value: "36%", label: "das empresas globais relataram impactos negativos diretos do viés de IA em 2024 — incluindo perda de receita, clientes e funcionários.", source: "AI Bias Report, AllAboutAI, 2025" },
+  },
+  analogy: {
+    chapter: "Capítulo 04",
+    eyebrow: "A analogia",
+    h2: "É a diferença entre um filme dublado e a versão original.",
+    dubbed: "Você segue a trama. Mas as piadas perdem o tempo, os idiomismos soam forçados e as referências culturais desaparecem ou são adaptadas de forma desajeitada. A experiência é funcional, mas distante. Nunca foi desenhada para você.",
+    original: "Lattice Na'at é a versão original. Construída especificamente para fechar o gap WEIRD no México e na América Latina: com corpus normativos de legislação e jurisprudência mexicana, benchmarks culturalmente apropriados, processamento em infraestrutura nacional sob as leis do México, e trabalho pioneiro em PLN para línguas originárias.",
+  },
+  response: {
+    chapter: "Capítulo 05",
+    eyebrow: "A resposta",
+    h2: "Lattice Na'at não é um patch de tradução. É um desenho diferente.",
+    lede: "Na'at é uma família de modelos especializados, treinada com corpus normativos de legislação e jurisprudência mexicana, avaliada com benchmarks que não assumem contexto ocidental e implantada em infraestrutura nacional sob as leis do México.",
+    pillars: [
+      { icon: BookOpen, title: "Corpus Normativo Mexicano", body: "Legislação federal e estadual, jurisprudência, normas administrativas e regulação setorial — integrados como conhecimento base, não como busca na web." },
+      { icon: Database, title: "Benchmarks sem viés ocidental", body: "Spanish HELM e MMLU-LatAm avaliam desempenho em espanhol sem assumir contexto anglo-saxão. Se um modelo pontua bem em MMLU mas falha em MMLU-LatAm, o viés WEIRD está atuando." },
+      { icon: ShieldCheck, title: "Processamento soberano", body: "Os dados são processados em infraestrutura localizada no México — AWS Querétaro ou servidores do cliente. Não cruzam fronteiras. Não estão sujeitos ao CLOUD Act." },
+      { icon: Languages, title: "Línguas originárias", body: "Trabalho pioneiro em PLN para náhuatl, maia e outras línguas indígenas. Mais de 7,3 milhões de falantes segundo o Censo 2020 do INEGI." },
+    ],
+  },
+  outcome: {
+    chapter: "Capítulo 06",
+    eyebrow: "O impacto no México",
+    h2: "O que muda quando a IA é desenhada a partir do contexto certo.",
+    items: [
+      { title: "Trâmites governamentais acessíveis", body: "Um assistente que entende SAT, IMSS e INFONAVIT como parte de seu treinamento. Guia qualquer cidadão em linguagem clara, independentemente do nível educacional." },
+      { title: "Contratos no seu marco legal", body: "Na'at explica o contrato usando o direito mexicano correto — não traduções de cláusulas anglo-saxãs que podem ser inaplicáveis sob o Código de Comércio local." },
+      { title: "Soberania tecnológica", body: "Seus dados são processados no México, sob leis mexicanas, em infraestrutura que sua organização controla." },
+      { title: "Inclusão que não existia", body: "Pela primeira vez, um esforço sistemático para que a IA funcione nas línguas que milhões de mexicanos falam." },
+      { title: "Inclusão digital", body: "Treinamento em línguas originárias (náhuatl, maia) como primeiro passo rumo a uma IA que represente os 7,3M+ de falantes de línguas indígenas no México." },
+    ],
+  },
+  research: {
+    chapter: "Capítulo 07",
+    eyebrow: "A pesquisa por trás",
+    h2: "Sintérgica Labs: o trabalho sistemático contra o viés WEIRD.",
+    lede: "Quatro linhas de pesquisa ativas compõem o programa de mitigação.",
+    lines: [
+      { num: "01", title: "Benchmarks não-WEIRD", body: "Spanish HELM e MMLU-LatAm: métricas que não assumem contexto ocidental." },
+      { num: "02", title: "Mitigação de viés cultural", body: "Identificação e redução sistemática de vieses WEIRD em modelos de produção." },
+      { num: "03", title: "Corpus Normativo Mexicano V1", body: "Dataset curado de legislação, jurisprudência e regulação mexicana." },
+      { num: "04", title: "PLN para línguas originárias", body: "Modelos e ferramentas para náhuatl, maia e outras línguas indígenas." },
+    ],
+    cta: "Conhecer Sintérgica Labs",
+  },
+  cta: {
+    badge: "Próximo passo",
+    title: "Feche o gap WEIRD na sua operação.",
+    subtitle: "Agende um Diagnóstico Inteligente. Em 45 minutos identificamos onde o viés da sua IA atual te custa — e como Lattice Na'at resolve com seus dados reais.",
+    ctaLabel: "Agendar Diagnóstico Inteligente",
+    trust: ["45 minutos, sem custo", "Sem permanência", "Demo com seus dados reais"],
+  },
+};
 
-const EJEMPLOS_ICONS = [FileText, Scale, Banknote];
+const BOOKING_URL = "/diagnostico";
 
-/* ─────────────────── Component ─────────────────── */
+/* ══════════════════ Component ══════════════════ */
 
 export function SesgoWeirdContent() {
-  const locale = useLocale();
-  const t = T[locale] ?? T.es;
+  const locale = useLocale() as Locale;
+  const c: Content =
+    locale === "en" ? en : locale === "pt-br" ? pt : es;
 
-  const weirdRef = useRef<HTMLDivElement>(null);
-  const weirdInView = useInView(weirdRef, { once: true, margin: "-100px" });
-  const chatRef = useRef<HTMLDivElement>(null);
-  const chatInView = useInView(chatRef, { once: true, margin: "-100px" });
-  const ejRef = useRef<HTMLDivElement>(null);
-  const ejInView = useInView(ejRef, { once: true, margin: "-100px" });
-  const solRef = useRef<HTMLDivElement>(null);
-  const solInView = useInView(solRef, { once: true, margin: "-100px" });
   const shouldReduce = useReducedMotion();
+
+  const originRef = useRef<HTMLDivElement>(null);
+  const evidenceRef = useRef<HTMLDivElement>(null);
+  const impactRef = useRef<HTMLDivElement>(null);
+  const analogyRef = useRef<HTMLDivElement>(null);
+  const responseRef = useRef<HTMLDivElement>(null);
+  const outcomeRef = useRef<HTMLDivElement>(null);
+  const researchRef = useRef<HTMLDivElement>(null);
+
+  const originInView = useInView(originRef, { once: true, margin: "-80px" });
+  const evidenceInView = useInView(evidenceRef, { once: true, margin: "-80px" });
+  const impactInView = useInView(impactRef, { once: true, margin: "-80px" });
+  const analogyInView = useInView(analogyRef, { once: true, margin: "-80px" });
+  const responseInView = useInView(responseRef, { once: true, margin: "-80px" });
+  const outcomeInView = useInView(outcomeRef, { once: true, margin: "-80px" });
+  const researchInView = useInView(researchRef, { once: true, margin: "-80px" });
+
+  const fade = (delay = 0) =>
+    shouldReduce
+      ? { initial: false, transition: { duration: 0 } }
+      : {
+          initial: { opacity: 0, y: 20 },
+          transition: { duration: 0.55, delay, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+        };
 
   return (
     <LazyMotion features={domAnimation}>
-      <>
-        {/* Hero with Paper Button */}
-        <section className="relative overflow-hidden bg-brand-surface dark:bg-brand-deep py-24 md:py-32">
-          {/* Decorative background image */}
-          <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-            <Image
-              src="/images/pages/General/hand-reaching-out-touch-human-hand.jpg"
-              alt=""
-              fill
-              className="object-cover opacity-[0.08]"
-              sizes="100vw"
-              priority={false}
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-brand-surface/80 via-brand-surface/60 to-brand-surface dark:from-brand-deep/80 dark:via-brand-deep/60 dark:to-brand-deep" />
-          </div>
 
-          {/* Background gradient */}
-          <div className="pointer-events-none absolute inset-0">
-            <div className="absolute -left-40 -top-40 h-[500px] w-[500px] rounded-full bg-orange-500/10 blur-[100px]" />
-            <div className="absolute -bottom-40 -right-40 h-[400px] w-[400px] rounded-full bg-brand-accent/10 blur-[100px]" />
-          </div>
+      {/* ══════════════ HERO ══════════════ */}
+      <section
+        className="relative overflow-hidden bg-brand-surface px-4 pt-28 dark:bg-brand-midnight sm:px-6 lg:px-8 md:pt-36"
+        aria-labelledby="weird-hero-h1"
+      >
+        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(54,101,245,0.08),transparent_55%)]" />
+          <div className="absolute right-[-10%] top-1/4 h-[520px] w-[520px] rounded-full bg-amber-500/6 blur-[130px]" />
+          <div
+            className="absolute inset-0 opacity-[0.04] dark:opacity-[0.06]"
+            style={{
+              backgroundImage:
+                "linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)",
+              backgroundSize: "64px 64px",
+              color: "var(--brand-midnight)",
+              maskImage: "radial-gradient(ellipse at center, black 40%, transparent 80%)",
+            }}
+          />
+        </div>
 
-          <div className="relative mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
-            <m.div
-              initial={shouldReduce ? false : { opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: shouldReduce ? 0 : 0.7 }}
+        <div className="relative mx-auto max-w-4xl pb-24 pt-10 md:pt-16 lg:pb-32">
+          <m.div {...fade(0)} animate={{ opacity: 1, y: 0 }} className="flex justify-center">
+            <span className="inline-flex items-center gap-2 rounded-full border border-brand-midnight/10 bg-white/60 px-4 py-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-midnight/70 backdrop-blur dark:border-brand-white/10 dark:bg-brand-midnight/40 dark:text-brand-white/70">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-500" />
+              {c.hero.eyebrow}
+            </span>
+          </m.div>
+
+          <m.h1
+            id="weird-hero-h1"
+            {...fade(0.08)}
+            animate={{ opacity: 1, y: 0 }}
+            className="font-proxima mx-auto mt-8 max-w-4xl text-balance text-center text-4xl font-extrabold leading-[1.02] tracking-tight text-brand-midnight dark:text-brand-white sm:text-5xl lg:text-[4.25rem]"
+          >
+            {c.hero.h1}
+          </m.h1>
+
+          <m.p
+            {...fade(0.16)}
+            animate={{ opacity: 1, y: 0 }}
+            className="mx-auto mt-8 max-w-2xl text-pretty text-center text-lg leading-relaxed text-brand-midnight/65 dark:text-brand-white/65 sm:text-xl"
+          >
+            {c.hero.lead}
+          </m.p>
+
+          <m.div
+            {...fade(0.24)}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-12 flex justify-center"
+          >
+            <a
+              href="#origin"
+              className="group inline-flex flex-col items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-brand-midnight/45 transition-colors hover:text-brand-accent dark:text-brand-white/45 dark:hover:text-brand-white"
             >
-              {/* Badge */}
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-orange-500/20 bg-orange-500/10 px-4 py-2">
-                <BookOpen className="h-4 w-4 text-orange-400" />
-                <span className="text-xs font-semibold uppercase tracking-wider text-orange-400">
-                  {t.hero.badge}
-                </span>
-              </div>
+              <span>{c.hero.scrollHint}</span>
+              <span className="flex h-8 w-5 items-start justify-center rounded-full border border-brand-midnight/20 p-1 dark:border-brand-white/20">
+                <span className="block h-2 w-0.5 animate-bounce rounded-full bg-brand-midnight/40 dark:bg-brand-white/40" />
+              </span>
+            </a>
+          </m.div>
+        </div>
+      </section>
 
-              {/* Title */}
-              <h1 className="font-proxima text-4xl font-bold leading-tight tracking-tight text-brand-midnight dark:text-brand-white sm:text-5xl lg:text-6xl">
-                {t.hero.title1}
-                <br />
-                <span className="text-orange-400">{t.hero.title2}</span>
-                <br />
-                <span className="text-brand-midnight/60 dark:text-brand-white/60">{t.hero.title3}</span>
-              </h1>
+      {/* ══════════════ 01 · ORIGIN ══════════════ */}
+      <section
+        id="origin"
+        ref={originRef}
+        className="relative border-t border-brand-midnight/5 bg-white px-4 py-24 dark:border-brand-white/10 dark:bg-brand-deep sm:px-6 lg:px-8 lg:py-32"
+        aria-labelledby="weird-origin-h2"
+      >
+        <div className="mx-auto max-w-5xl">
+          <m.div {...fade(0)} animate={originInView ? { opacity: 1, y: 0 } : {}} className="mb-12 grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-16">
+            <div>
+              <span className="flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-amber-600 dark:text-amber-400">
+                <span className="h-px w-8 bg-amber-500/60" />
+                {c.origin.eyebrow}
+              </span>
+            </div>
+            <h2
+              id="weird-origin-h2"
+              className="font-proxima text-balance text-3xl font-bold leading-[1.15] text-brand-midnight dark:text-brand-white sm:text-4xl lg:text-5xl"
+            >
+              {c.origin.h2}
+            </h2>
+          </m.div>
 
-              {/* Subtitle */}
-              <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-brand-midnight/60 dark:text-brand-white/60">
-                {t.hero.subtitle}
-              </p>
+          <div className="grid gap-12 lg:grid-cols-[1fr_2fr] lg:gap-16">
+            <div /> {/* spacer */}
+            <div className="space-y-6 text-base leading-relaxed text-brand-midnight/75 dark:text-brand-white/75 lg:text-lg">
+              <m.p {...fade(0.08)} animate={originInView ? { opacity: 1, y: 0 } : {}}>
+                {c.origin.p1}
+              </m.p>
+              <m.p {...fade(0.12)} animate={originInView ? { opacity: 1, y: 0 } : {}}>
+                {c.origin.p2}
+              </m.p>
 
-              {/* Paper Button */}
-              <m.div
-                initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: shouldReduce ? 0 : 0.5, delay: 0.2 }}
-                className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
+              {/* Acronym breakdown */}
+              <m.dl
+                {...fade(0.18)}
+                animate={originInView ? { opacity: 1, y: 0 } : {}}
+                className="my-10 grid gap-px overflow-hidden rounded-2xl border border-brand-midnight/10 bg-brand-midnight/10 dark:border-brand-white/10 dark:bg-brand-white/10 sm:grid-cols-5"
               >
-                <a
-                  href="https://coevolution.fas.harvard.edu/publications/which-humans"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2 rounded-full bg-orange-500 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-orange-500/25 transition-all hover:bg-orange-500/90 hover:shadow-orange-500/40"
-                >
-                  <BookOpen className="h-4 w-4" />
-                  {t.hero.paperBtn}
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </a>
-                <a
-                  href="#comparacion"
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-brand-midnight/60 dark:text-brand-white/60 transition-colors hover:text-brand-accent dark:hover:text-brand-white"
-                >
-                  {t.hero.compareBtn}
-                  <ArrowRight className="h-4 w-4" />
-                </a>
-              </m.div>
-            </m.div>
+                {c.origin.acronym.map((a) => (
+                  <div key={a.letter} className="flex flex-col bg-white p-5 dark:bg-brand-deep">
+                    <dt className="font-proxima text-3xl font-extrabold text-brand-accent dark:text-brand-accent-light">
+                      {a.letter}
+                    </dt>
+                    <dd className="mt-2">
+                      <p className="font-mono text-xs uppercase tracking-wide text-brand-midnight/40 dark:text-brand-white/40">
+                        {a.label}
+                      </p>
+                      <p className="mt-1 text-sm font-medium text-brand-midnight dark:text-brand-white">
+                        {a.description}
+                      </p>
+                    </dd>
+                  </div>
+                ))}
+              </m.dl>
+
+              <m.p {...fade(0.22)} animate={originInView ? { opacity: 1, y: 0 } : {}}>
+                {c.origin.p3}
+              </m.p>
+
+              <m.p
+                {...fade(0.28)}
+                animate={originInView ? { opacity: 1, y: 0 } : {}}
+                className="border-l-2 border-amber-500 pl-6 font-proxima text-xl font-semibold text-brand-midnight dark:text-brand-white"
+              >
+                {c.origin.consequence}
+              </m.p>
+
+              <m.p
+                {...fade(0.32)}
+                animate={originInView ? { opacity: 1, y: 0 } : {}}
+                className="mt-8 font-mono text-xs text-brand-midnight/45 dark:text-brand-white/45"
+              >
+                {c.origin.citation}
+              </m.p>
+            </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* WEIRD Definition */}
-        <section className="bg-brand-surface dark:bg-brand-midnight py-20 md:py-28">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <m.div
-              ref={weirdRef}
-              initial={shouldReduce ? false : { opacity: 0, y: 30 }}
-              animate={weirdInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: shouldReduce ? 0 : 0.7 }}
-              className="text-center"
-            >
-              <h2 className="font-proxima text-3xl font-bold text-brand-midnight dark:text-brand-white sm:text-4xl">
-                {t.weird.heading} <span className="text-orange-400">WEIRD</span>{t.weird.headingSuffix}
+      {/* ══════════════ 02 · EVIDENCE (Harvard 2023 + Chart) ══════════════ */}
+      <section
+        ref={evidenceRef}
+        className="relative overflow-hidden border-t border-brand-midnight/5 bg-brand-surface px-4 py-24 dark:border-brand-white/10 dark:bg-brand-midnight sm:px-6 lg:px-8 lg:py-32"
+        aria-labelledby="weird-evidence-h2"
+      >
+        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <div className="absolute left-[-10%] top-1/3 h-[500px] w-[500px] rounded-full bg-brand-accent/6 blur-[130px]" />
+        </div>
+
+        <div className="relative mx-auto max-w-6xl">
+          <m.div {...fade(0)} animate={evidenceInView ? { opacity: 1, y: 0 } : {}} className="mb-12 grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-16">
+            <div>
+              <span className="flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-accent">
+                <span className="h-px w-8 bg-brand-accent/60" />
+                {c.evidence.eyebrow}
+              </span>
+            </div>
+            <div>
+              <h2
+                id="weird-evidence-h2"
+                className="font-proxima text-balance text-3xl font-bold leading-[1.15] text-brand-midnight dark:text-brand-white sm:text-4xl lg:text-5xl"
+              >
+                {c.evidence.h2}
               </h2>
-              <p className="mx-auto mt-4 max-w-3xl text-brand-midnight/60 dark:text-brand-white/60">
-                {t.weird.description}
+              <p className="mt-5 max-w-2xl text-base leading-relaxed text-brand-midnight/65 dark:text-brand-white/65 lg:text-lg">
+                {c.evidence.lede}
               </p>
-            </m.div>
+            </div>
+          </m.div>
 
-            {/* WEIRD Cards */}
-            <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-              {WEIRD_LETTERS_BASE.map((w, i) => (
+          {/* Finding card */}
+          <m.div
+            {...fade(0.1)}
+            animate={evidenceInView ? { opacity: 1, y: 0 } : {}}
+            className="mb-10 grid gap-6 rounded-2xl border border-brand-accent/20 bg-white p-8 dark:border-brand-accent/25 dark:bg-brand-deep lg:grid-cols-[auto_1fr] lg:items-center lg:gap-10 lg:p-10"
+          >
+            <div>
+              <p className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-brand-accent">
+                {c.evidence.findingLabel}
+              </p>
+              <p className="font-proxima mt-3 text-5xl font-extrabold tracking-tight text-brand-accent sm:text-6xl">
+                r = −0.70
+              </p>
+            </div>
+            <p className="text-base leading-relaxed text-brand-midnight/75 dark:text-brand-white/75 lg:text-lg">
+              {c.evidence.finding}
+            </p>
+          </m.div>
+
+          {/* Pullquote */}
+          <m.blockquote
+            {...fade(0.16)}
+            animate={evidenceInView ? { opacity: 1, y: 0 } : {}}
+            className="my-14 mx-auto max-w-3xl text-center"
+          >
+            <Quote className="mx-auto h-8 w-8 text-brand-accent/30" aria-hidden />
+            <p className="font-proxima mt-5 text-balance text-2xl font-semibold leading-snug text-brand-midnight dark:text-brand-white sm:text-3xl lg:text-[2.25rem]">
+              “{c.evidence.pullquote}”
+            </p>
+          </m.blockquote>
+
+          {/* Context paragraph */}
+          <m.p
+            {...fade(0.2)}
+            animate={evidenceInView ? { opacity: 1, y: 0 } : {}}
+            className="mx-auto mb-12 max-w-3xl text-pretty text-base leading-relaxed text-brand-midnight/70 dark:text-brand-white/70 lg:text-lg"
+          >
+            {c.evidence.context}
+          </m.p>
+
+          {/* Chart */}
+          <m.figure
+            {...fade(0.24)}
+            animate={evidenceInView ? { opacity: 1, y: 0 } : {}}
+            className="mt-8 overflow-hidden rounded-2xl border border-brand-midnight/10 bg-white p-2 dark:border-brand-white/10 dark:bg-brand-deep sm:p-4"
+          >
+            <WeirdBiasChart />
+            <figcaption className="mt-3 px-2 pb-1 text-center text-xs text-brand-midnight/50 dark:text-brand-white/50">
+              {c.evidence.chartCaption} · Atari et al., Harvard 2023
+            </figcaption>
+          </m.figure>
+        </div>
+      </section>
+
+      {/* ══════════════ 03 · IMPACT (4 verticals + stat) ══════════════ */}
+      <section
+        ref={impactRef}
+        className="border-t border-brand-midnight/5 bg-white px-4 py-24 dark:border-brand-white/10 dark:bg-brand-deep sm:px-6 lg:px-8 lg:py-32"
+        aria-labelledby="weird-impact-h2"
+      >
+        <div className="mx-auto max-w-6xl">
+          <m.div {...fade(0)} animate={impactInView ? { opacity: 1, y: 0 } : {}} className="mb-14 grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-16">
+            <div>
+              <span className="flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-amber-600 dark:text-amber-400">
+                <span className="h-px w-8 bg-amber-500/60" />
+                {c.impact.eyebrow}
+              </span>
+            </div>
+            <div>
+              <h2
+                id="weird-impact-h2"
+                className="font-proxima text-balance text-3xl font-bold leading-[1.15] text-brand-midnight dark:text-brand-white sm:text-4xl lg:text-5xl"
+              >
+                {c.impact.h2}
+              </h2>
+              <p className="mt-5 max-w-2xl text-base leading-relaxed text-brand-midnight/65 dark:text-brand-white/65 lg:text-lg">
+                {c.impact.lede}
+              </p>
+            </div>
+          </m.div>
+
+          <div className="grid gap-px overflow-hidden rounded-2xl border border-brand-midnight/10 bg-brand-midnight/10 dark:border-brand-white/10 dark:bg-brand-white/10 md:grid-cols-2">
+            {c.impact.verticals.map((v, i) => {
+              const Icon = v.icon;
+              return (
                 <m.div
-                  key={w.letter}
-                  initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-                  animate={weirdInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: shouldReduce ? 0 : 0.5, delay: 0.1 + i * 0.1 }}
-                  className="group relative overflow-hidden rounded-2xl border border-orange-500/20 bg-brand-surface dark:bg-brand-deep p-5 transition-all hover:border-orange-500/40 hover:bg-orange-500/[0.05]"
+                  key={v.title}
+                  {...fade(0.06 * i)}
+                  animate={impactInView ? { opacity: 1, y: 0 } : {}}
+                  className="flex flex-col bg-white p-8 transition-colors hover:bg-brand-surface dark:bg-brand-deep dark:hover:bg-brand-midnight lg:p-10"
                 >
-                  <div className="text-center">
-                    <span className="font-proxima text-4xl font-bold text-orange-400">{w.letter}</span>
-                    <p className="mt-2 text-sm font-semibold text-brand-midnight dark:text-brand-white">{w.word}</p>
-                    <p className="text-xs text-brand-midnight/40 dark:text-brand-white/40">{t.weird.letters[i].desc}</p>
-                    <div className="mt-4 border-t border-orange-500/20 pt-3">
-                      <p className="text-lg font-bold text-orange-400">{w.stat}</p>
-                      <p className="text-[0.65rem] text-brand-midnight/40 dark:text-brand-white/40">{t.weird.letters[i].context}</p>
-                    </div>
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-500/10">
+                    <Icon className="h-5 w-5 text-amber-600 dark:text-amber-400" strokeWidth={1.8} aria-hidden />
                   </div>
+                  <h3 className="font-proxima mt-5 text-xl font-bold text-brand-midnight dark:text-brand-white">
+                    {v.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-brand-midnight/65 dark:text-brand-white/65">
+                    {v.body}
+                  </p>
                 </m.div>
-              ))}
-            </div>
-
-            {/* Chart */}
-            <div className="mt-16">
-              <WeirdBiasChart />
-            </div>
+              );
+            })}
           </div>
-        </section>
 
-        {/* Movie Analogy */}
-        <section className="bg-brand-surface dark:bg-brand-midnight py-20 md:py-28">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <m.div
-              initial={shouldReduce ? false : { opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: shouldReduce ? 0 : 0.7 }}
-              className="text-center"
+          {/* Stat callout */}
+          <m.div
+            {...fade(0.3)}
+            animate={impactInView ? { opacity: 1, y: 0 } : {}}
+            className="mt-10 flex flex-col items-start gap-6 rounded-2xl border border-amber-500/25 bg-amber-500/[0.04] p-8 dark:bg-amber-500/[0.06] lg:flex-row lg:items-center lg:gap-10 lg:p-10"
+          >
+            <p className="font-proxima text-5xl font-extrabold tracking-tight text-amber-600 dark:text-amber-400 sm:text-6xl lg:text-7xl">
+              {c.impact.stat.value}
+            </p>
+            <div className="flex-1">
+              <p className="text-base leading-relaxed text-brand-midnight/75 dark:text-brand-white/75 lg:text-lg">
+                {c.impact.stat.label}
+              </p>
+              <p className="mt-3 font-mono text-xs text-brand-midnight/40 dark:text-brand-white/40">
+                {c.impact.stat.source}
+              </p>
+            </div>
+          </m.div>
+        </div>
+      </section>
+
+      {/* ══════════════ 04 · ANALOGY ══════════════ */}
+      <section
+        ref={analogyRef}
+        className="border-t border-brand-midnight/5 bg-brand-surface px-4 py-24 dark:border-brand-white/10 dark:bg-brand-midnight sm:px-6 lg:px-8 lg:py-32"
+        aria-labelledby="weird-analogy-h2"
+      >
+        <div className="mx-auto max-w-6xl">
+          <m.div {...fade(0)} animate={analogyInView ? { opacity: 1, y: 0 } : {}} className="mb-12 grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-16">
+            <div>
+              <span className="flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-violet-600 dark:text-violet-400">
+                <span className="h-px w-8 bg-violet-500/60" />
+                {c.analogy.eyebrow}
+              </span>
+            </div>
+            <h2
+              id="weird-analogy-h2"
+              className="font-proxima text-balance text-3xl font-bold leading-[1.15] text-brand-midnight dark:text-brand-white sm:text-4xl lg:text-5xl"
             >
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-brand-accent/20 bg-brand-accent/10 px-4 py-2">
-                <Film className="h-4 w-4 text-brand-accent" />
-                <span className="text-xs font-semibold uppercase tracking-wider text-brand-accent">
-                  {t.movie.badge}
+              {c.analogy.h2}
+            </h2>
+          </m.div>
+
+          <div className="grid gap-5 md:grid-cols-2">
+            <m.div
+              {...fade(0.1)}
+              animate={analogyInView ? { opacity: 1, y: 0 } : {}}
+              className="relative overflow-hidden rounded-2xl border border-brand-midnight/10 bg-white p-8 dark:border-brand-white/10 dark:bg-brand-deep lg:p-10"
+            >
+              <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-brand-midnight/5 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wide text-brand-midnight/60 dark:bg-brand-white/5 dark:text-brand-white/60">
+                {locale === "en" ? "Dubbed film" : locale === "pt-br" ? "Filme dublado" : "Película doblada"}
+              </span>
+              <p className="font-proxima mt-6 text-xl font-semibold leading-snug text-brand-midnight dark:text-brand-white">
+                {locale === "en" ? "Global AI (ChatGPT, Claude, Gemini)" : locale === "pt-br" ? "IA global (ChatGPT, Claude, Gemini)" : "IA global (ChatGPT, Claude, Gemini)"}
+              </p>
+              <p className="mt-4 text-base leading-relaxed text-brand-midnight/65 dark:text-brand-white/65">
+                {c.analogy.dubbed}
+              </p>
+            </m.div>
+
+            <m.div
+              {...fade(0.16)}
+              animate={analogyInView ? { opacity: 1, y: 0 } : {}}
+              className="relative overflow-hidden rounded-2xl border border-brand-accent/25 bg-gradient-to-br from-brand-accent/[0.06] via-white to-emerald-500/[0.04] p-8 dark:border-brand-accent/30 dark:from-brand-accent/[0.12] dark:via-brand-deep dark:to-emerald-500/[0.06] lg:p-10"
+            >
+              <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-brand-accent/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wide text-brand-accent">
+                <Sparkles className="h-3 w-3" aria-hidden />
+                {locale === "en" ? "Original version" : locale === "pt-br" ? "Versão original" : "Versión original"}
+              </span>
+              <p className="font-proxima mt-6 text-xl font-semibold leading-snug text-brand-midnight dark:text-brand-white">
+                Lattice Na&rsquo;at
+              </p>
+              <p className="mt-4 text-base leading-relaxed text-brand-midnight/65 dark:text-brand-white/65">
+                {c.analogy.original}
+              </p>
+            </m.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════ 05 · RESPONSE (4 pillars) ══════════════ */}
+      <section
+        ref={responseRef}
+        className="border-t border-brand-midnight/5 bg-white px-4 py-24 dark:border-brand-white/10 dark:bg-brand-deep sm:px-6 lg:px-8 lg:py-32"
+        aria-labelledby="weird-response-h2"
+      >
+        <div className="mx-auto max-w-6xl">
+          <m.div {...fade(0)} animate={responseInView ? { opacity: 1, y: 0 } : {}} className="mb-14 grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-16">
+            <div>
+              <span className="flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-accent">
+                <span className="h-px w-8 bg-brand-accent/60" />
+                {c.response.eyebrow}
+              </span>
+            </div>
+            <div>
+              <h2
+                id="weird-response-h2"
+                className="font-proxima text-balance text-3xl font-bold leading-[1.15] text-brand-midnight dark:text-brand-white sm:text-4xl lg:text-5xl"
+              >
+                {c.response.h2}
+              </h2>
+              <p className="mt-5 max-w-2xl text-base leading-relaxed text-brand-midnight/65 dark:text-brand-white/65 lg:text-lg">
+                {c.response.lede}
+              </p>
+            </div>
+          </m.div>
+
+          <div className="grid gap-5 md:grid-cols-2">
+            {c.response.pillars.map((p, i) => {
+              const Icon = p.icon;
+              return (
+                <m.div
+                  key={p.title}
+                  {...fade(0.08 * i)}
+                  animate={responseInView ? { opacity: 1, y: 0 } : {}}
+                  className="group flex flex-col rounded-2xl border border-brand-midnight/10 bg-brand-surface p-8 transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-accent/30 hover:shadow-lg dark:border-brand-white/10 dark:bg-brand-midnight"
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-accent/10">
+                      <Icon className="h-5 w-5 text-brand-accent" strokeWidth={1.8} aria-hidden />
+                    </div>
+                    <span className="font-mono text-xs text-brand-midnight/40 dark:text-brand-white/40">
+                      0{i + 1}
+                    </span>
+                  </div>
+                  <h3 className="font-proxima mt-5 text-lg font-bold text-brand-midnight dark:text-brand-white">
+                    {p.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-brand-midnight/65 dark:text-brand-white/65">
+                    {p.body}
+                  </p>
+                </m.div>
+              );
+            })}
+          </div>
+
+          <m.div
+            {...fade(0.4)}
+            animate={responseInView ? { opacity: 1, y: 0 } : {}}
+            className="mt-10 flex justify-center"
+          >
+            <Link
+              href="/investigacion/lattice-naat"
+              className="group inline-flex items-center gap-2 rounded-lg border border-brand-accent/30 bg-brand-accent/5 px-6 py-3 text-sm font-semibold text-brand-accent transition-all hover:-translate-y-0.5 hover:border-brand-accent/50 hover:bg-brand-accent/10"
+            >
+              {locale === "en" ? "See full Na'at model" : locale === "pt-br" ? "Ver modelo Na'at completo" : "Ver Na'at en detalle"}
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </Link>
+          </m.div>
+        </div>
+      </section>
+
+      {/* ══════════════ 06 · OUTCOME (Mexico impact) ══════════════ */}
+      <section
+        ref={outcomeRef}
+        className="border-t border-brand-midnight/5 bg-brand-surface px-4 py-24 dark:border-brand-white/10 dark:bg-brand-midnight sm:px-6 lg:px-8 lg:py-32"
+        aria-labelledby="weird-outcome-h2"
+      >
+        <div className="mx-auto max-w-6xl">
+          <m.div {...fade(0)} animate={outcomeInView ? { opacity: 1, y: 0 } : {}} className="mb-14 grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-16">
+            <div>
+              <span className="flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-emerald-600 dark:text-emerald-400">
+                <span className="h-px w-8 bg-emerald-500/60" />
+                {c.outcome.eyebrow}
+              </span>
+            </div>
+            <h2
+              id="weird-outcome-h2"
+              className="font-proxima text-balance text-3xl font-bold leading-[1.15] text-brand-midnight dark:text-brand-white sm:text-4xl lg:text-5xl"
+            >
+              {c.outcome.h2}
+            </h2>
+          </m.div>
+
+          <ol className="grid gap-px overflow-hidden rounded-2xl border border-brand-midnight/10 bg-brand-midnight/10 dark:border-brand-white/10 dark:bg-brand-white/10 md:grid-cols-2 lg:grid-cols-3">
+            {c.outcome.items.map((it, i) => (
+              <m.li
+                key={it.title}
+                {...fade(0.05 * i)}
+                animate={outcomeInView ? { opacity: 1, y: 0 } : {}}
+                className="flex flex-col bg-white p-7 transition-colors hover:bg-brand-surface dark:bg-brand-deep dark:hover:bg-brand-midnight lg:p-8"
+              >
+                <span className="font-mono text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+                  0{i + 1}
                 </span>
-              </div>
-              <h2 className="font-proxima text-3xl font-bold text-brand-midnight dark:text-brand-white sm:text-4xl">
-                {t.movie.heading}
-              </h2>
-            </m.div>
+                <h3 className="font-proxima mt-4 text-base font-semibold leading-snug text-brand-midnight dark:text-brand-white">
+                  {it.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-brand-midnight/65 dark:text-brand-white/65">
+                  {it.body}
+                </p>
+              </m.li>
+            ))}
+          </ol>
+        </div>
+      </section>
 
-            <div className="mt-12 grid gap-6 lg:grid-cols-2">
-              {/* Doblada */}
-              <m.div
-                initial={shouldReduce ? false : { opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: shouldReduce ? 0 : 0.5 }}
-                className="rounded-2xl border border-red-500/20 bg-brand-surface dark:bg-brand-deep p-8"
-              >
-                <div className="mb-6 flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-red-500/10">
-                    <XCircle className="h-6 w-6 text-red-400" />
-                  </div>
-                  <div>
-                    <p className="font-proxima text-xl font-bold text-red-400">{t.movie.dubbed.title}</p>
-                    <p className="text-sm text-brand-midnight/40 dark:text-brand-white/40">{t.movie.dubbed.subtitle}</p>
-                  </div>
-                </div>
-                <p className="text-brand-midnight/70 dark:text-brand-white/70 leading-relaxed">
-                  {t.movie.dubbed.p1}
-                </p>
-                <p className="mt-4 text-brand-midnight/70 dark:text-brand-white/70 leading-relaxed">
-                  {t.movie.dubbed.p2pre}<span className="text-red-400 font-semibold">{t.movie.dubbed.p2highlight}</span>{t.movie.dubbed.p2post}
-                </p>
-              </m.div>
-
-              {/* Original */}
-              <m.div
-                initial={shouldReduce ? false : { opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: shouldReduce ? 0 : 0.5, delay: 0.1 }}
-                className="rounded-2xl border border-brand-accent/20 bg-brand-surface dark:bg-brand-deep p-8"
-              >
-                <div className="mb-6 flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-accent/10">
-                    <CheckCircle2 className="h-6 w-6 text-brand-accent" />
-                  </div>
-                  <div>
-                    <p className="font-proxima text-xl font-bold text-brand-accent">{t.movie.original.title}</p>
-                    <p className="text-sm text-brand-midnight/40 dark:text-brand-white/40">{t.movie.original.subtitle}</p>
-                  </div>
-                </div>
-                <p className="text-brand-midnight/70 dark:text-brand-white/70 leading-relaxed">
-                  {t.movie.original.p1pre}<span className="text-brand-accent font-semibold">{t.movie.original.p1highlight}</span>{t.movie.original.p1post}
-                </p>
-                <p className="mt-4 text-brand-midnight/70 dark:text-brand-white/70 leading-relaxed">
-                  {t.movie.original.p2pre}<span className="text-brand-accent font-semibold">{t.movie.original.p2highlight}</span>{t.movie.original.p2post}
-                </p>
-              </m.div>
+      {/* ══════════════ 07 · RESEARCH ══════════════ */}
+      <section
+        ref={researchRef}
+        className="border-t border-brand-midnight/5 bg-white px-4 py-24 dark:border-brand-white/10 dark:bg-brand-deep sm:px-6 lg:px-8 lg:py-32"
+        aria-labelledby="weird-research-h2"
+      >
+        <div className="mx-auto max-w-5xl">
+          <m.div {...fade(0)} animate={researchInView ? { opacity: 1, y: 0 } : {}} className="mb-12 grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-16">
+            <div>
+              <span className="flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-violet-600 dark:text-violet-400">
+                <span className="h-px w-8 bg-violet-500/60" />
+                {c.research.eyebrow}
+              </span>
             </div>
-          </div>
-        </section>
-
-        {/* Benefits for Mexico */}
-        <section className="bg-brand-surface dark:bg-brand-deep py-20 md:py-28">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <m.div
-              initial={shouldReduce ? false : { opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: shouldReduce ? 0 : 0.7 }}
-              className="text-center"
-            >
-              <h2 className="font-proxima text-3xl font-bold text-brand-midnight dark:text-brand-white sm:text-4xl">
-                {t.benefits.heading}
+            <div>
+              <h2
+                id="weird-research-h2"
+                className="font-proxima text-balance text-3xl font-bold leading-[1.15] text-brand-midnight dark:text-brand-white sm:text-4xl lg:text-5xl"
+              >
+                {c.research.h2}
               </h2>
-              <p className="mx-auto mt-4 max-w-2xl text-brand-midnight/60 dark:text-brand-white/60">
-                {t.benefits.subtitle}
+              <p className="mt-5 text-base leading-relaxed text-brand-midnight/65 dark:text-brand-white/65 lg:text-lg">
+                {c.research.lede}
               </p>
-            </m.div>
-
-            <div className="mt-12 grid gap-6 md:grid-cols-3">
-              {/* Benefit 1 */}
-              <m.div
-                initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: shouldReduce ? 0 : 0.5 }}
-                className="rounded-2xl border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-surface dark:bg-brand-midnight p-6"
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-accent/10">
-                  <Briefcase className="h-6 w-6 text-brand-accent" />
-                </div>
-                <h3 className="mt-4 text-lg font-proxima font-semibold text-brand-midnight dark:text-brand-white">{t.benefits.cards[0].title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-brand-midnight/60 dark:text-brand-white/60">
-                  {t.benefits.cards[0].text}
-                </p>
-              </m.div>
-
-              {/* Benefit 2 */}
-              <m.div
-                initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: shouldReduce ? 0 : 0.5, delay: 0.1 }}
-                className="rounded-2xl border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-surface dark:bg-brand-midnight p-6"
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-500/10">
-                  <FileText className="h-6 w-6 text-orange-400" />
-                </div>
-                <h3 className="mt-4 text-lg font-proxima font-semibold text-brand-midnight dark:text-brand-white">{t.benefits.cards[1].title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-brand-midnight/60 dark:text-brand-white/60">
-                  {t.benefits.cards[1].text}
-                </p>
-              </m.div>
-
-              {/* Benefit 3 */}
-              <m.div
-                initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: shouldReduce ? 0 : 0.5, delay: 0.2 }}
-                className="rounded-2xl border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-surface dark:bg-brand-midnight p-6"
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/10">
-                  <Shield className="h-6 w-6 text-emerald-400" />
-                </div>
-                <h3 className="mt-4 text-lg font-proxima font-semibold text-brand-midnight dark:text-brand-white">{t.benefits.cards[2].title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-brand-midnight/60 dark:text-brand-white/60">
-                  {t.benefits.cards[2].text}
-                  <span className="text-emerald-400 font-semibold">{t.benefits.cards[2].highlight}</span>{t.benefits.cards[2].textPost}
-                </p>
-              </m.div>
             </div>
-          </div>
-        </section>
+          </m.div>
 
-        {/* Economic Impact */}
-        <section className="bg-brand-surface dark:bg-brand-midnight py-20 md:py-28">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <m.div
-              initial={shouldReduce ? false : { opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: shouldReduce ? 0 : 0.7 }}
-              className="text-center"
-            >
-              <h2 className="font-proxima text-3xl font-bold text-brand-midnight dark:text-brand-white sm:text-4xl">
-                {t.economic.heading} <span className="text-brand-accent">{t.economic.headingHighlight}</span>
-              </h2>
-              <p className="mx-auto mt-4 max-w-2xl text-brand-midnight/60 dark:text-brand-white/60">
-                {t.economic.subtitle}
-              </p>
-            </m.div>
-
-            <div className="mt-12 grid gap-6 md:grid-cols-2">
-              {/* New jobs */}
-              <m.div
-                initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: shouldReduce ? 0 : 0.5 }}
-                className="rounded-2xl border border-brand-accent/20 bg-brand-accent/[0.05] p-8"
+          <ol className="grid gap-5 sm:grid-cols-2">
+            {c.research.lines.map((l, i) => (
+              <m.li
+                key={l.num}
+                {...fade(0.08 * i)}
+                animate={researchInView ? { opacity: 1, y: 0 } : {}}
+                className="group flex gap-5 rounded-2xl border border-brand-midnight/10 bg-brand-surface p-7 transition-all duration-200 hover:-translate-y-0.5 hover:border-violet-500/30 hover:shadow-lg dark:border-brand-white/10 dark:bg-brand-midnight"
               >
-                <div className="flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-accent/10">
-                    <Briefcase className="h-6 w-6 text-brand-accent" />
-                  </div>
-                  <h3 className="text-xl font-proxima font-semibold text-brand-midnight dark:text-brand-white">{t.economic.jobs.title}</h3>
-                </div>
-                <p className="mt-4 text-brand-midnight/70 dark:text-brand-white/70 leading-relaxed">
-                  {t.economic.jobs.p1pre}<span className="text-brand-accent font-semibold">{t.economic.jobs.p1highlight}</span>{t.economic.jobs.p1post}
-                </p>
-              </m.div>
-
-              {/* Competitiveness */}
-              <m.div
-                initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: shouldReduce ? 0 : 0.5, delay: 0.1 }}
-                className="rounded-2xl border border-orange-500/20 bg-orange-500/[0.05] p-8"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-500/10">
-                    <TrendingUp className="h-6 w-6 text-orange-400" />
-                  </div>
-                  <h3 className="text-xl font-proxima font-semibold text-brand-midnight dark:text-brand-white">{t.economic.compete.title}</h3>
-                </div>
-                <p className="mt-4 text-brand-midnight/70 dark:text-brand-white/70 leading-relaxed">
-                  {t.economic.compete.p1pre}<span className="text-orange-400 font-semibold">{t.economic.compete.p1highlight}</span>{t.economic.compete.p1post}
-                </p>
-              </m.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Education and Culture */}
-        <section className="bg-brand-surface dark:bg-brand-deep py-20 md:py-28">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <m.div
-              initial={shouldReduce ? false : { opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: shouldReduce ? 0 : 0.7 }}
-              className="text-center"
-            >
-              <h2 className="font-proxima text-3xl font-bold text-brand-midnight dark:text-brand-white sm:text-4xl">
-                {t.education.heading} <span className="text-brand-accent">{t.education.headingHighlight}</span>
-              </h2>
-            </m.div>
-
-            <div className="mt-12 grid gap-6 md:grid-cols-2">
-              {/* Education */}
-              <m.div
-                initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: shouldReduce ? 0 : 0.5 }}
-                className="rounded-2xl border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-surface dark:bg-brand-midnight p-6"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-accent/10">
-                    <GraduationCap className="h-6 w-6 text-brand-accent" />
-                  </div>
-                  <h3 className="text-lg font-proxima font-semibold text-brand-midnight dark:text-brand-white">{t.education.edu.title}</h3>
-                </div>
-                <p className="mt-4 text-sm leading-relaxed text-brand-midnight/60 dark:text-brand-white/60">
-                  {t.education.edu.p1}
-                </p>
-                <p className="mt-3 text-sm text-brand-midnight/60 dark:text-brand-white/60">
-                  {t.education.edu.p2}
-                </p>
-              </m.div>
-
-              {/* Cultural Inclusion */}
-              <m.div
-                initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: shouldReduce ? 0 : 0.5, delay: 0.1 }}
-                className="rounded-2xl border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-surface dark:bg-brand-midnight p-6"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/10">
-                    <Globe className="h-6 w-6 text-emerald-400" />
-                  </div>
-                  <h3 className="text-lg font-proxima font-semibold text-brand-midnight dark:text-brand-white">{t.education.culture.title}</h3>
-                </div>
-                <p className="mt-4 text-sm leading-relaxed text-brand-midnight/60 dark:text-brand-white/60">
-                  {t.education.culture.p1}
-                </p>
-                <p className="mt-3 text-sm text-brand-midnight/60 dark:text-brand-white/60">
-                  {t.education.culture.p2pre}<span className="text-emerald-400 font-semibold">{t.education.culture.p2highlight}</span>{t.education.culture.p2post}
-                </p>
-              </m.div>
-            </div>
-
-            {/* Conclusion */}
-            <m.div
-              initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: shouldReduce ? 0 : 0.5, delay: 0.2 }}
-              className="mt-10 rounded-2xl border border-brand-accent/30 bg-brand-accent/[0.08] p-8 text-center"
-            >
-              <p className="text-lg leading-relaxed text-brand-midnight/80 dark:text-brand-white/80">
-                <span className="text-brand-accent font-bold">{t.education.conclusion.pre}</span>
-                <span className="text-brand-accent font-bold">{t.education.conclusion.mid}</span>{t.education.conclusion.post}
-              </p>
-            </m.div>
-          </div>
-        </section>
-
-        {/* Chat Comparison */}
-        <section id="comparacion" className="bg-brand-surface dark:bg-brand-deep py-20 md:py-28">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <m.div
-              ref={chatRef}
-              initial={shouldReduce ? false : { opacity: 0, y: 30 }}
-              animate={chatInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: shouldReduce ? 0 : 0.7 }}
-              className="text-center"
-            >
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-red-500/20 bg-red-500/10 px-4 py-2">
-                <AlertTriangle className="h-4 w-4 text-red-400" />
-                <span className="text-xs font-semibold uppercase tracking-wider text-red-400">
-                  {t.chat.badge}
+                <span className="font-mono text-xs font-semibold text-violet-600 dark:text-violet-400">
+                  {l.num}
                 </span>
-              </div>
-              <h2 className="font-proxima text-3xl font-bold text-brand-midnight dark:text-brand-white sm:text-4xl">
-                {t.chat.heading}
-              </h2>
-              <p className="mx-auto mt-4 max-w-2xl text-brand-midnight/60 dark:text-brand-white/60">
-                {t.chat.subtitle}
-              </p>
-            </m.div>
+                <div className="flex-1">
+                  <h3 className="font-proxima text-base font-semibold leading-snug text-brand-midnight dark:text-brand-white">
+                    {l.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-brand-midnight/65 dark:text-brand-white/65">
+                    {l.body}
+                  </p>
+                </div>
+              </m.li>
+            ))}
+          </ol>
 
-            {/* Query */}
-            <m.div
-              initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-              animate={chatInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: shouldReduce ? 0 : 0.5, delay: 0.2 }}
-              className="mx-auto mt-10 max-w-3xl rounded-2xl border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-surface dark:bg-brand-midnight p-6"
+          <m.div
+            {...fade(0.4)}
+            animate={researchInView ? { opacity: 1, y: 0 } : {}}
+            className="mt-10 flex justify-center"
+          >
+            <Link
+              href="/investigacion/labs"
+              className="group inline-flex items-center gap-2 rounded-lg border border-violet-500/30 bg-violet-500/[0.06] px-6 py-3 text-sm font-semibold text-violet-600 transition-all hover:-translate-y-0.5 hover:border-violet-500/50 hover:bg-violet-500/[0.1] dark:text-violet-400"
             >
-              <p className="text-xs font-semibold uppercase tracking-wider text-brand-midnight/40 dark:text-brand-white/40">{t.chat.userQuery}</p>
-              <p className="mt-2 text-brand-midnight dark:text-brand-white">{t.chat.query}</p>
-            </m.div>
+              <FileText className="h-4 w-4" aria-hidden />
+              {c.research.cta}
+              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </Link>
+          </m.div>
+        </div>
+      </section>
 
-            {/* Side by Side */}
-            <div className="mt-8 grid gap-6 lg:grid-cols-2">
-              {/* Global Model */}
-              <m.div
-                initial={shouldReduce ? false : { opacity: 0, x: -20 }}
-                animate={chatInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: shouldReduce ? 0 : 0.5, delay: 0.3 }}
-                className="rounded-2xl border border-red-500/20 bg-brand-surface dark:bg-brand-midnight/50 p-6"
-              >
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-500/10">
-                    <Globe className="h-5 w-5 text-red-400" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-red-400">{t.chat.global.model}</p>
-                    <p className="text-xs text-brand-midnight/40 dark:text-brand-white/40">{t.chat.global.trainedWith}</p>
-                  </div>
-                </div>
-                <div className="space-y-2 rounded-xl bg-brand-surface dark:bg-brand-deep p-4">
-                  {t.chat.global.response.map((line, i) => (
-                    <p key={i} className="text-sm text-brand-midnight/70 dark:text-brand-white/70">{line}</p>
-                  ))}
-                </div>
-                <div className="mt-4 space-y-2">
-                  {t.chat.global.issues.map((issue, i) => (
-                    <div key={i} className="flex items-start gap-2">
-                      <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-red-400" />
-                      <p className="text-sm text-red-400/80">{issue}</p>
-                    </div>
-                  ))}
-                </div>
-              </m.div>
+      {/* ══════════════ FINAL CTA ══════════════ */}
+      <CTASection
+        badge={c.cta.badge}
+        title={c.cta.title}
+        subtitle={c.cta.subtitle}
+        ctaLabel={c.cta.ctaLabel}
+        ctaHref={BOOKING_URL}
+        trustSignals={c.cta.trust}
+      />
 
-              {/* Lattice */}
-              <m.div
-                initial={shouldReduce ? false : { opacity: 0, x: 20 }}
-                animate={chatInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: shouldReduce ? 0 : 0.5, delay: 0.4 }}
-                className="rounded-2xl border border-brand-accent/20 bg-brand-surface dark:bg-brand-midnight/50 p-6"
-              >
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-accent/10">
-                    <MapPin className="h-5 w-5 text-brand-accent" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-brand-accent">{t.chat.lattice.model}</p>
-                    <p className="text-xs text-brand-midnight/40 dark:text-brand-white/40">{t.chat.lattice.trainedWith}</p>
-                  </div>
-                </div>
-                <div className="space-y-2 rounded-xl bg-brand-accent/[0.05] p-4">
-                  {t.chat.lattice.response.map((line, i) => (
-                    <p key={i} className="text-sm text-brand-midnight/80 dark:text-brand-white/80">{line}</p>
-                  ))}
-                </div>
-                <div className="mt-4 space-y-2">
-                  {t.chat.lattice.strengths.map((strength, i) => (
-                    <div key={i} className="flex items-start gap-2">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-brand-accent" />
-                      <p className="text-sm text-brand-accent/80">{strength}</p>
-                    </div>
-                  ))}
-                </div>
-              </m.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Real Examples */}
-        <section className="bg-brand-surface dark:bg-brand-midnight py-20 md:py-28">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <m.div
-              ref={ejRef}
-              initial={shouldReduce ? false : { opacity: 0, y: 30 }}
-              animate={ejInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: shouldReduce ? 0 : 0.7 }}
-              className="text-center"
-            >
-              <h2 className="font-proxima text-3xl font-bold text-brand-midnight dark:text-brand-white sm:text-4xl">
-                {t.examples.heading}
-              </h2>
-              <p className="mx-auto mt-4 max-w-2xl text-brand-midnight/60 dark:text-brand-white/60">
-                {t.examples.subtitle}
-              </p>
-            </m.div>
-
-            <div className="mt-12 grid gap-6 md:grid-cols-3">
-              {t.examples.cards.map((ej, i) => {
-                const Icon = EJEMPLOS_ICONS[i];
-                return (
-                  <m.div
-                    key={ej.title}
-                    initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-                    animate={ejInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: shouldReduce ? 0 : 0.5, delay: 0.1 + i * 0.1 }}
-                    className="group rounded-2xl border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-surface dark:bg-brand-deep p-6 transition-all hover:border-orange-500/30 hover:bg-orange-500/[0.02]"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-orange-500/10">
-                        <Icon className="h-5 w-5 text-orange-400" />
-                      </div>
-                      <div>
-                        <p className="text-xs font-medium text-orange-400">{ej.context}</p>
-                        <h3 className="font-proxima font-semibold text-brand-midnight dark:text-brand-white">{ej.title}</h3>
-                      </div>
-                    </div>
-                    <p className="mt-4 text-sm leading-relaxed text-brand-midnight/60 dark:text-brand-white/60">
-                      <span className="text-red-400 font-medium">{t.examples.errorLabel}</span>
-                      {ej.error}
-                    </p>
-                    <p className="mt-3 text-sm text-brand-midnight/40 dark:text-brand-white/40">
-                      <span className="text-orange-400 font-medium">{t.examples.impactLabel}</span>
-                      {ej.impact}
-                    </p>
-                  </m.div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* Solution */}
-        <section className="bg-brand-surface dark:bg-brand-deep py-20 md:py-28">
-          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-            <m.div
-              ref={solRef}
-              initial={shouldReduce ? false : { opacity: 0, y: 30 }}
-              animate={solInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: shouldReduce ? 0 : 0.7 }}
-              className="relative overflow-hidden rounded-3xl border border-brand-accent/20 bg-brand-accent/[0.03] p-8 md:p-12"
-            >
-              {/* Glow */}
-              <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-brand-accent/20 blur-[80px]" />
-
-              <div className="relative">
-                <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand-accent/30 bg-brand-accent/10 px-4 py-2">
-                  <Sparkles className="h-4 w-4 text-brand-accent" />
-                  <span className="text-xs font-semibold uppercase tracking-wider text-brand-accent">
-                    {t.solution.badge}
-                  </span>
-                </div>
-
-                <h2 className="font-proxima text-3xl font-bold text-brand-midnight dark:text-brand-white sm:text-4xl">
-                  {t.solution.heading}
-                </h2>
-
-                <p className="mt-4 max-w-2xl text-lg leading-relaxed text-brand-midnight/70 dark:text-brand-white/70">
-                  {t.solution.description}
-                </p>
-
-                <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {t.solution.features.map((item, i) => (
-                    <div key={i} className="flex items-start gap-2">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-brand-accent" />
-                      <p className="text-sm text-brand-midnight/70 dark:text-brand-white/70">{item}</p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-                  <a
-                    href="/investigacion/lattice-naat"
-                    className="group inline-flex items-center justify-center gap-2 rounded-full bg-brand-accent px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand-accent/25 transition-all hover:bg-brand-accent/90"
-                  >
-                    {t.solution.knowBtn}
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </a>
-                  <a
-                    href="/soluciones/lattice-seeb"
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-brand-midnight/20 dark:border-brand-white/10 px-6 py-3 text-sm font-semibold text-brand-midnight dark:text-brand-white transition-colors hover:border-brand-white/40"
-                  >
-                    {t.solution.exploreBtn}
-                  </a>
-                </div>
-              </div>
-            </m.div>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <CTASection
-          title={t.cta.title}
-          subtitle={t.cta.subtitle}
-          ctaLabel={t.cta.ctaLabel}
-          ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
-          trustSignals={[...t.cta.trust]}
-        />
-      </>
     </LazyMotion>
   );
 }

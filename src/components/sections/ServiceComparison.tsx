@@ -112,7 +112,7 @@ export function ServiceComparison() {
         className="mt-10 text-center"
       >
         <a
-          href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+          href="/diagnostico"
           className="inline-flex h-14 items-center justify-center gap-2 rounded-xl bg-brand-accent px-8 text-sm font-bold text-brand-midnight dark:text-brand-white shadow-lg shadow-brand-accent/25 transition-all hover:-translate-y-0.5 hover:bg-brand-accent/90 hover:shadow-brand-accent/40"
         >
           {t.cta}

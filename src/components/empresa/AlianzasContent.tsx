@@ -51,12 +51,12 @@ const T = {
 } as const;
 
 const INSTITUTIONAL_BASE = [
-  { name: "AMITI", logo: "/images/badges/Amiti CMYK.png" },
-  { name: "CANACINTRA", logo: "/images/badges/Canacintra.png" },
-  { name: "Universidad Veracruzana", logo: "/images/badges/Universidad Veracruzana.png" },
-  { name: "COVEICYDET", logo: "/images/badges/coveicydet.png" },
-  { name: "Secretaría de Economía", logo: "/images/badges/Logo Secretaria de Economia 2024.png" },
-  { name: "Secretaría de Ciencia y Tecnología", logo: "/images/badges/Logo Secretaria Ciencia y Tecnologia 2024.png" },
+  { name: "AMITI", logo: "/images/aliados/Amiti CMYK.png" },
+  { name: "CANACINTRA", logo: "/images/aliados/Canacintra.png" },
+  { name: "Universidad Veracruzana", logo: "/images/aliados/Universidad Veracruzana.png" },
+  { name: "COVEICYDET", logo: "/images/aliados/coveicydet.png" },
+  { name: "Secretaría de Economía", logo: "/images/aliados/Logo Secretaria de Economia 2024.png" },
+  { name: "Secretaría de Ciencia y Tecnología", logo: "/images/aliados/Logo Secretaria Ciencia y Tecnologia 2024.png" },
 ];
 
 export function AlianzasContent() {
@@ -115,7 +115,7 @@ export function AlianzasContent() {
                         alt={inst.name}
                         width={120}
                         height={48}
-                        className="h-10 w-auto max-w-[120px] object-contain brightness-0 invert opacity-60 transition-opacity hover:opacity-90"
+                        className="h-10 w-auto max-w-[120px] object-contain opacity-60 grayscale transition-all hover:opacity-100 hover:grayscale-0 dark:brightness-0 dark:invert dark:opacity-80 dark:hover:opacity-100"
                       />
                     </div>
 
@@ -144,7 +144,7 @@ export function AlianzasContent() {
           title={t.cta.title}
           subtitle={t.cta.subtitle}
           ctaLabel={t.cta.ctaLabel}
-          ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+          ctaHref="/diagnostico"
           trustSignals={[...t.cta.trustSignals]}
         />
       </>

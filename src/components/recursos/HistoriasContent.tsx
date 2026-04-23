@@ -125,7 +125,7 @@ export function HistoriasContent() {
         title="¿Quieres ver resultados proyectados para tu industria?"
         subtitle="Solicita un Diagnóstico Inteligente y te entregamos un mapa de implementación con ROI estimado en 1 semana."
         ctaLabel="Solicitar Diagnóstico Inteligente"
-        ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+        ctaHref="/diagnostico"
         trustSignals={["Demo con datos reales", "Sin permanencia", "ROI proyectado"]}
       />
     </>

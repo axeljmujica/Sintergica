@@ -65,13 +65,8 @@ export function proxy(request: NextRequest) {
     );
   }
 
-  // If the pathname has the default locale (/es/...), redirect to remove it
-  if (pathname.startsWith(`/${i18n.defaultLocale}/`) || pathname === `/${i18n.defaultLocale}`) {
-    const newPath = pathname.replace(new RegExp(`^/${i18n.defaultLocale}`), '') || '/';
-    return NextResponse.redirect(
-      new URL(`${newPath}${request.nextUrl.search}`, request.url)
-    );
-  }
+  // NOTE: Stripping /es/ → / would create a redirect loop with trailingSlash: true.
+  // In production, .htaccess handles the /es/ → / rewrite for clean SEO URLs.
 }
 
 export const config = {

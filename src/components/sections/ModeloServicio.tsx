@@ -191,9 +191,7 @@ export function ModeloServicio() {
               className="mt-12 text-center"
             >
               <a
-                href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/diagnostico"
                 className="group inline-flex items-center gap-2 text-sm font-semibold text-brand-accent transition-colors hover:text-brand-accent-light"
               >
                 Comienza con tu diagnóstico

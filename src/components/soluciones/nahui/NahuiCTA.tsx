@@ -71,9 +71,7 @@ export function NahuiCTA() {
             className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
           >
             <a
-              href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/diagnostico"
               className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-brand-accent px-10 text-[1rem] font-bold text-white shadow-xl shadow-brand-accent/25 transition-all duration-300 hover:scale-[1.02] hover:-translate-y-0.5 hover:bg-brand-400 hover:shadow-brand-accent/40"
             >
               Agenda tu Diagnóstico Inteligente

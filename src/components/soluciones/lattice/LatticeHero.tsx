@@ -88,9 +88,7 @@ export function LatticeHero() {
               className="mt-10 flex flex-col gap-4 sm:flex-row justify-center"
             >
               <a
-                href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/diagnostico"
                 className="inline-flex items-center justify-center rounded-full bg-[#006EFA] px-8 py-3.5 font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-[#0058CC] hover:shadow-lg hover:shadow-[#006EFA]/25"
               >
                 Solicitar demo →

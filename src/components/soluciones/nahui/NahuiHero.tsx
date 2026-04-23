@@ -16,7 +16,7 @@ export function NahuiHero() {
       <div className="relative mx-auto w-full max-w-7xl px-6 py-24 pt-32 lg:px-8 text-center flex flex-col items-center">
         <div className="max-w-4xl flex flex-col items-center">
           <span className="inline-flex items-center rounded-full border border-[#53abe6]/25 bg-[#53abe6]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[#53abe6]">
-            Logística Inteligente
+            Nahui TMS Inteligente
           </span>
 
           <h1 className="mt-6 font-proxima text-4xl font-extrabold leading-tight text-white md:text-5xl lg:text-6xl text-balance">
@@ -43,9 +43,7 @@ export function NahuiHero() {
 
           <div className="mt-10 flex flex-col gap-4 sm:flex-row justify-center">
             <a
-              href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/diagnostico"
               className="inline-flex items-center justify-center rounded-full bg-[#006EFA] px-8 py-3.5 font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-[#0058CC] hover:shadow-lg hover:shadow-[#006EFA]/25"
             >
               Solicitar demo de Nahui →

@@ -162,7 +162,7 @@ export function ServiciosContent() {
           bgImage="/images/Negocios-Oficina/modern-office-corporate-building-low-angle-view-skyscrapers-city-singapore-panoramic-perspective-view-business-concept-success-industry-tech-architecture.jpg"
           bgImageAlt={t.heroBgImageAlt}
           ctaLabel={t.heroCtaLabel}
-          ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+          ctaHref="/diagnostico"
           trustSignals={[t.heroTrustStrategy, t.heroTrustImplementation, t.heroTrustTraining, t.heroTrustAccompaniment]}
         />
 
@@ -245,7 +245,7 @@ export function ServiciosContent() {
             </div>
 
             <Link
-                href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+                href="/diagnostico"
                 className="mt-8 inline-flex items-center gap-2 rounded-full bg-brand-accent px-7 py-3 text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-brand-400 hover:shadow-lg hover:shadow-brand-accent/25"
               >
                 {t.diagCtaLabel}
@@ -259,7 +259,7 @@ export function ServiciosContent() {
           title={t.ctaTitle}
           subtitle={t.ctaSubtitle}
           ctaLabel={t.ctaCtaLabel}
-          ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+          ctaHref="/diagnostico"
           trustSignals={[
             t.ctaTrust0,
             t.ctaTrust1,

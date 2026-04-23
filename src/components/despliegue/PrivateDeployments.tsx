@@ -12,7 +12,7 @@ import { SectionHeader } from "@/components/shared/SectionHeader";
 import { CTASection } from "@/components/shared/CTASection";
 import { useLocale } from "@/i18n/DictionaryProvider";
 
-const BOOKING_URL = "https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4";
+const BOOKING_URL = "/diagnostico";
 
 /* ── Non-translatable base data ──────────────────────────────── */
 const RISK_BASE = [

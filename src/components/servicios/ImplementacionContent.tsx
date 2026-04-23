@@ -211,7 +211,7 @@ const T = {
   },
 } as const;
 
-const BOOKING_URL = "https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4";
+const BOOKING_URL = "/diagnostico";
 
 const INCLUYE_BASE = [
   { icon: Users,    image: "/images/Lattice-Agents-configurados-implementacion.jpg", iconColor: "text-blue-400",    iconBg: "bg-blue-500/10",    borderColor: "rgba(96,165,250,0.45)",  glowColor: "rgba(59,130,246,0.5)"   },
@@ -450,7 +450,7 @@ export function ImplementacionContent() {
           title={t.cta.title}
           subtitle={t.cta.subtitle}
           ctaLabel={t.cta.ctaLabel}
-          ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+          ctaHref="/diagnostico"
           trustSignals={[...t.cta.trustSignals]}
         />
       </>

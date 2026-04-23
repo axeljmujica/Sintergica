@@ -339,9 +339,7 @@ export function LatticeAgentsSection() {
             className="mt-12 text-center"
           >
             <a
-              href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/diagnostico"
               className="group inline-flex items-center gap-2 rounded-full bg-brand-accent px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-accent/25 transition-all duration-300 hover:bg-brand-accent/90 hover:shadow-brand-accent/40"
             >
               Contrata tu primer agente

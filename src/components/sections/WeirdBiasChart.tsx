@@ -151,7 +151,7 @@ export function WeirdBiasChart() {
             {/* Main Axis Border (L-shaped) */}
             <polyline
               points={`${PLOT_X},${PLOT_Y} ${PLOT_X},${PLOT_Y + PLOT_H} ${PLOT_X + PLOT_W},${PLOT_Y + PLOT_H}`}
-              className="fill-none stroke-brand-midnight/30 dark:stroke-brand-white/30"
+              className="fill-none stroke-black/20 dark:stroke-white/20"
               strokeWidth="2"
             />
 
@@ -163,7 +163,7 @@ export function WeirdBiasChart() {
                 ${getX(0.24)},${getY(0.55)}
                 ${getX(0)},${getY(0.79)}
               `}
-              className="fill-brand-midnight/10 transition-colors duration-500 dark:fill-brand-white/10"
+              className="fill-black/5 transition-colors duration-500 dark:fill-white/10"
               clipPath="url(#plot-clip)"
             />
 
@@ -178,7 +178,7 @@ export function WeirdBiasChart() {
             <line
               x1={getX(0)} y1={getY(0.84)}
               x2={getX(0.24)} y2={getY(0.605)}
-              className="stroke-brand-midnight transition-colors duration-500 dark:stroke-brand-white"
+              className="stroke-black transition-colors duration-500 dark:stroke-white"
               strokeWidth="4"
               clipPath="url(#plot-clip)"
             />
@@ -220,7 +220,7 @@ export function WeirdBiasChart() {
                 x={PLOT_X + 8}
                 y={PLOT_Y + 22}
                 textAnchor="start"
-                className="fill-brand-midnight/50 dark:fill-brand-white/50"
+                className="fill-black/50 dark:fill-white/50"
                 fontSize="12"
                 fontStyle="italic"
               >
@@ -230,7 +230,7 @@ export function WeirdBiasChart() {
                 x={PLOT_X + 8}
                 y={PLOT_Y + 38}
                 textAnchor="start"
-                className="fill-brand-midnight/40 dark:fill-brand-white/40"
+                className="fill-black/40 dark:fill-white/40"
                 fontSize="11"
               >
                 {t.dirUpNote}
@@ -243,7 +243,7 @@ export function WeirdBiasChart() {
                 x={PLOT_X + PLOT_W - 8}
                 y={PLOT_Y + PLOT_H - 18}
                 textAnchor="end"
-                className="fill-brand-midnight/50 dark:fill-brand-white/50"
+                className="fill-black/50 dark:fill-white/50"
                 fontSize="12"
                 fontStyle="italic"
               >
@@ -253,7 +253,7 @@ export function WeirdBiasChart() {
                 x={PLOT_X + PLOT_W - 8}
                 y={PLOT_Y + PLOT_H - 4}
                 textAnchor="end"
-                className="fill-brand-midnight/40 dark:fill-brand-white/40"
+                className="fill-black/40 dark:fill-white/40"
                 fontSize="11"
               >
                 {t.dirDownNote}
@@ -265,8 +265,8 @@ export function WeirdBiasChart() {
               const y = getY(val);
               return (
                 <g key={`y-${val}`}>
-                  <line x1={PLOT_X - 6} y1={y} x2={PLOT_X} y2={y} className="stroke-brand-midnight/30 dark:stroke-brand-white/30" strokeWidth="2" />
-                  <text x={PLOT_X - 14} y={y + 5} textAnchor="end" className="fill-brand-navy/60 text-[15px] font-semibold dark:fill-brand-white/60">
+                  <line x1={PLOT_X - 6} y1={y} x2={PLOT_X} y2={y} className="stroke-black/20 dark:stroke-white/20" strokeWidth="2" />
+                  <text x={PLOT_X - 14} y={y + 5} textAnchor="end" className="fill-black/60 text-[15px] font-semibold dark:fill-white/60">
                     {val.toFixed(1)}
                   </text>
                 </g>
@@ -278,8 +278,8 @@ export function WeirdBiasChart() {
               const x = getX(val);
               return (
                 <g key={`x-${val}`}>
-                  <line x1={x} y1={PLOT_Y + PLOT_H} x2={x} y2={PLOT_Y + PLOT_H + 6} className="stroke-brand-midnight/30 dark:stroke-brand-white/30" strokeWidth="2" />
-                  <text x={x} y={PLOT_Y + PLOT_H + 28} textAnchor="middle" className="fill-brand-navy/60 text-[15px] font-semibold dark:fill-brand-white/60">
+                  <line x1={x} y1={PLOT_Y + PLOT_H} x2={x} y2={PLOT_Y + PLOT_H + 6} className="stroke-black/20 dark:stroke-white/20" strokeWidth="2" />
+                  <text x={x} y={PLOT_Y + PLOT_H + 28} textAnchor="middle" className="fill-black/60 text-[15px] font-semibold dark:fill-white/60">
                     {val.toFixed(2)}
                   </text>
                 </g>
@@ -292,7 +292,7 @@ export function WeirdBiasChart() {
               y={30}
               transform="rotate(-90)"
               textAnchor="middle"
-              className="fill-brand-midnight font-bold tracking-widest dark:fill-brand-white"
+              className="fill-black font-bold tracking-widest dark:fill-white"
               fontSize="18"
             >
               {t.yAxis}
@@ -302,7 +302,7 @@ export function WeirdBiasChart() {
               x={PLOT_X + PLOT_W/2}
               y={PLOT_Y + PLOT_H + 70}
               textAnchor="middle"
-              className="fill-brand-midnight font-bold tracking-widest dark:fill-brand-white"
+              className="fill-black font-bold tracking-widest dark:fill-white"
               fontSize="18"
             >
               {t.xAxis}
@@ -322,7 +322,7 @@ export function WeirdBiasChart() {
                   key={`line-${p.id}`}
                   x1={px} y1={py} x2={lx} y2={ly}
                   className={`transition-colors duration-300 ${
-                    isMexico ? 'stroke-red-500' : isHovered ? 'stroke-brand-accent-light' : 'stroke-brand-midnight/30 dark:stroke-brand-white/30'
+                    isMexico ? 'stroke-red-500' : isHovered ? 'stroke-brand-accent-light' : 'stroke-black/20 dark:stroke-white/20'
                   }`}
                   strokeWidth={isMexico || isHovered ? "2" : "1"}
                 />

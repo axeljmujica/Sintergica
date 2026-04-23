@@ -86,7 +86,7 @@ export function LabsHero() {
             className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
           >
             <Link
-              href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+              href="/diagnostico"
               className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-6 py-3 font-semibold text-brand-midnight dark:text-brand-white transition-all hover:-translate-y-0.5 hover:bg-emerald-500 hover:shadow-lg hover:shadow-emerald-600/25"
             >
               {c.ctaPrimary}

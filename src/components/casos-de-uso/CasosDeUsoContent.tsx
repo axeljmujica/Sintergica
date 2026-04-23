@@ -1,352 +1,523 @@
 "use client";
 
+import { useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import { useState, useRef } from "react";
-import { LazyMotion, domAnimation, m, useInView, useReducedMotion, AnimatePresence } from "motion/react";
+import Link from "next/link";
 import {
-  Zap,
-  HeartPulse,
+  LazyMotion,
+  domAnimation,
+  m,
+  useInView,
+  useReducedMotion,
+} from "motion/react";
+import {
+  ArrowRight,
+  Factory,
+  Stethoscope,
   Ship,
   ShoppingBag,
   Landmark,
-  AlertCircle,
-  Lightbulb,
-  TrendingUp,
-  Info,
-  Tag,
+  AlertTriangle,
+  Sparkles,
+  LineChart,
+  Quote,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { PageHero } from "@/components/shared/PageHero";
-import { CTASection } from "@/components/shared/CTASection";
 import {
   CASOS_DE_USO_I18N,
   type LangCode,
   type IndustriaId,
   type ProductoId,
+  type CasoDeUso,
 } from "@/lib/casos-de-uso-i18n";
+import { PageHero } from "@/components/shared/PageHero";
+import { CTASection } from "@/components/shared/CTASection";
+
+/* tested: light ✓ dark ✓ */
 
 interface CasosDeUsoContentProps {
-  lang?: LangCode;
+  lang: LangCode;
 }
 
-const INDUSTRIA_IMAGES: Record<IndustriaId, string> = {
-  energia: "/img/finance-tech.jpg",
-  salud: "/img/healthcare-ai.jpg",
-  logistica: "/img/logistics-tech.jpg",
-  ecommerce: "/img/retail-tech.jpg",
-  gobierno: "/img/cybersecurity.jpg",
-};
-
-const INDUSTRIA_ICONS: Record<IndustriaId, React.ElementType> = {
-  energia: Zap,
-  salud: HeartPulse,
+const INDUSTRIA_ICON: Record<IndustriaId, React.ComponentType<{ className?: string }>> = {
+  energia: Factory,
+  salud: Stethoscope,
   logistica: Ship,
   ecommerce: ShoppingBag,
   gobierno: Landmark,
 };
 
-const INDUSTRIA_COLORS: Record<IndustriaId, { accent: string; bg: string; border: string; text: string }> = {
+// Imágenes alusivas reales (públicas) por industria
+const INDUSTRIA_IMAGE: Record<IndustriaId, { src: string; alt: string }> = {
   energia: {
-    accent: "text-yellow-400",
-    bg: "bg-yellow-400/10",
-    border: "border-yellow-400/20",
-    text: "text-yellow-400",
+    src: "/images/industries/seeb-energia.jpg",
+    alt: "Campo de paneles solares fotovoltaicos — sector energía",
   },
   salud: {
-    accent: "text-emerald-400",
-    bg: "bg-emerald-400/10",
-    border: "border-emerald-400/20",
-    text: "text-emerald-400",
+    src: "/images/industries/seeb-salud.jpg",
+    alt: "Profesional médico revisando expediente clínico digital — sector salud",
   },
   logistica: {
-    accent: "text-sky-400",
-    bg: "bg-sky-400/10",
-    border: "border-sky-400/20",
-    text: "text-sky-400",
+    src: "/images/industries/seeb-logistica.jpg",
+    alt: "Contenedores en puerto y operación aduanal — sector logística",
   },
   ecommerce: {
-    accent: "text-purple-400",
-    bg: "bg-purple-400/10",
-    border: "border-purple-400/20",
-    text: "text-purple-400",
+    src: "/images/industries/seeb-ventas.jpg",
+    alt: "Operación de comercio electrónico y atención al cliente",
   },
   gobierno: {
-    accent: "text-brand-accent",
-    bg: "bg-brand-accent/10",
-    border: "border-brand-accent/20",
-    text: "text-brand-accent",
+    src: "/images/industries/seeb-gob.jpg",
+    alt: "Operación de servicio público municipal — sector gobierno",
   },
 };
 
-const PRODUCTO_COLORS: Record<ProductoId, string> = {
-  saleshub: "border-purple-500/30 bg-purple-500/10 text-purple-300",
-  lattice: "border-brand-accent/30 bg-brand-accent/10 text-brand-accent",
-  "lattice-seeb-salud": "border-emerald-500/30 bg-emerald-500/10 text-emerald-300",
-  "lattice-seeb-logistica": "border-sky-500/30 bg-sky-500/10 text-sky-300",
-  nahui: "border-orange-500/30 bg-orange-500/10 text-orange-300",
+// Acento cromático por industria (tokens de marca + acentos semánticos existentes)
+const INDUSTRIA_ACCENT: Record<
+  IndustriaId,
+  { dot: string; chip: string; ring: string; metricBg: string; metricText: string }
+> = {
+  energia: {
+    dot: "bg-amber-500",
+    chip: "bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/20",
+    ring: "ring-amber-500/30",
+    metricBg: "bg-amber-500/10",
+    metricText: "text-amber-700 dark:text-amber-300",
+  },
+  salud: {
+    dot: "bg-emerald-500",
+    chip:
+      "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/20",
+    ring: "ring-emerald-500/30",
+    metricBg: "bg-emerald-500/10",
+    metricText: "text-emerald-700 dark:text-emerald-300",
+  },
+  logistica: {
+    dot: "bg-brand-accent",
+    chip:
+      "bg-brand-accent/10 text-brand-accent border-brand-accent/20",
+    ring: "ring-brand-accent/30",
+    metricBg: "bg-brand-accent/10",
+    metricText: "text-brand-accent",
+  },
+  ecommerce: {
+    dot: "bg-fuchsia-500",
+    chip:
+      "bg-fuchsia-500/10 text-fuchsia-700 dark:text-fuchsia-300 border-fuchsia-500/20",
+    ring: "ring-fuchsia-500/30",
+    metricBg: "bg-fuchsia-500/10",
+    metricText: "text-fuchsia-700 dark:text-fuchsia-300",
+  },
+  gobierno: {
+    dot: "bg-indigo-500",
+    chip:
+      "bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border-indigo-500/20",
+    ring: "ring-indigo-500/30",
+    metricBg: "bg-indigo-500/10",
+    metricText: "text-indigo-700 dark:text-indigo-300",
+  },
 };
 
-export function CasosDeUsoContent({ lang = "es" }: CasosDeUsoContentProps) {
-  const t = CASOS_DE_USO_I18N[lang];
-  const [activeFilter, setActiveFilter] = useState<IndustriaId | "all">("all");
-
-  const filterRef = useRef<HTMLDivElement>(null);
-  const filterInView = useInView(filterRef, { once: true, margin: "-40px" });
-  const shouldReduce = useReducedMotion();
-
-  const filteredCasos =
-    activeFilter === "all"
-      ? t.casos
-      : t.casos.filter((c) => c.industria === activeFilter);
-
-  const filterOptions: Array<{ id: IndustriaId | "all"; label: string }> = [
-    { id: "all", label: t.filter.all },
-    ...Object.entries(t.filter.industrias).map(([id, label]) => ({
-      id: id as IndustriaId,
-      label,
-    })),
+function FilterBar({
+  allLabel,
+  industrias,
+  selected,
+  onSelect,
+  counts,
+}: {
+  allLabel: string;
+  industrias: Record<IndustriaId, string>;
+  selected: IndustriaId | "all";
+  onSelect: (v: IndustriaId | "all") => void;
+  counts: Record<IndustriaId | "all", number>;
+}) {
+  const entries: Array<{ id: IndustriaId | "all"; label: string }> = [
+    { id: "all", label: allLabel },
+    ...(Object.entries(industrias) as Array<[IndustriaId, string]>).map(
+      ([id, label]) => ({ id, label })
+    ),
   ];
 
   return (
-    <LazyMotion features={domAnimation}>
-      <>
-        <PageHero
-          badge={t.hero.badge}
-          title={t.hero.h1}
-          subtitle={t.hero.subtitle}
-          ctaLabel="Solicitar Diagnóstico"
-          ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
-          trustSignals={t.hero.trustSignals}
-        />
+    <div
+      role="tablist"
+      aria-label="Filtrar por industria"
+      className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-2 rounded-full border border-[var(--border-default)] bg-[var(--surface-elevated)] p-1.5 shadow-sm backdrop-blur"
+    >
+      {entries.map(({ id, label }) => {
+        const active = selected === id;
+        const Icon = id === "all" ? Sparkles : INDUSTRIA_ICON[id as IndustriaId];
+        return (
+          <button
+            key={id}
+            role="tab"
+            aria-selected={active}
+            onClick={() => onSelect(id)}
+            className={[
+              "inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-all",
+              active
+                ? "bg-brand-midnight text-brand-white shadow-sm dark:bg-brand-white dark:text-brand-midnight"
+                : "text-brand-midnight/70 hover:bg-brand-midnight/[0.04] hover:text-brand-midnight dark:text-brand-white/70 dark:hover:bg-brand-white/[0.06] dark:hover:text-brand-white",
+            ].join(" ")}
+          >
+            <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+            <span>{label}</span>
+            <span
+              className={[
+                "ml-0.5 rounded-full px-1.5 py-0.5 text-[0.65rem] font-semibold tabular-nums",
+                active
+                  ? "bg-white/15 text-brand-white dark:bg-brand-midnight/15 dark:text-brand-midnight"
+                  : "bg-brand-midnight/5 text-brand-midnight/60 dark:bg-brand-white/10 dark:text-brand-white/60",
+              ].join(" ")}
+            >
+              {counts[id]}
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
 
-        {/* Disclaimer */}
-        <section className="bg-brand-surface dark:bg-brand-midnight px-4 pb-2 pt-8 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-5xl">
-            <div className="flex items-start gap-3 rounded-xl border border-brand-accent/15 bg-brand-accent/[0.04] p-4">
-              <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-accent/60" />
-              <p className="text-xs leading-relaxed text-brand-midnight/50 dark:text-brand-white/50">
-                {t.disclaimer}
-              </p>
+function ImpactSummary({
+  casos,
+  industrias,
+  label,
+}: {
+  casos: CasoDeUso[];
+  industrias: Record<IndustriaId, string>;
+  label: string;
+}) {
+  return (
+    <div className="mx-auto mt-16 grid max-w-6xl grid-cols-2 gap-3 px-4 sm:px-6 md:grid-cols-5 md:gap-4 lg:px-8">
+      {casos.map((c) => {
+        const accent = INDUSTRIA_ACCENT[c.industria];
+        const Icon = INDUSTRIA_ICON[c.industria];
+        return (
+          <div
+            key={c.id}
+            className="group relative overflow-hidden rounded-2xl border border-[var(--border-default)] bg-[var(--surface-elevated)] p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg"
+          >
+            <div className={`mb-3 inline-flex h-9 w-9 items-center justify-center rounded-xl ${accent.metricBg}`}>
+              <Icon className={`h-5 w-5 ${accent.metricText}`} aria-hidden="true" />
+            </div>
+            <div className={`font-proxima text-3xl font-extrabold tracking-tight ${accent.metricText}`}>
+              {c.metrica.value}
+            </div>
+            <div className="mt-1 text-xs font-medium text-brand-midnight/60 dark:text-brand-white/60">
+              {c.metrica.label}
+            </div>
+            <div className="mt-3 text-[0.7rem] font-semibold uppercase tracking-wider text-brand-midnight/45 dark:text-brand-white/45">
+              {label} · {industrias[c.industria]}
             </div>
           </div>
-        </section>
+        );
+      })}
+    </div>
+  );
+}
 
-        {/* Filter bar */}
-        <section className="sticky top-16 z-20 bg-brand-surface dark:bg-brand-midnight/95 px-4 py-5 backdrop-blur-sm sm:px-6 lg:px-8">
-          <m.div
-            ref={filterRef}
-            initial={shouldReduce ? false : { opacity: 0, y: -8 }}
-            animate={filterInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: shouldReduce ? 0 : 0.4 }}
-            className="mx-auto flex max-w-5xl flex-wrap items-center gap-2"
-          >
-            {filterOptions.map((opt) => {
-              const isActive = activeFilter === opt.id;
-              const color =
-                opt.id !== "all"
-                  ? INDUSTRIA_COLORS[opt.id as IndustriaId]
-                  : null;
+function CasoCard({
+  caso,
+  index,
+  content,
+}: {
+  caso: CasoDeUso;
+  index: number;
+  content: ReturnType<typeof getContent>;
+}) {
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const reduce = useReducedMotion();
+  const accent = INDUSTRIA_ACCENT[caso.industria];
+  const Icon = INDUSTRIA_ICON[caso.industria];
+  const img = INDUSTRIA_IMAGE[caso.industria];
+  const reversed = index % 2 === 1;
 
-              return (
-                <button
-                  key={opt.id}
-                  onClick={() => setActiveFilter(opt.id)}
-                  className={cn(
-                    "rounded-full border px-4 py-1.5 text-xs font-semibold transition-all",
-                    isActive
-                      ? color
-                        ? cn(color.bg, color.border, color.text)
-                        : "border-brand-accent/40 bg-brand-accent/20 text-brand-accent"
-                      : "border-brand-midnight/10 dark:border-brand-white/10 bg-transparent text-brand-midnight/50 dark:text-brand-white/50 hover:border-brand-white/25 hover:text-brand-surface/80"
-                  )}
-                >
-                  {opt.label}
-                </button>
-              );
-            })}
-          </m.div>
-        </section>
+  return (
+    <m.article
+      ref={ref}
+      id={caso.id}
+      initial={reduce ? false : { opacity: 0, y: 32 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: reduce ? 0 : 0.6, delay: 0.05 }}
+      className="group relative overflow-hidden rounded-3xl border border-[var(--border-default)] bg-[var(--surface-elevated)] shadow-sm transition-shadow hover:shadow-xl"
+    >
+      <div className={`grid items-stretch gap-0 lg:grid-cols-12 ${reversed ? "lg:[&>.img]:order-2" : ""}`}>
+        {/* Imagen alusiva */}
+        <div className="img relative col-span-12 aspect-[16/10] overflow-hidden lg:col-span-5 lg:aspect-auto lg:min-h-[460px]">
+          <Image
+            src={img.src}
+            alt={img.alt}
+            fill
+            sizes="(max-width: 1024px) 100vw, 40vw"
+            className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+          />
+          {/* Gradiente para legibilidad de chips sobre la imagen */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
 
-        {/* Cases grid */}
-        <section className="bg-brand-surface dark:bg-brand-midnight px-4 pb-24 pt-8 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-5xl">
-            <AnimatePresence mode="popLayout">
-              <div className="grid gap-6 lg:grid-cols-1">
-                {filteredCasos.map((caso, i) => {
-                  const colors = INDUSTRIA_COLORS[caso.industria];
-                  const Icon = INDUSTRIA_ICONS[caso.industria];
-
-                  return (
-                    <m.article
-                      key={caso.id}
-                      layout
-                      initial={shouldReduce ? false : { opacity: 0, y: 24 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={shouldReduce ? undefined : { opacity: 0, y: -12, scale: 0.98 }}
-                      transition={{
-                        duration: shouldReduce ? 0 : 0.45,
-                        delay: shouldReduce ? 0 : i * 0.08,
-                      }}
-                      className="group overflow-hidden rounded-2xl border border-brand-midnight/8 dark:border-brand-white/10 bg-brand-surface dark:bg-brand-deep transition-shadow hover:shadow-xl hover:shadow-brand-accent/5"
-                    >
-                      {/* Image banner */}
-                      <div className="relative h-52 w-full overflow-hidden sm:h-60">
-                        <Image
-                          src={INDUSTRIA_IMAGES[caso.industria]}
-                          alt={caso.empresa}
-                          fill
-                          className="object-cover object-center transition-transform duration-700 group-hover:scale-105 will-change-transform"
-                          sizes="(max-width: 768px) 100vw, 896px"
-                        />
-                        {/* Gradient to card bg */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-brand-deep via-brand-deep/40 to-transparent" />
-                        {/* Overlay: industry badge + metric */}
-                        <div className="absolute bottom-0 left-0 right-0 flex items-end justify-between px-6 pb-5">
-                          <span
-                            className={cn(
-                              "rounded-full border px-3 py-1 text-[0.65rem] font-bold uppercase tracking-wider backdrop-blur-sm",
-                              colors.bg,
-                              colors.border,
-                              colors.text
-                            )}
-                          >
-                            {t.filter.industrias[caso.industria]}
-                          </span>
-                          <div className="text-right">
-                            <p className={cn("text-3xl font-extrabold leading-none drop-shadow-lg", colors.accent)}>
-                              {caso.metrica.value}
-                            </p>
-                            <p className="mt-0.5 text-[0.65rem] text-brand-midnight/55 dark:text-brand-white/55">{caso.metrica.label}</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Card header */}
-                      <div className={cn("flex items-start justify-between gap-4 border-b border-brand-midnight/8 dark:border-brand-white/10 p-6 pb-5")}>
-                        <div className="flex items-center gap-4">
-                          <div
-                            className={cn(
-                              "flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl",
-                              colors.bg,
-                              colors.border,
-                              "border"
-                            )}
-                          >
-                            <Icon className={cn("h-5 w-5", colors.accent)} />
-                          </div>
-                          <div>
-                            <p
-                              className={cn(
-                                "text-[0.65rem] font-semibold uppercase tracking-wider",
-                                colors.text
-                              )}
-                            >
-                              {t.labels.industria} · {t.filter.industrias[caso.industria]}
-                            </p>
-                            <h3 className="text-lg font-proxima font-semibold text-brand-midnight dark:text-brand-white">
-                              {caso.empresa}
-                            </h3>
-                          </div>
-                        </div>
-
-                        {/* Key metric — hidden since it's now on the image banner */}
-                        <div className="hidden" aria-hidden="true" />
-                      </div>
-
-                      {/* Product tags */}
-                      <div className="flex flex-wrap items-center gap-2 border-b border-brand-midnight/8 dark:border-brand-white/10 px-6 py-3">
-                        <Tag className="h-3 w-3 flex-shrink-0 text-brand-midnight/30 dark:text-brand-white/30" />
-                        {caso.productos.map((pid) => (
-                          <span
-                            key={pid}
-                            className={cn(
-                              "rounded-full border px-2.5 py-0.5 text-[0.65rem] font-semibold",
-                              PRODUCTO_COLORS[pid as ProductoId]
-                            )}
-                          >
-                            {t.productos[pid as ProductoId]}
-                          </span>
-                        ))}
-                      </div>
-
-                      {/* PSR grid */}
-                      <div className="grid gap-0 divide-y divide-brand-white/5 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-                        {/* Problema */}
-                        <div className="p-6">
-                          <div className="mb-3 flex items-center gap-2">
-                            <AlertCircle className="h-3.5 w-3.5 text-warning-600" />
-                            <p className="text-[0.65rem] font-semibold uppercase tracking-wider text-warning-600">
-                              {t.labels.problema}
-                            </p>
-                          </div>
-                          <p className="text-sm leading-relaxed text-brand-midnight/55 dark:text-brand-white/55">
-                            {caso.problema}
-                          </p>
-                        </div>
-
-                        {/* Solución */}
-                        <div className="p-6">
-                          <div className="mb-3 flex items-center gap-2">
-                            <Lightbulb className="h-3.5 w-3.5 text-brand-accent" />
-                            <p className="text-[0.65rem] font-semibold uppercase tracking-wider text-brand-accent">
-                              {t.labels.solucion}
-                            </p>
-                          </div>
-                          <p className="text-sm leading-relaxed text-brand-midnight/55 dark:text-brand-white/55">
-                            {caso.solucion}
-                          </p>
-                        </div>
-
-                        {/* Resultado */}
-                        <div className="p-6">
-                          <div className="mb-3 flex items-center gap-2">
-                            <TrendingUp className="h-3.5 w-3.5 text-success-600" />
-                            <p className="text-[0.65rem] font-semibold uppercase tracking-wider text-success-600">
-                              {t.labels.resultado}
-                            </p>
-                          </div>
-                          <p className="text-sm leading-relaxed text-brand-midnight/55 dark:text-brand-white/55">
-                            {caso.resultado}
-                          </p>
-
-                          {/* Mobile metric */}
-                          <div className="mt-4 flex items-center gap-2 sm:hidden">
-                            <p
-                              className={cn(
-                                "text-xl font-extrabold leading-none",
-                                colors.accent
-                              )}
-                            >
-                              {caso.metrica.value}
-                            </p>
-                            <p className="text-[0.65rem] text-brand-midnight/45 dark:text-brand-white/45">
-                              {caso.metrica.label}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </m.article>
-                  );
-                })}
-              </div>
-            </AnimatePresence>
-
-            {filteredCasos.length === 0 && (
-              <p className="py-16 text-center text-sm text-brand-midnight/40 dark:text-brand-white/40">
-                No hay casos para esta industria todavía.
-              </p>
-            )}
+          {/* Chip industria sobre imagen */}
+          <div className="absolute left-5 top-5 flex items-center gap-2">
+            <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold backdrop-blur-sm ${accent.chip}`}>
+              <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+              {content.filter.industrias[caso.industria]}
+            </span>
           </div>
-        </section>
 
-        <CTASection
-          title={t.cta.title}
-          subtitle={t.cta.subtitle}
-          ctaLabel={t.cta.label}
-          ctaHref={t.cta.href}
-          trustSignals={t.cta.trustSignals}
+          {/* Tarjeta de métrica destacada */}
+          <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-3">
+            <div>
+              <div className="text-[0.7rem] font-semibold uppercase tracking-wider text-white/80">
+                {content.labels.metrica}
+              </div>
+              <div className="mt-1 font-proxima text-4xl font-extrabold leading-none text-white drop-shadow-md sm:text-5xl">
+                {caso.metrica.value}
+              </div>
+              <div className="mt-1 text-sm text-white/85">{caso.metrica.label}</div>
+            </div>
+            <LineChart className="h-10 w-10 text-white/70" aria-hidden="true" />
+          </div>
+        </div>
+
+        {/* Contenido */}
+        <div className="col-span-12 p-6 sm:p-8 lg:col-span-7 lg:p-10">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className={`h-2 w-2 rounded-full ${accent.dot}`} aria-hidden="true" />
+            <span className="text-xs font-semibold uppercase tracking-wider text-brand-midnight/55 dark:text-brand-white/55">
+              {`Caso ${String(index + 1).padStart(2, "0")}`}
+            </span>
+            <span className="text-brand-midnight/25 dark:text-brand-white/25">/</span>
+            <span className="text-xs text-brand-midnight/55 dark:text-brand-white/55">
+              {caso.empresa}
+            </span>
+          </div>
+
+          <h3 className="mt-3 font-proxima text-2xl font-extrabold leading-tight tracking-tight text-brand-midnight dark:text-brand-white sm:text-3xl">
+            {caso.empresa}
+          </h3>
+
+          {/* Productos aplicados */}
+          <div className="mt-4 flex flex-wrap items-center gap-2">
+            <span className="text-xs font-semibold uppercase tracking-wider text-brand-midnight/50 dark:text-brand-white/50">
+              {content.labels.productos}:
+            </span>
+            {caso.productos.map((p: ProductoId) => (
+              <span
+                key={p}
+                className="inline-flex items-center gap-1 rounded-md border border-[var(--border-default)] bg-[var(--surface-subtle)] px-2 py-0.5 text-xs font-medium text-brand-midnight dark:bg-brand-white/[0.04] dark:text-brand-white"
+              >
+                {content.productos[p]}
+              </span>
+            ))}
+          </div>
+
+          {/* P → S → R */}
+          <div className="mt-6 space-y-5">
+            <PSRBlock
+              label={content.labels.problema}
+              text={caso.problema}
+              icon={<AlertTriangle className="h-4 w-4" />}
+              tone="danger"
+            />
+            <PSRBlock
+              label={content.labels.solucion}
+              text={caso.solucion}
+              icon={<Sparkles className="h-4 w-4" />}
+              tone="accent"
+            />
+            <PSRBlock
+              label={content.labels.resultado}
+              text={caso.resultado}
+              icon={<LineChart className="h-4 w-4" />}
+              tone="success"
+            />
+          </div>
+        </div>
+      </div>
+    </m.article>
+  );
+}
+
+function PSRBlock({
+  label,
+  text,
+  icon,
+  tone,
+}: {
+  label: string;
+  text: string;
+  icon: React.ReactNode;
+  tone: "danger" | "accent" | "success";
+}) {
+  const tones: Record<typeof tone, { bar: string; iconWrap: string; iconText: string }> = {
+    danger: {
+      bar: "bg-rose-500/60",
+      iconWrap: "bg-rose-500/10",
+      iconText: "text-rose-600 dark:text-rose-400",
+    },
+    accent: {
+      bar: "bg-brand-accent/70",
+      iconWrap: "bg-brand-accent/10",
+      iconText: "text-brand-accent",
+    },
+    success: {
+      bar: "bg-emerald-500/70",
+      iconWrap: "bg-emerald-500/10",
+      iconText: "text-emerald-600 dark:text-emerald-400",
+    },
+  };
+  const t = tones[tone];
+
+  return (
+    <div className="relative flex gap-4 pl-0">
+      <div className="flex flex-col items-center">
+        <span className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${t.iconWrap} ${t.iconText}`}>
+          {icon}
+        </span>
+        <span className={`mt-1 w-px flex-1 ${t.bar}`} aria-hidden="true" />
+      </div>
+      <div className="flex-1 pb-1">
+        <div className="text-[0.7rem] font-bold uppercase tracking-widest text-brand-midnight/55 dark:text-brand-white/55">
+          {label}
+        </div>
+        <p className="mt-1.5 text-[0.95rem] leading-relaxed text-brand-midnight/80 dark:text-brand-white/75">
+          {text}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function getContent(lang: LangCode) {
+  return CASOS_DE_USO_I18N[lang];
+}
+
+export function CasosDeUsoContent({ lang }: CasosDeUsoContentProps) {
+  const content = useMemo(() => getContent(lang), [lang]);
+  const [selected, setSelected] = useState<IndustriaId | "all">("all");
+
+  const counts = useMemo(() => {
+    const base = {
+      all: content.casos.length,
+    } as Record<IndustriaId | "all", number>;
+    (Object.keys(content.filter.industrias) as IndustriaId[]).forEach((k) => {
+      base[k] = content.casos.filter((c) => c.industria === k).length;
+    });
+    return base;
+  }, [content]);
+
+  const visibles = useMemo(
+    () =>
+      selected === "all"
+        ? content.casos
+        : content.casos.filter((c) => c.industria === selected),
+    [content.casos, selected]
+  );
+
+  return (
+    <LazyMotion features={domAnimation}>
+      {/* HERO */}
+      <PageHero
+        badge={content.hero.badge}
+        badgeColor="brand-accent"
+        title={content.hero.h1}
+        subtitle={content.hero.subtitle}
+        trustSignals={content.hero.trustSignals}
+        bgImage="/images/ai-cloud-concept-with-lit-brain.jpg"
+        bgImageAlt=""
+      />
+
+      {/* Resumen de impacto */}
+      <section
+        aria-label="Resumen de impacto por industria"
+        className="relative -mt-10 bg-transparent pb-6"
+      >
+        <ImpactSummary
+          casos={content.casos}
+          industrias={content.filter.industrias}
+          label={content.labels.industria}
         />
-      </>
+      </section>
+
+      {/* FILTROS + GRID DE CASOS */}
+      <section className="relative py-20 sm:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* Header */}
+          <div className="mx-auto mb-10 max-w-3xl text-center">
+            <h2 className="font-proxima text-3xl font-extrabold tracking-tight text-brand-midnight dark:text-brand-white sm:text-4xl">
+              {lang === "es"
+                ? "Implementaciones documentadas"
+                : lang === "en"
+                ? "Documented implementations"
+                : "Implementações documentadas"}
+            </h2>
+            <p className="mt-3 text-base text-brand-midnight/65 dark:text-brand-white/60">
+              {lang === "es"
+                ? "Filtra por industria para ver el caso que aplica a tu operación."
+                : lang === "en"
+                ? "Filter by industry to see the case that applies to your operation."
+                : "Filtre por setor para ver o caso aplicável à sua operação."}
+            </p>
+          </div>
+
+          <FilterBar
+            allLabel={content.filter.all}
+            industrias={content.filter.industrias}
+            selected={selected}
+            onSelect={setSelected}
+            counts={counts}
+          />
+
+          {/* Grid alternado */}
+          <div className="mt-14 flex flex-col gap-10">
+            {visibles.map((caso, idx) => (
+              <CasoCard key={caso.id} caso={caso} index={idx} content={content} />
+            ))}
+          </div>
+
+          {/* Disclaimer */}
+          <div className="mx-auto mt-14 flex max-w-3xl items-start gap-3 rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-subtle)] p-5">
+            <Quote className="mt-0.5 h-4 w-4 shrink-0 text-brand-midnight/40 dark:text-brand-white/40" aria-hidden="true" />
+            <p className="text-xs leading-relaxed text-brand-midnight/60 dark:text-brand-white/55">
+              {content.disclaimer}
+            </p>
+          </div>
+
+          {/* Links cruzados */}
+          <div className="mx-auto mt-10 flex max-w-3xl flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm">
+            <Link
+              href={lang === "es" ? "/soluciones" : `/${lang}/soluciones`}
+              className="inline-flex items-center gap-1 font-semibold text-brand-accent hover:underline"
+            >
+              {lang === "es"
+                ? "Ver soluciones"
+                : lang === "en"
+                ? "See solutions"
+                : "Ver soluções"}
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+            <Link
+              href={lang === "es" ? "/industrias" : `/${lang}/industrias`}
+              className="inline-flex items-center gap-1 font-semibold text-brand-accent hover:underline"
+            >
+              {lang === "es"
+                ? "Explorar por industria"
+                : lang === "en"
+                ? "Explore by industry"
+                : "Explorar por setor"}
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA final */}
+      <CTASection
+        badge={content.hero.badge}
+        title={content.cta.title}
+        subtitle={content.cta.subtitle}
+        ctaLabel={content.cta.label}
+        ctaHref={content.cta.href}
+        trustSignals={content.cta.trustSignals}
+      />
     </LazyMotion>
   );
 }

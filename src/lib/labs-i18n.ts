@@ -214,7 +214,7 @@ const es: LabsI18nContent = {
         statusVariant: "dev",
         params: "1T",
         label: "Evolución Lattice 2.0",
-        arch: "Arquitecturas avanzadas (Kimi K2.5 / MoE)",
+        arch: "Arquitecturas MoE avanzadas",
         year: "Fase 2",
         desc: "Migración del modelo base hacia arquitecturas de razonamiento avanzado. El valor central se mantiene en el enriquecimiento de nuestro dataset nacional.",
       },
@@ -369,7 +369,7 @@ const en: LabsI18nContent = {
     subtitle: "Sintérgica AI developed the largest AI model in LATAM with 1 trillion parameters. This is the path to the global frontier.",
     phases: [
       { status: "Active", statusVariant: "active", params: "1T", label: "Lattice Na\u2019at", year: "2025", desc: "Largest AI model developed in LATAM. Regulatory, cultural, and linguistic knowledge base for Mexico and LATAM. Active production." },
-      { status: "In development", statusVariant: "dev", params: "1T", label: "Na\u2019at Scale", arch: "Kimi K2.5 architecture", year: "2027", desc: "Scaling toward 1 trillion parameters adopting the Kimi K2.5 architecture. Enhanced reasoning and extended context." },
+      { status: "In development", statusVariant: "dev", params: "1T", label: "Na\u2019at Scale", arch: "Advanced MoE architecture", year: "2027", desc: "Scaling toward 1 trillion parameters with advanced MoE architecture. Enhanced reasoning and extended context." },
       { status: "Goal", statusVariant: "goal", params: "Frontier", label: "Na\u2019at Global", year: "2030", desc: "Position a Latin American-origin model at the global frontier of AI knowledge. Regional cognitive sovereignty." },
     ],
   },
@@ -463,7 +463,7 @@ const pt: LabsI18nContent = {
     subtitle: "Sintérgica AI desenvolveu o modelo de IA de maior escala na LATAM com 1 trilhão de parâmetros. Este é o caminho para a fronteira global.",
     phases: [
       { status: "Ativo", statusVariant: "active", params: "1T", label: "Lattice Na\u2019at", year: "2025", desc: "Modelo de IA de maior escala desenvolvido na LATAM. Base de conhecimento regulatório, cultural e linguístico para México e LATAM. Em produção ativa." },
-      { status: "Em desenvolvimento", statusVariant: "dev", params: "1T", label: "Na\u2019at Escala", arch: "Arquitetura Kimi K2.5", year: "2027", desc: "Escalonamento para 1 trilhão de parâmetros adotando a arquitetura Kimi K2.5. Maior capacidade de raciocínio e contexto estendido." },
+      { status: "Em desenvolvimento", statusVariant: "dev", params: "1T", label: "Na\u2019at Escala", arch: "Arquitetura MoE avançada", year: "2027", desc: "Escalonamento para 1 trilhão de parâmetros com arquitetura MoE avançada. Maior capacidade de raciocínio e contexto estendido." },
       { status: "Objetivo", statusVariant: "goal", params: "Fronteira", label: "Na\u2019at Global", year: "2030", desc: "Posicionar um modelo de origem latino-americana na fronteira global do conhecimento em IA. Soberania cognitiva regional." },
     ],
   },

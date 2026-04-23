@@ -198,12 +198,12 @@ const T = {
 } as const;
 
 const INDUSTRIAS_BASE = [
-  { slug: "legal", name: "Legal", imageUrl: "/images/Negocios-Oficina/hourglass-dark-color-background.jpg", icon: Scale, accentColor: "from-blue-600/20 to-transparent" },
-  { slug: "gobierno", name: "Gobierno", imageUrl: "/images/Negocios-Oficina/modern-office-corporate-building-low-angle-view-skyscrapers-city-singapore-panoramic-perspective-view-business-concept-success-industry-tech-architecture.jpg", icon: Landmark, accentColor: "from-indigo-600/20 to-transparent" },
-  { slug: "logistica", name: "Logística y Com. Ext.", imageUrl: "/images/Industrial-Logistica/shipping-container-stack-yard-night-light-trails-industrial-crane-motion-blur.jpg", icon: Ship, accentColor: "from-amber-600/20 to-transparent" },
-  { slug: "energia", name: "Energía", imageUrl: "/images/Naturaleza-Energia/beautiful-milky-way-night-sky.jpg", icon: Zap, accentColor: "from-yellow-600/20 to-transparent" },
-  { slug: "salud", name: "Salud", imageUrl: "/images/Tecnologia-IA/glowing-synapse-multi-colored-neural-communication-abstract-design-generated-by-ai.jpg", icon: HeartPulse, accentColor: "from-emerald-600/20 to-transparent" },
-  { slug: "financiero", name: "Financiero", imageUrl: "/images/Negocios-Oficina/modern-office-corporate-building-low-angle-view-skyscrapers-city-singapore-panoramic-perspective-view-business-concept-success-industry-tech-architecture.jpg", icon: Building2, accentColor: "from-purple-600/20 to-transparent" },
+  { slug: "legal", name: "Legal", imageUrl: "/images/industries/seeb-legal.jpg", icon: Scale, accentColor: "from-blue-600/20 to-transparent" },
+  { slug: "gobierno", name: "Gobierno", imageUrl: "/images/industries/seeb-gob.jpg", icon: Landmark, accentColor: "from-indigo-600/20 to-transparent" },
+  { slug: "logistica", name: "Logística y Com. Ext.", imageUrl: "/images/industries/seeb-logistica.jpg", icon: Ship, accentColor: "from-amber-600/20 to-transparent" },
+  { slug: "energia", name: "Energía", imageUrl: "/images/industries/seeb-energia.jpg", icon: Zap, accentColor: "from-yellow-600/20 to-transparent" },
+  { slug: "salud", name: "Salud", imageUrl: "/images/industries/seeb-salud.jpg", icon: HeartPulse, accentColor: "from-emerald-600/20 to-transparent" },
+  { slug: "financiero", name: "Financiero", imageUrl: "/images/industries/seeb-finanzas.jpg", icon: Building2, accentColor: "from-purple-600/20 to-transparent" },
 ];
 
 export default async function IndustriasPage({ params }: { params: Promise<{ lang: string }> }) {
@@ -332,7 +332,7 @@ export default async function IndustriasPage({ params }: { params: Promise<{ lan
           title={t.ctaTitle}
           subtitle={t.ctaSubtitle}
           ctaLabel={t.ctaLabel}
-          ctaHref="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
+          ctaHref="/diagnostico"
           trustSignals={[...t.ctaTrust]}
         />
       </main>

@@ -199,9 +199,7 @@ export function Resultados() {
 
                   {/* CTA */}
                   <a
-                    href="https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href="/diagnostico"
                     className="group/cta mt-6 inline-flex items-center gap-2 text-sm font-bold text-brand-midnight transition-colors hover:text-brand-accent dark:text-brand-white dark:hover:text-brand-accent"
                   >
                     {dictionary.resultados?.cta || "Solicitar Diagnóstico Inteligente"}

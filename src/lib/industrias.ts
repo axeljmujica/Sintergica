@@ -19,6 +19,7 @@ export interface IndustriaData {
   name: string;
   badge: string;
   imageUrl: string;
+  secondaryImageUrl?: string;
   imageAlt: string;
   atmosphericImageUrl?: string;
   headline: string;
@@ -42,6 +43,7 @@ export interface IndustriaData {
 interface IndustriaBase {
   slug: string;
   imageUrl: string;
+  secondaryImageUrl?: string;
   atmosphericImageUrl?: string;
   sectorIcon: string;
   agentIcon: string;
@@ -52,8 +54,9 @@ interface IndustriaBase {
 const INDUSTRIAS_BASE: Record<string, IndustriaBase> = {
   legal: {
     slug: "legal",
-    imageUrl: "/images/pages/Negocios-Oficina/close-up-notepad-black-table-3d-rendering.jpg",
-    atmosphericImageUrl: "/images/stock/legal-atmospheric.jpg",
+    imageUrl: "/images/industries/seeb-legal.jpg",
+    secondaryImageUrl: "/images/industries/seeb-legal-2.jpg",
+    atmosphericImageUrl: "/images/industries/seeb-legal-2.jpg",
     sectorIcon: "Scale",
     agentIcon: "Scale",
     agentName: "Ana",
@@ -66,8 +69,9 @@ const INDUSTRIAS_BASE: Record<string, IndustriaBase> = {
   },
   gobierno: {
     slug: "gobierno",
-    imageUrl: "/images/pages/Negocios-Oficina/businessman-gazes-intently-through-window-with-coffe-mug-hands-background-consists-blurred-cityscape-with-multiple-skyscrapers-copy-space.jpg",
-    atmosphericImageUrl: "/images/stock/gobierno-atmospheric.jpg",
+    imageUrl: "/images/industries/seeb-gob.jpg",
+    secondaryImageUrl: "/images/industries/seeb-gob-2.jpg",
+    atmosphericImageUrl: "/images/industries/seeb-gob-2.jpg",
     sectorIcon: "Landmark",
     agentIcon: "Landmark",
     agentName: "Carlos",
@@ -80,8 +84,9 @@ const INDUSTRIAS_BASE: Record<string, IndustriaBase> = {
   },
   logistica: {
     slug: "logistica",
-    imageUrl: "/images/pages/Industrial-Logistica/warehouse-with-lot-trucks-blue-light.jpg",
-    atmosphericImageUrl: "/images/stock/logistica-atmospheric.jpg",
+    imageUrl: "/images/industries/seeb-logistica.jpg",
+    secondaryImageUrl: "/images/industries/seeb-logistica-2.jpg",
+    atmosphericImageUrl: "/images/industries/seeb-logistica-2.jpg",
     sectorIcon: "Ship",
     agentIcon: "Ship",
     agentName: "Carlos",
@@ -94,8 +99,9 @@ const INDUSTRIAS_BASE: Record<string, IndustriaBase> = {
   },
   energia: {
     slug: "energia",
-    imageUrl: "/images/pages/Naturaleza-Energia/solar-panels-with-copy-space.jpg",
-    atmosphericImageUrl: "/images/stock/energia-atmospheric.jpg",
+    imageUrl: "/images/industries/seeb-energia.jpg",
+    secondaryImageUrl: "/images/industries/seeb-energia-2.jpg",
+    atmosphericImageUrl: "/images/industries/seeb-energia-2.jpg",
     sectorIcon: "Zap",
     agentIcon: "Zap",
     agentName: "Sofía",
@@ -108,8 +114,9 @@ const INDUSTRIAS_BASE: Record<string, IndustriaBase> = {
   },
   salud: {
     slug: "salud",
-    imageUrl: "/images/pages/Ciencia-Salud/futuristic-female-clinician-utilizing-ai-technology-healthcare.jpg",
-    atmosphericImageUrl: "/images/stock/salud-atmospheric.jpg",
+    imageUrl: "/images/industries/seeb-salud.jpg",
+    secondaryImageUrl: "/images/industries/seeb-salud-2.jpg",
+    atmosphericImageUrl: "/images/industries/seeb-salud-2.jpg",
     sectorIcon: "HeartPulse",
     agentIcon: "HeartPulse",
     agentName: "Marco",
@@ -122,8 +129,9 @@ const INDUSTRIAS_BASE: Record<string, IndustriaBase> = {
   },
   financiero: {
     slug: "financiero",
-    imageUrl: "/images/pages/Negocios-Oficina/contemporary-art-collage-concept-time-management.jpg",
-    atmosphericImageUrl: "/images/stock/financiero-atmospheric.jpg",
+    imageUrl: "/images/industries/seeb-finanzas.jpg",
+    secondaryImageUrl: "/images/industries/seeb-finanzas-2.jpg",
+    atmosphericImageUrl: "/images/industries/seeb-finanzas-2.jpg",
     sectorIcon: "Building2",
     agentIcon: "Building2",
     agentName: "Sofía",
@@ -136,8 +144,9 @@ const INDUSTRIAS_BASE: Record<string, IndustriaBase> = {
   },
   ventas: {
     slug: "ventas",
-    imageUrl: "/images/pages/Negocios-Oficina/close-up-person-using-tablet.jpg",
-    atmosphericImageUrl: "/images/stock/ventas-atmospheric.jpg",
+    imageUrl: "/images/industries/seeb-ventas.jpg",
+    secondaryImageUrl: "/images/industries/seeb-ventas-2.jpg",
+    atmosphericImageUrl: "/images/industries/seeb-ventas-2.jpg",
     sectorIcon: "TrendingUp",
     agentIcon: "TrendingUp",
     agentName: "Laura",
@@ -1178,6 +1187,7 @@ export function getIndustriaData(slug: string, locale: Locale): IndustriaData {
     name: text.name,
     badge: text.badge,
     imageUrl: base.imageUrl,
+    secondaryImageUrl: base.secondaryImageUrl,
     imageAlt: text.imageAlt,
     atmosphericImageUrl: base.atmosphericImageUrl,
     headline: text.headline,

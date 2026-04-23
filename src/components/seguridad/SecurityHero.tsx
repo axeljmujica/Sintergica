@@ -22,7 +22,7 @@ const T = {
     subtitle:
       "Lattice opera bajo arquitectura zero-trust. Tus datos nunca salen de tu infraestructura y cada acción queda registrada en una auditoría inmutable.",
     cta: "Solicitar evaluación de seguridad",
-    ctaHref: "https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4",
+    ctaHref: "/diagnostico",
     secondary: "Ver cumplimiento normativo",
     secondaryHref: "#cumplimiento",
     trust: [
@@ -40,7 +40,7 @@ const T = {
     subtitle:
       "Lattice operates on a zero-trust architecture. Your data never leaves your infrastructure and every action is recorded in an immutable audit log.",
     cta: "Request security assessment",
-    ctaHref: "https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4",
+    ctaHref: "/diagnostico",
     secondary: "View regulatory compliance",
     secondaryHref: "#cumplimiento",
     trust: [
@@ -58,7 +58,7 @@ const T = {
     subtitle:
       "Lattice opera sob arquitetura zero-trust. Seus dados nunca saem da sua infraestrutura e cada ação é registrada em uma auditoria imutável.",
     cta: "Solicitar avaliação de segurança",
-    ctaHref: "https://sales.sintergica.ai/widget/booking/vh6cQRURUU1nU5nslpu4",
+    ctaHref: "/diagnostico",
     secondary: "Ver conformidade regulatória",
     secondaryHref: "#cumplimiento",
     trust: [

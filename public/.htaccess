@@ -25,23 +25,18 @@
   RewriteCond %{REQUEST_URI} !(.*)/$
   RewriteRule ^(.*)$ /$1/ [L,R=301]
 
-  # 3. Enrutar idiomas (Inglés explícito)
-  RewriteCond %{REQUEST_URI} ^/en/
- <IfModule mod_rewrite.c>
-  Rew{R  RewriteEngine On
+  # 3. Enrutar idiomas: por defecto sirve /es/ internamente para las rutas en la raíz
+  RewriteCond %{REQUEST_URI} !^/(es|en|pt-br)/
+  RewriteCond %{REQUEST_URI} !^/_next/
+  RewriteCond %{REQUEST_URI} !(\.[a-zA-Z0-9]{2,5})$
+  RewriteRule ^(.*)$ /es/$1 [L]
 
-  #-f
-  # Definir docu.*)  DirectoryIndex index.html
-
-  #ar
-  # Redirecciones legadaslto  RewriteRule ^investiga{R  RewriteRule ^investigacion/prensa/?$ /recursos/prensa/ [R=3ST  RewriteRule ^empresa/eventos/?$ /recursos/eventos/ [R=301,L]
-
-  Manejo de error 404
-  ErrorDocument 404 /404.html
 </IfModule>
 
-<I  RewriteCond %{THE_REQUEST} \s/es/ [NC]
- s
-  A  RewriteRule ^es/(.*)$ /$1 [R=301,L]
- Ty  Reont/woff2 .woff2
+<IfModule mod_mime.c>
+  # Correct MIME types
+  AddType font/woff2 .woff2
 </IfModule>
+
+# Manejo de error 404
+ErrorDocument 404 /404.html
