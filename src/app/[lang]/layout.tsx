@@ -47,14 +47,42 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const locale = lang as Locale;
   const dictionary = await getDictionary(locale);
 
+  const title = dictionary.metadata?.title || "Sintérgica AI — IA Privada para México y Latinoamérica";
+  const description = dictionary.metadata?.description || "Sintérgica AI diseña, implementa y opera Lattice: IA privada con modelos especializados, agentes autónomos y gobernanza verificable para sectores regulados de México y LATAM.";
+  const siteUrl = "https://sintergica.ai";
+  const ogImage = {
+    url: `${siteUrl}/images/fine-tuning-hero.jpg`,
+    width: 1200,
+    height: 630,
+    alt: "Sintérgica AI — IA Privada para México y Latinoamérica",
+  };
+
   return {
-    title: dictionary.metadata?.title || "Sintérgica AI — IA Privada para México y Latinoamérica",
-    description: dictionary.metadata?.description || "Sintérgica AI diseña, implementa y opera Lattice: IA privada con modelos especializados, agentes autónomos y gobernanza verificable para sectores regulados de México y LATAM.",
+    metadataBase: new URL(siteUrl),
+    title,
+    description,
     icons: {
       icon: [
         { url: "/favicon/favicon.ico" },
         { url: "/favicon/favicon.svg", type: "image/svg+xml" }
       ],
+    },
+    openGraph: {
+      type: "website",
+      url: `${siteUrl}${locale === i18n.defaultLocale ? '' : `/${locale}`}`,
+      siteName: "Sintérgica AI",
+      title,
+      description,
+      locale: locale === "es" ? "es_MX" : locale === "pt-br" ? "pt_BR" : "en_US",
+      images: [ogImage],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImage.url],
+      creator: "@sintergica_ai",
+      site: "@sintergica_ai",
     },
   };
 }

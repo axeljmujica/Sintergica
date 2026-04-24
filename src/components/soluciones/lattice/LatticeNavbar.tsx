@@ -4,8 +4,8 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
-import { Menu, X, ArrowRight, Globe, ChevronDown } from "lucide-react";
-import { NAV_MENUS, LANGUAGES } from "@/lib/data";
+import { Menu, X, ArrowRight, ChevronDown } from "lucide-react";
+import { NAV_MENUS } from "@/lib/data";
 
 const MENU_KEYS = ["lattice", "soluciones", "industrias", "investigacion", "empresa"] as const;
 type MenuKey = (typeof MENU_KEYS)[number];
@@ -13,8 +13,6 @@ type MenuKey = (typeof MENU_KEYS)[number];
 export function LatticeNavbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<MenuKey | null>(null);
-  const [lang, setLang] = useState<"es" | "en" | "pt">("es");
-  const [langOpen, setLangOpen] = useState(false);
   const [mobileExpanded, setMobileExpanded] = useState<MenuKey | null>(null);
 
   const shouldReduce = useReducedMotion();
@@ -103,39 +101,6 @@ export function LatticeNavbar() {
             </nav>
 
             <div className="hidden items-center gap-3 lg:flex">
-              <div
-                className="relative"
-                onMouseEnter={() => setLangOpen(true)}
-                onMouseLeave={() => setLangOpen(false)}
-              >
-                <button
-                  type="button"
-                  className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-[0.85rem] font-semibold transition-all duration-200 text-white/50 hover:text-white hover:bg-white/[0.07]"
-                >
-                  <Globe className="h-4 w-4" />
-                  {lang.toUpperCase()}
-                </button>
-                {langOpen && (
-                  <div className="absolute right-0 top-full z-50 pt-1">
-                    <div className="rounded-xl border border-white/10 bg-[#0d101d] p-1.5 shadow-xl shadow-black/30">
-                      {LANGUAGES.map((l) => (
-                        <button
-                          key={l.code}
-                          type="button"
-                          onClick={() => { setLang(l.code); setLangOpen(false); }}
-                          className={`block w-full rounded-lg px-6 py-2.5 text-center text-[0.85rem] font-semibold transition-all duration-200 ${
-                            lang === l.code
-                              ? "bg-white/10 text-white"
-                              : "text-white/60 hover:bg-white/[0.05] hover:text-white"
-                          }`}
-                        >
-                          {l.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
               <Link
                 href="/diagnostico"
                 className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[0.85rem] font-semibold transition-all duration-300 bg-brand-accent text-white hover:scale-105 hover:bg-brand-accent/90 hover:shadow-lg hover:shadow-brand-accent/25"
@@ -146,17 +111,6 @@ export function LatticeNavbar() {
             </div>
 
             <div className="flex items-center gap-2 lg:hidden">
-              <button
-                type="button"
-                className="rounded-lg px-2 py-1.5 text-xs font-semibold text-white/40"
-                onClick={() => {
-                  const codes = LANGUAGES.map((l) => l.code);
-                  const next = codes[(codes.indexOf(lang) + 1) % codes.length];
-                  setLang(next);
-                }}
-              >
-                <Globe className="inline h-3.5 w-3.5" /> {lang.toUpperCase()}
-              </button>
               <button
                 type="button"
                 aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}
