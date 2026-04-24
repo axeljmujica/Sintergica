@@ -84,7 +84,7 @@ export default async function RootLayout({
         ))}
         <link rel="alternate" hrefLang="x-default" href="https://sintergica.ai" />
       </head>
-      <body className={`${proximaNova.variable} ${gilroy.variable} ${mulish.variable} antialiased bg-brand-surface text-brand-midnight`}>
+      <body className={`${proximaNova.variable} ${gilroy.variable} ${mulish.variable} antialiased bg-brand-surface text-brand-midnight overflow-x-hidden`}>
         <DictionaryProvider dictionary={dictionary} locale={locale}>
           {children}
         </DictionaryProvider>

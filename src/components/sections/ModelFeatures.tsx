@@ -53,7 +53,7 @@ export function ModelFeatures() {
         <div className="absolute top-1/4 left-0 w-full md:w-1/2 h-1/2 bg-brand-accent/20 blur-[150px] pointer-events-none rounded-full" />
         <div className="absolute bottom-0 right-0 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-blue-600/10 blur-[150px] pointer-events-none rounded-full" />
 
-        <div className="w-full mx-auto max-w-[1400px] px-6 md:px-12 relative z-10">
+        <div className="w-full mx-auto max-w-[1400px] px-4 sm:px-6 md:px-12 relative z-10">
           
           {/* Header */}
           <div className="mb-12 md:mb-14">
