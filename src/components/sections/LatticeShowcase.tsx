@@ -58,7 +58,7 @@ export function LatticeShowcase() {
               src="/images/mockup-home.png"
               alt="Lattice interface"
               fill
-              className="object-contain object-bottom"
+              className="object-contain object-right-bottom"
               sizes="100vw"
             />
           </div>

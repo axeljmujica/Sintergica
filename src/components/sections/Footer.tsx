@@ -112,25 +112,39 @@ export function Footer() {
             </div>
 
             {/* Link columns */}
-            {footerCols.map((col: { title: string, links: { label: string, href: string }[] }) => (
-              <div key={col.title}>
-                <h3 className="mb-4 text-xs font-proxima font-semibold uppercase tracking-wider text-brand-midnight/60 dark:text-brand-white/50">
-                  {col.title}
-                </h3>
-                <ul className="space-y-2.5" role="list">
-                  {col.links.map((link: { label: string, href: string }) => (
-                    <li key={link.label}>
-                      <a
-                        href={link.href}
-                        className="text-sm text-brand-midnight/50 transition-colors duration-200 hover:text-brand-midnight dark:text-brand-white/45 dark:hover:text-brand-white"
-                      >
-                        {link.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            {footerCols.map((col: { title: string, links: { label: string, href: string }[] }, idx: number) => {
+              const isLastCol = idx === footerCols.length - 1;
+              return (
+                <div key={col.title}>
+                  <h3 className="mb-4 text-xs font-proxima font-semibold uppercase tracking-wider text-brand-midnight/60 dark:text-brand-white/50">
+                    {col.title}
+                  </h3>
+                  <ul className="space-y-2.5" role="list">
+                    {col.links.map((link: { label: string, href: string }) => (
+                      <li key={link.label}>
+                        <a
+                          href={link.href}
+                          className="text-sm text-brand-midnight/50 transition-colors duration-200 hover:text-brand-midnight dark:text-brand-white/45 dark:hover:text-brand-white"
+                        >
+                          {link.label}
+                        </a>
+                      </li>
+                    ))}
+                    {/* Solo en móvil: los legales van debajo de Soporte en la última columna (Contacto) */}
+                    {isLastCol && bottomLinks.map((link: { label: string, href: string }) => (
+                      <li key={`mobile-${link.label}`} className="lg:hidden">
+                        <a
+                          href={link.href}
+                          className="text-sm text-brand-midnight/50 transition-colors duration-200 hover:text-brand-midnight dark:text-brand-white/45 dark:hover:text-brand-white"
+                        >
+                          {link.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -171,7 +185,7 @@ export function Footer() {
           <p className="text-xs text-brand-midnight/40 dark:text-brand-white/35">
             &copy; {year} Sintérgica AI. {dictionary.footer?.rights || "Todos los derechos reservados."}
           </p>
-          <div className="flex flex-wrap items-center gap-6">
+          <div className="hidden flex-wrap items-center gap-6 lg:flex">
             {bottomLinks.map((link: { label: string, href: string }) => (
               <a
                 key={link.label}

@@ -36,7 +36,7 @@ export function Hero() {
       aria-label="Sintérgica AI Inicio"
     >
       {/* Container acting as the "rounded image" like the reference */}
-      <div className="relative mx-5 sm:mx-6 md:mx-8 xl:mx-auto flex w-[calc(100%-2.5rem)] sm:w-[calc(100%-3rem)] md:w-[calc(100%-4rem)] xl:w-full max-w-[1400px] flex-col overflow-hidden rounded-[2.5rem] bg-brand-midnight h-[calc(100vh-5.5rem)] min-h-[600px] px-6 sm:px-8 lg:px-12 pt-10 pb-8 shadow-2xl">
+      <div className="relative mx-5 sm:mx-6 md:mx-8 xl:mx-auto flex w-[calc(100%-2.5rem)] sm:w-[calc(100%-3rem)] md:w-[calc(100%-4rem)] xl:w-full max-w-[1400px] flex-col overflow-hidden rounded-[2.5rem] bg-brand-midnight min-h-[calc(100svh-5.5rem)] lg:h-[calc(100vh-5.5rem)] lg:min-h-[600px] px-6 sm:px-8 lg:px-12 pt-10 pb-8 shadow-2xl">
         {/* Background Video */}
         <div className="absolute inset-0 z-0 bg-brand-midnight">
           <video
