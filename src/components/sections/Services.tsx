@@ -1,40 +1,40 @@
 "use client";
 
-import { ArrowRight, Hexagon, Globe, Layers } from "lucide-react";
+import { ArrowRight, Route, ShieldCheck, GraduationCap } from "lucide-react";
 import Link from "next/link";
 import { useDictionary } from "@/i18n/DictionaryProvider";
 import { LazyMotion, domAnimation, m } from "motion/react";
 
 const SERVICES = [
   {
-    icon: Hexagon,
+    icon: Route,
     title: "Consultoría",
     description: "Analizamos tus procesos críticos y trazamos un roadmap estratégico para integrar Inteligencia Artificial con alto retorno de inversión.",
     link: "/servicios/consultoria",
-    animation: { rotate: [0, 360] },
-    transition: { repeat: Infinity, duration: 25, ease: "linear" },
-    echoAnimation: { rotate: [360, 0], scale: [1, 1.3, 1] },
-    echoTransition: { repeat: Infinity, duration: 15, ease: "easeInOut" }
+    animation: { y: [0, -4, 0], scale: [1, 1.05, 1] },
+    transition: { repeat: Infinity, duration: 7, ease: "easeInOut" },
+    echoAnimation: { x: [-4, 4, -4], scale: [1, 1.2, 1] },
+    echoTransition: { repeat: Infinity, duration: 9, ease: "easeInOut" }
   },
   {
-    icon: Globe,
+    icon: ShieldCheck,
     title: "Implementación",
     description: "Desplegamos soluciones de IA seguras en tu propia infraestructura (On-Premise) o en nube privada, garantizando la gobernanza de tus datos.",
     link: "/servicios/implementacion",
-    animation: { rotateY: [0, 360], y: [0, -8, 0] },
-    transition: { repeat: Infinity, duration: 12, ease: "linear" },
-    echoAnimation: { rotateZ: [0, 90, 0], rotateX: [0, 60, 0], scale: [1, 1.15, 1] },
-    echoTransition: { repeat: Infinity, duration: 18, ease: "easeInOut" }
+    animation: { scale: [1, 1.08, 1] },
+    transition: { repeat: Infinity, duration: 4, ease: "easeInOut" },
+    echoAnimation: { scale: [1, 1.4, 1], opacity: [0.25, 0.05, 0.25] },
+    echoTransition: { repeat: Infinity, duration: 5, ease: "easeInOut" }
   },
   {
-    icon: Layers,
+    icon: GraduationCap,
     title: "Capacitación",
     description: "Acompañamos a tu equipo en la adopción tecnológica mediante formación especializada para liderar la transformación digital desde adentro.",
     link: "/servicios/capacitacion",
-    animation: { y: [0, -15, 0], rotateX: [0, 15, 0] },
-    transition: { repeat: Infinity, duration: 6, ease: "easeInOut" },
-    echoAnimation: { y: [0, 10, 0], rotateY: [0, 180, 360], scale: [1, 1.2, 1] },
-    echoTransition: { repeat: Infinity, duration: 10, ease: "linear" }
+    animation: { y: [0, -6, 0], rotate: [-3, 3, -3] },
+    transition: { repeat: Infinity, duration: 5, ease: "easeInOut" },
+    echoAnimation: { y: [0, 6, 0], scale: [1, 1.2, 1] },
+    echoTransition: { repeat: Infinity, duration: 7, ease: "easeInOut" }
   },
 ];
 

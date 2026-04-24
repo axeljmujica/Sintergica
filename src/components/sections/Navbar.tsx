@@ -374,6 +374,25 @@ export function Navbar() {
                           ))}
                         </div>
                       ))}
+                      {menu.featured && (
+                        <a
+                          href={menu.featured.href}
+                          onClick={closeAll}
+                          className="mt-3 block rounded-lg bg-brand-midnight/[0.04] px-3 py-2.5 text-[0.85rem] font-semibold text-brand-midnight transition-colors hover:bg-brand-midnight/[0.08]"
+                        >
+                          {menu.featured.title}
+                        </a>
+                      )}
+                      {menu.bottomLinks?.map((link) => (
+                        <a
+                          key={link.label}
+                          href={link.href}
+                          onClick={closeAll}
+                          className="mt-1 inline-flex items-center gap-1 rounded-lg px-2 py-2 text-[0.75rem] font-semibold uppercase tracking-wider text-brand-midnight/50 transition-colors hover:text-brand-midnight"
+                        >
+                          {link.label} <ArrowRight className="h-3 w-3" />
+                        </a>
+                      ))}
                     </div>
                   )}
                 </div>

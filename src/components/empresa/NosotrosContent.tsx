@@ -4,12 +4,13 @@ import { useRef } from "react";
 import Link from "next/link";
 import { LazyMotion, domAnimation, m, useInView, useReducedMotion } from "motion/react";
 import {
-  ArrowRight, Building2, FlaskConical, Briefcase, Code2, MapPin,
+  ArrowRight, FlaskConical, Briefcase, Code2, MapPin,
   Target, Eye, ShieldCheck, Database, Scale, BarChart3, FileSearch,
   ChevronDown,
   type LucideIcon,
 } from "lucide-react";
 import { CTASection } from "@/components/shared/CTASection";
+import { PageHero } from "@/components/shared/PageHero";
 import { useLocale } from "@/i18n/DictionaryProvider";
 
 /* ══════════════════ i18n ══════════════════ */
@@ -579,107 +580,34 @@ export function NosotrosContent() {
     <LazyMotion features={domAnimation}>
 
       {/* ══════════════ HERO ══════════════ */}
-      <section
-        className="relative overflow-hidden bg-brand-surface dark:bg-brand-midnight px-4 pt-28 sm:px-6 lg:px-8 md:pt-36"
-        aria-labelledby="nosotros-hero-h1"
-      >
-        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(54,101,245,0.08),transparent_55%)]" />
-          <div className="absolute -left-40 top-1/4 h-[520px] w-[520px] rounded-full bg-emerald-500/5 blur-[120px]" />
-          <div className="absolute right-[-10%] top-1/3 h-[500px] w-[500px] rounded-full bg-violet-500/5 blur-[130px]" />
-          <div
-            className="absolute inset-0 opacity-[0.04] dark:opacity-[0.06]"
-            style={{
-              backgroundImage:
-                "linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)",
-              backgroundSize: "64px 64px",
-              color: "var(--brand-midnight)",
-              maskImage: "radial-gradient(ellipse at center, black 40%, transparent 80%)",
-            }}
-          />
-        </div>
+      <PageHero
+        badge={c.hero.eyebrow}
+        title={c.hero.h1}
+        subtitle={c.hero.lead}
+        ctaLabel={c.hero.ctaPrimary}
+        ctaHref={BOOKING_URL}
+        ctaSecondaryLabel={c.hero.ctaSecondary}
+        ctaSecondaryHref="/investigacion/labs"
+        bgImage="/images/ai-cloud-concept-with-lit-brain.jpg"
+        bgImageAlt="Sintérgica AI"
+        trustSignals={[...c.hero.trust]}
+      />
 
-        <div className="relative mx-auto grid max-w-6xl items-center pb-20 pt-10 md:pt-14 lg:pb-24">
-          <m.div {...fade(0)} animate={{ opacity: 1, y: 0 }} className="flex justify-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-brand-midnight/10 bg-white/60 px-4 py-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-midnight/70 backdrop-blur dark:border-brand-white/10 dark:bg-brand-midnight/40 dark:text-brand-white/70">
-              <Building2 className="h-3.5 w-3.5 text-brand-accent" />
-              {c.hero.eyebrow}
-            </span>
-          </m.div>
-
-          <m.h1
-            id="nosotros-hero-h1"
-            {...fade(0.08)}
-            animate={{ opacity: 1, y: 0 }}
-            className="font-proxima mx-auto mt-8 max-w-5xl text-balance text-center text-4xl font-extrabold leading-[1.03] tracking-tight text-brand-midnight dark:text-brand-white sm:text-5xl lg:text-[4.25rem]"
-          >
-            {c.hero.h1}
-          </m.h1>
-
-          <m.p
-            {...fade(0.16)}
-            animate={{ opacity: 1, y: 0 }}
-            className="mx-auto mt-7 max-w-2xl text-pretty text-center text-lg leading-relaxed text-brand-midnight/65 dark:text-brand-white/65 sm:text-xl"
-          >
-            {c.hero.lead}
-          </m.p>
-
-          <m.div
-            {...fade(0.24)}
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-5"
-          >
-            <Link
-              href={BOOKING_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 rounded-lg bg-brand-accent px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-brand-accent/25 transition-all hover:-translate-y-0.5 hover:bg-brand-accent/90 hover:shadow-xl hover:shadow-brand-accent/30"
-            >
-              {c.hero.ctaPrimary}
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </Link>
-            <Link
-              href="/investigacion/labs"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-midnight/70 transition-colors hover:text-brand-accent dark:text-brand-white/70 dark:hover:text-brand-white"
-            >
-              {c.hero.ctaSecondary}
-              <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
-          </m.div>
-
-          <m.div
-            {...fade(0.32)}
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-12 flex flex-wrap items-center justify-center gap-x-6 gap-y-2"
-          >
-            {c.hero.trust.map((s) => (
-              <span
-                key={s}
-                className="flex items-center gap-2 text-xs font-medium text-brand-midnight/45 dark:text-brand-white/45"
-              >
-                <span className="h-1 w-1 rounded-full bg-emerald-500/80" />
-                {s}
-              </span>
+      {/* Stats strip */}
+      <section className="bg-brand-surface dark:bg-brand-midnight border-b border-brand-midnight/8 dark:border-brand-white/10">
+        <div className="mx-auto max-w-6xl">
+          <dl className="grid grid-cols-3 divide-x divide-brand-midnight/8 dark:divide-brand-white/10">
+            {c.stats.map((s) => (
+              <div key={s.label} className="flex flex-col items-center justify-center py-8 sm:py-10">
+                <dt className="order-2 mt-1.5 px-2 text-center text-[0.65rem] font-medium uppercase tracking-[0.14em] text-brand-midnight/55 dark:text-brand-white/55 sm:text-xs">
+                  {s.label}
+                </dt>
+                <dd className="order-1 font-proxima text-3xl font-extrabold text-brand-midnight dark:text-brand-white sm:text-4xl lg:text-5xl">
+                  {s.value}
+                </dd>
+              </div>
             ))}
-          </m.div>
-        </div>
-
-        {/* Stats strip */}
-        <div className="relative border-t border-brand-midnight/8 dark:border-brand-white/10">
-          <div className="mx-auto max-w-6xl">
-            <dl className="grid grid-cols-3 divide-x divide-brand-midnight/8 dark:divide-brand-white/10">
-              {c.stats.map((s) => (
-                <div key={s.label} className="flex flex-col items-center justify-center py-6 sm:py-8">
-                  <dt className="order-2 mt-1.5 px-2 text-center text-[0.65rem] font-medium uppercase tracking-[0.14em] text-brand-midnight/45 dark:text-brand-white/45 sm:text-xs">
-                    {s.label}
-                  </dt>
-                  <dd className="order-1 font-proxima text-3xl font-extrabold text-brand-midnight dark:text-brand-white sm:text-4xl lg:text-5xl">
-                    {s.value}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </div>
+          </dl>
         </div>
       </section>
 

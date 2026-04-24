@@ -6,10 +6,6 @@ import { Hero } from "@/components/sections/Hero";
 // Navbar + Hero are eagerly loaded for best LCP
 
 // ── Below-the-fold: lazy loaded to split the JS bundle
-const LogoStrip = dynamic(
-  () => import("@/components/sections/LogoStrip").then((m) => ({ default: m.LogoStrip })),
-  { ssr: true }
-);
 const StatsBar = dynamic(
   () => import("@/components/sections/StatsBar").then((m) => ({ default: m.default })),
   { ssr: true }
@@ -61,7 +57,6 @@ export default function Home() {
         {/* 1. Hero — above the fold, SSR + eager */}
         <Hero />
         {/* 2–10. Below the fold — code-split bundles */}
-        <LogoStrip />
         <StatsBar />
         <Services />
         <LatticeShowcase />

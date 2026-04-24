@@ -53,9 +53,9 @@ export const NAV_MENUS: Record<string, NavMenuEntry> = {
       {
         heading: "ECOSISTEMA LATTICE",
         items: [
-          { name: "Lattice", desc: "Sistema operativo de agentes autónomos", href: "/soluciones/lattice" },
+          { name: "Lattice", desc: "Sistema Operativo de IA empresarial", href: "/soluciones/lattice" },
           { name: "Lattice Séeb", desc: "SLMs especializados por industria", href: "/soluciones/lattice-seeb" },
-          { name: "Lattice Na'at", desc: "Modelo maestro 120B para LATAM", href: "/investigacion/lattice-naat" },
+          { name: "Lattice Na'at", desc: "Cerebro digital 1T para México y LATAM", href: "/investigacion/lattice-naat" },
         ],
       },
     ],
@@ -76,7 +76,7 @@ export const NAV_MENUS: Record<string, NavMenuEntry> = {
       {
         heading: "Soluciones",
         items: [
-          { name: "Lattice", desc: "IA privada con gobernanza y trazabilidad", href: "/soluciones/lattice" },
+          { name: "Lattice", desc: "Sistema Operativo de IA empresarial", href: "/soluciones/lattice" },
           { name: "Nahui", desc: "Trazabilidad operativa y control en campo", href: "/soluciones/nahui" },
           { name: "SalesHub", desc: "Automatización de ventas y captación de leads", href: "/soluciones/saleshub" },
         ],
@@ -128,7 +128,7 @@ export const NAV_MENUS: Record<string, NavMenuEntry> = {
       {
         heading: "Investigación",
         items: [
-          { name: "Lattice Na'at", desc: "Modelo 120B de Sintérgica AI para LATAM", href: "/investigacion/lattice-naat" },
+          { name: "Lattice Na'at", desc: "Cerebro digital 1T para México y LATAM", href: "/investigacion/lattice-naat" },
           { name: "Sesgo WEIRD", desc: "Por qué la IA global no es suficiente", href: "/investigacion/sesgo-weird" },
           { name: "Gobernanza", desc: "Ética, transparencia y control", href: "/investigacion/gobernanza" },
         ],
@@ -498,4 +498,4 @@ export const FOOTER_BOTTOM_LINKS = [
   { label: "Seguridad & Compliance", href: "/seguridad" },
 ] as const;
 
-export const FOOTER_TAGLINE = "La infraestructura de IA de referencia para América Latina." as const;
+export const FOOTER_TAGLINE = "IA privada, especializada y gobernable para organizaciones de México y LATAM." as const;

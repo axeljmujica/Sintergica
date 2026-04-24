@@ -477,28 +477,27 @@ export function SesgoWeirdContent() {
 
       {/* ══════════════ HERO ══════════════ */}
       <section
-        className="relative overflow-hidden bg-brand-surface px-4 pt-28 dark:bg-brand-midnight sm:px-6 lg:px-8 md:pt-36"
+        className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#0A0F1C] px-6 pb-16 pt-28"
         aria-labelledby="weird-hero-h1"
       >
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(54,101,245,0.08),transparent_55%)]" />
-          <div className="absolute right-[-10%] top-1/4 h-[520px] w-[520px] rounded-full bg-amber-500/6 blur-[130px]" />
-          <div
-            className="absolute inset-0 opacity-[0.04] dark:opacity-[0.06]"
-            style={{
-              backgroundImage:
-                "linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)",
-              backgroundSize: "64px 64px",
-              color: "var(--brand-midnight)",
-              maskImage: "radial-gradient(ellipse at center, black 40%, transparent 80%)",
-            }}
-          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0A0F1C]/65 via-brand-midnight/35 to-[#0A0F1C]/90" />
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/50 via-transparent to-brand-navy/50" />
+        </div>
+        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <div className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-accent/[0.08] blur-[120px]" />
+          <div className="absolute top-0 right-0 h-[400px] w-[400px] rounded-full bg-amber-500/10 blur-[150px]" />
         </div>
 
-        <div className="relative mx-auto max-w-4xl pb-24 pt-10 md:pt-16 lg:pb-32">
+        <div className="relative mx-auto max-w-4xl">
           <m.div {...fade(0)} animate={{ opacity: 1, y: 0 }} className="flex justify-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-brand-midnight/10 bg-white/60 px-4 py-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-brand-midnight/70 backdrop-blur dark:border-brand-white/10 dark:bg-brand-midnight/40 dark:text-brand-white/70">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-500" />
+            <span className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-amber-400 backdrop-blur-sm">
+              <span className="relative flex h-2 w-2">
+                {!shouldReduce && (
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-500 opacity-75" />
+                )}
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-amber-500" />
+              </span>
               {c.hero.eyebrow}
             </span>
           </m.div>
@@ -507,7 +506,7 @@ export function SesgoWeirdContent() {
             id="weird-hero-h1"
             {...fade(0.08)}
             animate={{ opacity: 1, y: 0 }}
-            className="font-proxima mx-auto mt-8 max-w-4xl text-balance text-center text-4xl font-extrabold leading-[1.02] tracking-tight text-brand-midnight dark:text-brand-white sm:text-5xl lg:text-[4.25rem]"
+            className="font-proxima mx-auto mt-6 max-w-4xl text-balance text-center text-4xl font-extrabold leading-[1.02] tracking-tight text-brand-white sm:text-5xl lg:text-[4.25rem]"
           >
             {c.hero.h1}
           </m.h1>
@@ -515,7 +514,7 @@ export function SesgoWeirdContent() {
           <m.p
             {...fade(0.16)}
             animate={{ opacity: 1, y: 0 }}
-            className="mx-auto mt-8 max-w-2xl text-pretty text-center text-lg leading-relaxed text-brand-midnight/65 dark:text-brand-white/65 sm:text-xl"
+            className="mx-auto mt-6 max-w-2xl text-pretty text-center text-lg leading-relaxed text-brand-white sm:text-xl [text-shadow:0_2px_12px_rgba(10,15,28,0.9)]"
           >
             {c.hero.lead}
           </m.p>
@@ -527,11 +526,11 @@ export function SesgoWeirdContent() {
           >
             <a
               href="#origin"
-              className="group inline-flex flex-col items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-brand-midnight/45 transition-colors hover:text-brand-accent dark:text-brand-white/45 dark:hover:text-brand-white"
+              className="group inline-flex flex-col items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-brand-white transition-colors hover:text-brand-accent-light"
             >
               <span>{c.hero.scrollHint}</span>
-              <span className="flex h-8 w-5 items-start justify-center rounded-full border border-brand-midnight/20 p-1 dark:border-brand-white/20">
-                <span className="block h-2 w-0.5 animate-bounce rounded-full bg-brand-midnight/40 dark:bg-brand-white/40" />
+              <span className="flex h-8 w-5 items-start justify-center rounded-full border border-brand-white/60 p-1">
+                <span className="block h-2 w-0.5 animate-bounce rounded-full bg-brand-white" />
               </span>
             </a>
           </m.div>

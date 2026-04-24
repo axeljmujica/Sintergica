@@ -18,7 +18,7 @@ const T = {
       "Experiencia en logtech y foodtech. Responsable de la coordinación ejecutiva y operación estratégica del equipo.",
       "Comunicóloga con amplia experiencia en relaciones públicas y campañas digitales. Responsable de la experiencia del cliente, estrategia de comunicación y relaciones institucionales.",
     ],
-    roles: ["CEO", "CTO", "CSO", "VP Relaciones Interinstitucionales", "Chief of Staff", "Chief Customer Officer"],
+    roles: ["Director General", "Director de Tecnología", "Director de Ciencia", "VP Relaciones Interinstitucionales", "Jefe de Staff", "Directora de Éxito al Cliente"],
     cta: { title: "¿Listo para llevar IA privada a tu organización?", subtitle: "Agenda un Diagnóstico Inteligente. Analizamos tus procesos, identificamos los casos de uso con mayor impacto y entregamos un plan de implementación con ROI estimado — sin permanencia.", ctaLabel: "Solicitar Diagnóstico", trustSignals: ["Sin permanencia", "Demo con tus datos reales", "ROI estimado en 1 semana"] },
   },
   en: {
@@ -32,7 +32,7 @@ const T = {
       "Experience in logtech and foodtech. Responsible for executive coordination and strategic team operations.",
       "Communications specialist with extensive experience in PR and digital campaigns. Responsible for customer experience, communication strategy, and institutional relations.",
     ],
-    roles: ["CEO", "CTO", "CSO", "VP Institutional Relations", "Chief of Staff", "Chief Customer Officer"],
+    roles: ["Chief Executive Officer", "Chief Technology Officer", "Chief Science Officer", "VP Institutional Relations", "Chief of Staff", "Chief Customer Officer"],
     cta: { title: "Ready to bring private AI to your organization?", subtitle: "Book a Smart Diagnosis. We analyze your processes, identify the highest-impact use cases, and deliver an implementation plan with estimated ROI — no lock-in.", ctaLabel: "Request Diagnosis", trustSignals: ["No lock-in", "Demo with your real data", "Estimated ROI in 1 week"] },
   },
   "pt-br": {
@@ -46,7 +46,7 @@ const T = {
       "Experiência em logtech e foodtech. Responsável pela coordenação executiva e operação estratégica da equipe.",
       "Comunicóloga com ampla experiência em relações públicas e campanhas digitais. Responsável pela experiência do cliente, estratégia de comunicação e relações institucionais.",
     ],
-    roles: ["CEO", "CTO", "CSO", "VP Relações Interinstitucionais", "Chief of Staff", "Chief Customer Officer"],
+    roles: ["Diretor Executivo", "Diretor de Tecnologia", "Diretor de Ciência", "VP Relações Interinstitucionais", "Diretor de Gabinete", "Diretora de Clientes"],
     cta: { title: "Pronto para levar IA privada à sua organização?", subtitle: "Agende um Diagnóstico Inteligente. Analisamos seus processos, identificamos os casos de uso com maior impacto e entregamos um plano de implementação com ROI estimado — sem permanência.", ctaLabel: "Solicitar Diagnóstico", trustSignals: ["Sem permanência", "Demo com seus dados reais", "ROI estimado em 1 semana"] },
   },
 } as const;
@@ -75,7 +75,7 @@ export function EquipoContent() {
           badge={t.hero.badge}
           title={t.hero.title}
           subtitle={t.hero.subtitle}
-          bgImage="/images/Industrial-Logistica/factory-workshop-interior-machines-glass-production-background.jpg"
+          bgImage="/images/ai-cloud-concept-with-lit-brain.jpg"
           bgImageAlt={t.hero.bgImageAlt}
         />
 

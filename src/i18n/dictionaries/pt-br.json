@@ -18,7 +18,7 @@
         {
           "heading": "Produtos",
           "items": [
-            { "name": "Lattice", "desc": "O sistema operacional inteligente" },
+            { "name": "Lattice", "desc": "Sistema Operacional de IA empresarial" },
             { "name": "Nahui", "desc": "Logística Inteligente e TMS" },
             { "name": "SalesHub", "desc": "Motor Comercial Completo" }
           ]
@@ -65,7 +65,7 @@
         {
           "heading": "Pesquisa",
           "items": [
-            { "name": "Lattice Na'at", "desc": "Modelo 1T da Sintérgica AI para LATAM" },
+            { "name": "Lattice Na'at", "desc": "Cérebro digital 1T para México e LATAM" },
             { "name": "Viés WEIRD", "desc": "Por que a IA global não é suficiente" },
             { "name": "Governança", "desc": "Ética, transparência e controle" }
           ]
@@ -100,7 +100,7 @@
     }
   },
   "footer": {
-    "tagline": "A infraestrutura de IA de referência para a América Latina.",
+    "tagline": "IA privada, especializada e governável para organizações do México e LATAM.",
     "asociaciones": "Parcerias e Associações",
     "hechoEn": "Feito no México",
     "rights": "Todos os direitos reservados.",

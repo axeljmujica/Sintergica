@@ -18,7 +18,7 @@
         {
           "heading": "Products",
           "items": [
-            { "name": "Lattice", "desc": "The intelligent operating system" },
+            { "name": "Lattice", "desc": "Enterprise AI Operating System" },
             { "name": "Nahui", "desc": "Smart Logistics & TMS" },
             { "name": "SalesHub", "desc": "Complete Sales Engine" }
           ]
@@ -65,7 +65,7 @@
         {
           "heading": "Research",
           "items": [
-            { "name": "Lattice Na'at", "desc": "Sintérgica AI's 1T model for LATAM" },
+            { "name": "Lattice Na'at", "desc": "1T digital brain for Mexico and LATAM" },
             { "name": "WEIRD Bias", "desc": "Why global AI is not enough" },
             { "name": "Governance", "desc": "Ethics, transparency & control" }
           ]
@@ -100,7 +100,7 @@
     }
   },
   "footer": {
-    "tagline": "The reference AI infrastructure for Latin America.",
+    "tagline": "Private, specialized, and governable AI for organizations in Mexico and LATAM.",
     "asociaciones": "Partnerships & Associations",
     "hechoEn": "Made in Mexico",
     "rights": "All rights reserved.",

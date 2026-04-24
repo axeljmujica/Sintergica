@@ -41,8 +41,8 @@ const TESTIMONIALS: Testimonial[] = [
     quote: "Los agentes de Sintérgica atienden a nuestros pacientes, agendan y confirman citas sin que alguien del equipo levante el teléfono. Todo conectado a un sistema de gestión hospitalaria hecho a la medida —nuestra operación dejó de depender de la disponibilidad humana.",
     linkText: "Conoce el caso",
     linkHref: "#",
-    image: "/images/industries/seeb-salud.jpg",
-    altText: "Consultorio médico moderno",
+    image: "/images/DSC_0114.JPG",
+    altText: "Equipo de SJ Médica Estética",
   },
 ];
 

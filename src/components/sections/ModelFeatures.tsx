@@ -70,8 +70,8 @@ export function ModelFeatures() {
             {/* Left: Neural Network Concept Image */}
             <div className="w-full lg:w-1/2 rounded-[2rem] overflow-hidden bg-brand-deep relative shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-white/10 group h-[350px] lg:h-auto lg:min-h-[480px]">
               <Image
-                src="/images/lattice_neural_network.png"
-                alt="Concepto de red neuronal y modelos Lattice"
+                src="/images/naat/85.jpg"
+                alt="Lattice Na'at — modelo fundacional para México y LATAM"
                 fill
                 loading="lazy"
                 className="object-cover object-center transition-transform duration-1500 ease-out group-hover:scale-105"

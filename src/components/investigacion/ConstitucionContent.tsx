@@ -599,7 +599,7 @@ export function ConstitucionContent() {
           badgeColor="sky-600"
           title={t.hero.title}
           subtitle={t.hero.subtitle}
-          bgImage="/images/Industrial-Logistica/factory-workshop-interior-machines-glass-production-background.jpg"
+          bgImage="/images/ai-cloud-concept-with-lit-brain.jpg"
           bgImageAlt={t.hero.bgImageAlt}
           trustSignals={[...t.hero.trustSignals]}
         />
@@ -630,7 +630,7 @@ export function ConstitucionContent() {
               <div className="relative">
                 <div className="rounded-2xl overflow-hidden border border-brand-midnight/10 dark:border-brand-white/10">
                   <Image
-                    src="/images/Naturaleza-Energia/solar-panels-with-copy-space.jpg"
+                    src="/images/ocean-waves.jpg"
                     alt={t.problema.imgAlt}
                     width={600}
                     height={500}
@@ -724,7 +724,7 @@ export function ConstitucionContent() {
             <div className="grid gap-16 lg:grid-cols-2 items-center">
               <div className="rounded-2xl overflow-hidden border border-brand-midnight/10 dark:border-brand-white/10">
                 <Image
-                  src="/images/Negocios-Oficina/hourglass-dark-color-background.jpg"
+                  src="/images/2727.jpg"
                   alt={t.utilidad.imgAlt}
                   width={600}
                   height={450}
@@ -819,7 +819,7 @@ export function ConstitucionContent() {
                 </p>
                 <div className="mt-8 rounded-2xl overflow-hidden border border-brand-midnight/10 dark:border-brand-white/10">
                   <Image
-                    src="/images/Negocios-Oficina/modern-office-corporate-building-low-angle-view-skyscrapers-city-singapore-panoramic-perspective-view-business-concept-success-industry-tech-architecture.jpg"
+                    src="/images/2151895873.jpg"
                     alt={t.privacidad.imgAlt}
                     width={600}
                     height={400}

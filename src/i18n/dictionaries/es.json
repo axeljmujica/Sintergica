@@ -18,7 +18,7 @@
         {
           "heading": "Productos",
           "items": [
-            { "name": "Lattice", "desc": "El sistema operativo inteligente" },
+            { "name": "Lattice", "desc": "Sistema Operativo de IA empresarial" },
             { "name": "Nahui", "desc": "Logística Inteligente y TMS" },
             { "name": "SalesHub", "desc": "Motor Comercial Completo" }
           ]
@@ -65,7 +65,7 @@
         {
           "heading": "Investigación",
           "items": [
-            { "name": "Lattice Na'at", "desc": "Modelo 1T de Sintérgica AI para LATAM" },
+            { "name": "Lattice Na'at", "desc": "Cerebro digital 1T para México y LATAM" },
             { "name": "Sesgo WEIRD", "desc": "Por qué la IA global no es suficiente" },
             { "name": "Gobernanza", "desc": "Ética, transparencia y control" }
           ]
@@ -100,7 +100,7 @@
     }
   },
   "footer": {
-    "tagline": "La infraestructura de IA de referencia para América Latina.",
+    "tagline": "IA privada, especializada y gobernable para organizaciones de México y LATAM.",
     "asociaciones": "Asociaciones y Partners",
     "hechoEn": "Hecho en México",
     "rights": "Todos los derechos reservados.",

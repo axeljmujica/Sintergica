@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+import { useEffect, useRef } from "react";
 import { LazyMotion, domAnimation, m, useReducedMotion } from "motion/react";
 import { ArrowRight, Home } from "lucide-react";
 import { useLocale } from "@/i18n/DictionaryProvider";
@@ -58,6 +58,17 @@ export function NotFoundContent() {
   const contactHref = locale === "es" ? "/empresa/contacto" : `/${locale}/empresa/contacto`;
 
   const shouldReduce = useReducedMotion();
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (shouldReduce) {
+      v.pause();
+    } else {
+      v.play().catch(() => {});
+    }
+  }, [shouldReduce]);
 
   const fade = (delay = 0) =>
     shouldReduce
@@ -93,10 +104,10 @@ export function NotFoundContent() {
 
         <div className="relative mx-auto w-full max-w-6xl">
           <div className="grid items-center gap-10 lg:grid-cols-[1fr_1fr] lg:gap-16">
-            {/* Illustration */}
+            {/* Illustration (video loop) */}
             <m.div
               {...fade(0)}
-              className="relative order-1 mx-auto flex max-w-md items-center justify-center lg:order-none lg:max-w-none"
+              className="relative order-1 mx-auto flex w-full max-w-md items-center justify-center lg:order-none lg:max-w-none"
             >
               <div
                 className="absolute inset-0 -z-10 mx-auto my-auto h-[70%] w-[70%] animate-pulse-glow rounded-full bg-brand-accent/15 blur-3xl dark:bg-brand-accent/25"
@@ -106,15 +117,19 @@ export function NotFoundContent() {
                 initial={shouldReduce ? false : { y: 0 }}
                 animate={shouldReduce ? undefined : { y: [0, -8, 0] }}
                 transition={shouldReduce ? undefined : { duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-                className="relative will-change-transform"
+                className="relative w-full max-w-[520px] overflow-hidden rounded-3xl shadow-[0_25px_60px_rgba(15,23,42,0.22)] ring-1 ring-brand-midnight/5 will-change-transform dark:shadow-[0_25px_60px_rgba(0,0,0,0.55)] dark:ring-brand-white/5"
               >
-                <Image
-                  src="/images/404-error.png"
-                  alt={c.imageAlt}
-                  width={560}
-                  height={560}
-                  priority
-                  className="h-auto w-full max-w-[520px] drop-shadow-[0_25px_45px_rgba(15,23,42,0.18)] dark:drop-shadow-[0_25px_45px_rgba(0,0,0,0.55)]"
+                <video
+                  ref={videoRef}
+                  src="/videos/404.mp4"
+                  poster="/images/404-error.png"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                  aria-label={c.imageAlt}
+                  className="block h-auto w-full"
                 />
               </m.div>
             </m.div>
