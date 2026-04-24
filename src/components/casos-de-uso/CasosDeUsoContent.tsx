@@ -46,6 +46,18 @@ const INDUSTRIA_ICON: Record<IndustriaId, React.ComponentType<{ className?: stri
   gobierno: Landmark,
 };
 
+// Override de imagen por caso específico (prioridad sobre INDUSTRIA_IMAGE)
+const CASO_IMAGE_OVERRIDE: Record<string, { src: string; alt: string }> = {
+  "energia-solar": {
+    src: "/images/industries/seeb-energia-2.jpg",
+    alt: "Paneles solares fotovoltaicos — empresa de energía solar",
+  },
+  "limpieza-municipal": {
+    src: "/images/veracruz-ampliara-a-120-las-rutas-de-recoleccion-de-basura-695445.jpg",
+    alt: "Camión recolector de residuos en Veracruz — servicio de limpia municipal",
+  },
+};
+
 // Imágenes alusivas reales (públicas) por industria
 const INDUSTRIA_IMAGE: Record<IndustriaId, { src: string; alt: string }> = {
   energia: {
@@ -229,7 +241,7 @@ function CasoCard({
   const reduce = useReducedMotion();
   const accent = INDUSTRIA_ACCENT[caso.industria];
   const Icon = INDUSTRIA_ICON[caso.industria];
-  const img = INDUSTRIA_IMAGE[caso.industria];
+  const img = CASO_IMAGE_OVERRIDE[caso.id] ?? INDUSTRIA_IMAGE[caso.industria];
   const reversed = index % 2 === 1;
 
   return (
