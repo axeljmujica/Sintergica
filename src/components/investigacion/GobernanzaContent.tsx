@@ -461,7 +461,7 @@ export function GobernanzaContent() {
           badgeColor="success-600"
           title={t.hero.title}
           subtitle={t.hero.subtitle}
-          bgImage="/images/Negocios-Oficina/modern-office-corporate-building-low-angle-view-skyscrapers-city-singapore-panoramic-perspective-view-business-concept-success-industry-tech-architecture.jpg"
+          bgImage="/images/Catedral Metropolitana Ciudad de México.jpg"
           bgImageAlt={t.hero.bgImageAlt}
           trustSignals={[...t.hero.trustSignals]}
         />
@@ -530,7 +530,7 @@ export function GobernanzaContent() {
 
         {/* Quién decide qué */}
         <section className="bg-brand-surface dark:bg-brand-deep py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-          <div className="pointer-events-none absolute inset-0 bg-[url('/images/Negocios-Oficina/modern-office-corporate-building-low-angle-view-skyscrapers-city-singapore-panoramic-perspective-view-business-concept-success-industry-tech-architecture.jpg')] bg-cover bg-center opacity-[0.04]" aria-hidden="true" />
+          <div className="pointer-events-none absolute inset-0 bg-[url('/images/Catedral Metropolitana Ciudad de México.jpg')] bg-cover bg-center opacity-[0.04]" aria-hidden="true" />
           <div className="mx-auto max-w-5xl relative z-10">
             <SectionHeader
               badge={t.decisiones.badge}
@@ -573,11 +573,11 @@ export function GobernanzaContent() {
                 />
                 <div className="mt-8 rounded-2xl overflow-hidden border border-brand-midnight/10 dark:border-brand-white/10">
                   <Image
-                    src="/images/Industrial-Logistica/factory-workshop-interior-machines-glass-production-background.jpg"
+                    src="/images/ai-cloud-concept-with-lit-brain.jpg"
                     alt={t.contribucion.imgAlt}
                     width={600}
                     height={400}
-                    className="w-full object-cover opacity-70"
+                    className="w-full object-cover"
                   />
                 </div>
               </div>
@@ -655,7 +655,7 @@ export function GobernanzaContent() {
                 <div className="mt-8 space-y-3">
                   <div className="rounded-xl border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-surface dark:bg-brand-deep p-5">
                     <p className="text-xs font-semibold uppercase tracking-wider text-brand-midnight/50 dark:text-brand-white/50 mb-2">{t.incidentes.canalPrincipal}</p>
-                    <p className="text-sm text-brand-midnight dark:text-brand-white font-mono">hola@sintergica.ai</p>
+                    <p className="text-sm text-brand-midnight dark:text-brand-white font-mono">clemente.hernandez@sintergica.ai</p>
                     <p className="text-xs text-brand-midnight/40 dark:text-brand-white/40 mt-1">{t.incidentes.asunto}</p>
                   </div>
                   <div className="rounded-xl border border-brand-midnight/10 dark:border-brand-white/10 bg-brand-surface dark:bg-brand-deep p-5">

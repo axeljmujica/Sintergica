@@ -634,9 +634,8 @@ export function ConstitucionContent() {
                     alt={t.problema.imgAlt}
                     width={600}
                     height={500}
-                    className="w-full object-cover opacity-60"
+                    className="w-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-brand-deep/90 via-brand-deep/20 to-transparent" />
                 </div>
                 <div className="absolute bottom-6 left-6 right-6">
                   <div className="grid grid-cols-3 gap-3">
@@ -728,7 +727,7 @@ export function ConstitucionContent() {
                   alt={t.utilidad.imgAlt}
                   width={600}
                   height={450}
-                  className="w-full object-cover opacity-65"
+                  className="w-full object-cover"
                 />
               </div>
               <div>
@@ -823,7 +822,7 @@ export function ConstitucionContent() {
                     alt={t.privacidad.imgAlt}
                     width={600}
                     height={400}
-                    className="w-full object-cover opacity-60"
+                    className="w-full object-cover"
                   />
                 </div>
               </div>
