@@ -97,7 +97,7 @@ export function TestimonialsCarousel() {
           </svg>
 
           {/* Carousel Container */}
-          <div className="relative w-full aspect-[4/3] md:aspect-[21/9] lg:aspect-[22/10] max-h-[800px] lg:max-h-[600px] mt-8 bg-transparent">
+          <div className="relative w-full md:aspect-[21/9] lg:aspect-[22/10] md:max-h-[800px] lg:max-h-[600px] mt-8 bg-transparent">
             
             {/* Desktop Layout - static structure, animated content */}
             <div className="hidden md:block absolute inset-0 w-full h-full">
@@ -177,7 +177,7 @@ export function TestimonialsCarousel() {
             </div>
 
             {/* Mobile Layout (Slide up animation for full card) */}
-            <div className="md:hidden relative w-full h-full">
+            <div className="md:hidden relative w-full">
               <AnimatePresence mode="wait">
                 <m.div
                   key={"mobile-" + currentIndex}
@@ -185,18 +185,18 @@ export function TestimonialsCarousel() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
                   transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  className="flex flex-col w-full h-full bg-white rounded-3xl overflow-hidden shadow-xl"
+                  className="flex flex-col w-full bg-white rounded-3xl overflow-hidden shadow-xl"
                 >
-                   <div className="relative w-full h-[40%]">
-                      <Image 
-                        src={TESTIMONIALS[currentIndex].image} 
+                   <div className="relative w-full aspect-[16/10]">
+                      <Image
+                        src={TESTIMONIALS[currentIndex].image}
                         alt={TESTIMONIALS[currentIndex].altText}
                         fill
                         loading="lazy"
                         className="object-cover object-center"
                       />
                    </div>
-                   <div className="p-6 md:p-8 flex-1 flex flex-col justify-between">
+                   <div className="p-6 md:p-8 flex flex-col justify-between">
                       <div>
                         <div className="mb-6 flex items-center gap-3">
                           <div className="relative h-10 w-10 shrink-0">
