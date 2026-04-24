@@ -135,32 +135,34 @@ export function Footer() {
         </div>
 
         {/* ── Partners / Hecho en México ───── */}
-        <div className="flex flex-row flex-nowrap items-center justify-start gap-4 border-t border-brand-midnight/[0.06] py-8 sm:gap-8 md:gap-12 md:py-10 dark:border-brand-white/[0.06]">
-          {/* Badges estáticos alineados a la izquierda */}
-          {BADGES_WITH_IMAGE.map((badge) => (
-            <div
-              key={badge.name}
-              className="flex h-10 items-center justify-start sm:h-12 md:h-16"
-            >
+        <div className="flex flex-row flex-nowrap items-center justify-between gap-3 border-t border-brand-midnight/[0.06] py-8 md:gap-6 md:py-10 dark:border-brand-white/[0.06]">
+          {/* Badges + Hecho en México: móvil → distribución uniforme; desktop → badges izquierda, Hecho en México derecha */}
+          <div className="flex flex-1 items-center justify-around gap-3 md:justify-start md:gap-10">
+            {BADGES_WITH_IMAGE.map((badge) => (
+              <div
+                key={badge.name}
+                className="flex h-10 items-center justify-center sm:h-12 md:h-16"
+              >
+                <Image
+                  src={badge.src}
+                  alt={badge.name}
+                  width={160}
+                  height={56}
+                  className="max-h-8 w-auto object-contain opacity-70 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 sm:max-h-10 md:max-h-12 dark:brightness-0 dark:invert dark:hover:brightness-100 dark:hover:invert-0"
+                />
+              </div>
+            ))}
+
+            {/* Hecho en México — en móvil es parte del flujo uniforme, en desktop lo sacamos del grupo vía margin-left auto */}
+            <div className="flex h-10 items-center justify-center sm:h-12 md:h-16 md:ml-auto">
               <Image
-                src={badge.src}
-                alt={badge.name}
-                width={160}
-                height={56}
-                className="max-h-8 w-auto object-contain opacity-70 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 sm:max-h-10 md:max-h-12 dark:brightness-0 dark:invert dark:hover:brightness-100 dark:hover:invert-0"
+                src="/images/aliados/Hecho en Mexico.svg"
+                alt="Hecho en México — Sintérgica AI"
+                width={120}
+                height={60}
+                className="h-10 w-auto object-contain sm:h-12 md:h-14"
               />
             </div>
-          ))}
-
-          {/* Hecho en México — junto a los badges a la izquierda */}
-          <div className="flex h-10 items-center justify-start sm:h-12 md:h-16">
-            <Image
-              src="/images/aliados/Hecho en Mexico.svg"
-              alt="Hecho en México — Sintérgica AI"
-              width={120}
-              height={60}
-              className="h-10 w-auto object-contain sm:h-12 md:h-14"
-            />
           </div>
         </div>
 
