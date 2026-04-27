@@ -138,10 +138,10 @@ const T = {
         autonomousTask: "Monitoreo DOF activo · alertas configuradas para cambios en normativa vigente",
       },
       gobierno: {
-        userMsg: "Carlos, ¿cumplimos los requisitos para la licitación LO-SHCP-2025-018?",
-        agentMsg: "Revisé las bases. Cumplimos el 94% de los criterios. Pendiente: Anexo C y fianza de $1.2M. Generé el checklist con documentos faltantes y un borrador del Anexo C prellenado.",
-        artifactName: "Checklist_LO-SHCP-2025-018.docx",
-        autonomousTask: "Vigilando 4 licitaciones activas en CompraNet · próximo cierre en 3 días",
+        userMsg: "Carlos, prepara el boletín de prensa de la sesión de cabildo de hoy. Tono institucional, máximo 400 palabras.",
+        agentMsg: "Listo. Tomé el acta preliminar y los 4 acuerdos aprobados (presupuesto participativo, programa de pavimentación, convenio con DIF y terna de regidor suplente). Boletín redactado en tono institucional y validado contra el manual de identidad municipal.",
+        artifactName: "Boletin_Cabildo_27abr2026.docx",
+        autonomousTask: "Monitoreando 3 sesiones de cabildo y 8 publicaciones en periódico oficial este mes",
       },
       logistica: {
         userMsg: "Carlos, el pedimento 1234-2025 tiene un error. ¿Qué necesitamos corregir antes del despacho?",
@@ -254,10 +254,10 @@ const T = {
         autonomousTask: "Active DOF monitoring · alerts configured for changes in current regulations",
       },
       gobierno: {
-        userMsg: "Carlos, do we meet the requirements for tender LO-SHCP-2025-018?",
-        agentMsg: "I reviewed the terms. We meet 94% of the criteria. Pending: Annex C and a $1.2M bond. I generated the checklist with missing documents and a pre-filled Annex C draft.",
-        artifactName: "Checklist_LO-SHCP-2025-018.docx",
-        autonomousTask: "Monitoring 4 active tenders on CompraNet · next deadline in 3 days",
+        userMsg: "Carlos, draft the press release for today's city council session. Institutional tone, max 400 words.",
+        agentMsg: "Done. I pulled the preliminary minutes and the 4 approved resolutions (participatory budget, paving program, DIF agreement, alternate council member shortlist). Drafted in institutional tone and validated against the municipal style manual.",
+        artifactName: "Council_Briefing_27apr2026.docx",
+        autonomousTask: "Monitoring 3 council sessions and 8 official gazette publications this month",
       },
       logistica: {
         userMsg: "Carlos, customs entry 1234-2025 has an error. What do we need to fix before clearance?",
@@ -370,10 +370,10 @@ const T = {
         autonomousTask: "Monitoramento DOF ativo · alertas configurados para mudanças na normativa vigente",
       },
       gobierno: {
-        userMsg: "Carlos, cumprimos os requisitos para a licitação LO-SHCP-2025-018?",
-        agentMsg: "Revisei as bases. Cumprimos 94% dos critérios. Pendente: Anexo C e fiança de $1.2M. Gerei o checklist com documentos faltantes e um rascunho do Anexo C preenchido.",
-        artifactName: "Checklist_LO-SHCP-2025-018.docx",
-        autonomousTask: "Monitorando 4 licitações ativas no CompraNet · próximo encerramento em 3 dias",
+        userMsg: "Carlos, prepare o boletim de imprensa da sessão da câmara de hoje. Tom institucional, máximo 400 palavras.",
+        agentMsg: "Pronto. Peguei a ata preliminar e as 4 resoluções aprovadas (orçamento participativo, programa de pavimentação, convênio com o DIF e lista tríplice de vereador suplente). Boletim redigido em tom institucional e validado com o manual de identidade municipal.",
+        artifactName: "Boletim_Camara_27abr2026.docx",
+        autonomousTask: "Monitorando 3 sessões da câmara e 8 publicações no diário oficial este mês",
       },
       logistica: {
         userMsg: "Carlos, o despacho 1234-2025 tem um erro. O que precisamos corrigir antes da liberação?",
@@ -693,9 +693,6 @@ export function IndustryPageContent({ data: dataProp }: IndustryPageContentProps
             <h2 className="font-proxima mt-3 max-w-3xl text-balance text-3xl font-bold text-brand-midnight dark:text-brand-white sm:text-4xl">
               {t.useCasesTitle(data.name)}
             </h2>
-            <p className="mt-4 max-w-2xl text-base text-brand-midnight/45 dark:text-brand-white/45">
-              {data.problemBody}
-            </p>
           </m.div>
 
           <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-brand-midnight/8 dark:border-brand-white/10 bg-brand-white dark:bg-brand-midnight/8 sm:grid-cols-2">
