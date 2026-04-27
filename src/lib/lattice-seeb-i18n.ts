@@ -132,8 +132,8 @@ const es: SeebI18nContent = {
       {
         id: "gobierno",
         name: "Lattice Séeb Gobierno",
-        corpus: ["Ley de Adquisiciones", "Compranet", "LGTAIP", "Normativa de transparencia", "Legislación estatal"],
-        useCases: ["Análisis de licitaciones", "Respuestas a LGTAIP", "Redacción de oficios", "Análisis de presupuesto"],
+        corpus: ["LAASSP y CompraNet", "Constituciones y leyes estatales", "Reglamentos municipales", "Procesos legislativos y judiciales", "LGTAIP y transparencia local"],
+        useCases: ["Licitaciones federales, estatales y municipales", "Análisis de iniciativas legislativas", "Soporte a procesos judiciales", "Respuestas a LGTAIP y leyes locales", "Redacción de oficios y dictámenes"],
       },
       {
         id: "logistica",
