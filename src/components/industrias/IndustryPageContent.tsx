@@ -1011,8 +1011,9 @@ export function IndustryPageContent({ data: dataProp }: IndustryPageContentProps
           className="object-cover object-center"
           sizes="100vw"
         />
-        {/* Gradient overlay — darker on left for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-midnight/95 via-brand-midnight/70 to-brand-midnight/30" />
+        {/* Dark overlay — base darkening + extra emphasis on the left for text readability */}
+        <div className="absolute inset-0 bg-brand-midnight/65" />
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-midnight/85 via-brand-midnight/55 to-brand-midnight/35" />
         <div className="absolute inset-0 bg-gradient-to-t from-brand-midnight/60 to-transparent lg:bg-none" />
 
         <div className="relative mx-auto flex min-h-[520px] max-w-7xl items-center px-5 py-16 sm:px-8 lg:min-h-[620px] lg:py-24">
