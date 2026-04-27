@@ -8,37 +8,37 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 const INDUSTRIES = [
   {
     title: "Legal",
-    image: "/images/industries/legal.png",
+    image: "/images/industries/legal.jpg",
     link: "/industrias/legal",
   },
   {
     title: "Gobierno",
-    image: "/images/industries/gobierno.png",
+    image: "/images/industries/gobierno.jpg",
     link: "/industrias/gobierno",
   },
   {
     title: "Logística y Com. Ext.",
-    image: "/images/industries/logistica.png",
+    image: "/images/industries/logistica.jpg",
     link: "/industrias/logistica",
   },
   {
     title: "Energía",
-    image: "/images/industries/energia.png",
+    image: "/images/industries/energia.jpg",
     link: "/industrias/energia",
   },
   {
     title: "Salud",
-    image: "/images/industries/salud.png",
+    image: "/images/industries/salud.jpg",
     link: "/industrias/salud",
   },
   {
     title: "Financiero",
-    image: "/images/industries/financiero.png",
+    image: "/images/industries/financiero.jpg",
     link: "/industrias/financiero",
   },
   {
     title: "Ventas",
-    image: "/images/industries/ventas.png",
+    image: "/images/industries/ventas.jpg",
     link: "/industrias/ventas",
   },
 ];
@@ -125,6 +125,7 @@ export function IndustriesCarousel() {
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                 sizes="340px"
+                priority={i === 0}
               />
 
               {/* Subtle bottom gradient for label area */}
